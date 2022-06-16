@@ -39,7 +39,7 @@ void main() async {
     alarmadan('asr');
     alarmadan('magrib');
     alarmadan('isha');
-  runApp(const MyApp());
+
 
   runApp(const MyApp());
 }
