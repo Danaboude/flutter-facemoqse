@@ -31,11 +31,15 @@ callbackDispatcher() {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Workmanager().initialize(callbackDispatcher);
-  await Workmanager().registerPeriodicTask("test_workertask", "test_workertask",
-      frequency: Duration(hours: 12),
-      initialDelay: Duration(days: 1),
-      existingWorkPolicy: ExistingWorkPolicy.replace);
+  // await Workmanager().initialize(callbackDispatcher);
+ // await Workmanager().registerPeriodicTask("test_workertask", "test_workertask",frequency: Duration(hours: 12),initialDelay: Duration(days: 1), existingWorkPolicy: ExistingWorkPolicy.replace);
+    await _notificationHelper.initializeNotification();
+    alarmadan('fajer');
+    alarmadan('dhuhr');
+    alarmadan('asr');
+    alarmadan('magrib');
+    alarmadan('isha');
+  runApp(const MyApp());
 
   runApp(const MyApp());
 }
