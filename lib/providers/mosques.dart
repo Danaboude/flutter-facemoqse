@@ -1,0 +1,107 @@
+import 'dart:convert';
+
+
+class mosques {
+  String mosqueid;
+  String mac;
+  String name;
+  String countryid;
+  String country;
+  String idcity;
+  String street;
+  String houseno;
+  String zip;
+  String status;
+  String publicip;
+  String prymethod;
+  String activationcode;
+  String dateofstart;
+  bool isFavrote;
+  mosques({
+    required this.mosqueid,
+    required this.mac,
+    required this.name,
+    required this.countryid,
+    required this.country,
+    required this.idcity,
+    required this.street,
+    required this.houseno,
+    required this.zip,
+    required this.status,
+    required this.publicip,
+    required this.prymethod,
+    required this.activationcode,
+    required this.dateofstart,
+    this.isFavrote=false,
+  }
+  );
+
+  Map<String, dynamic> toMap() {
+    return {
+      'mosqueid': mosqueid,
+      'mac': mac,
+      'name': name,
+      'countryid': countryid,
+      'country': country,
+      'idcity': idcity,
+      'street': street,
+      'houseno': houseno,
+      'zip': zip,
+      'status': status,
+      'publicip': publicip,
+      'prymethod': prymethod,
+      'activationcode': activationcode,
+      'dateofstart': dateofstart,
+      'isFavrote': isFavrote,
+    };
+  }
+
+  //factory mosques.fromJson(String source) => mosques.fromMap(json.decode(source));
+  factory mosques.fromJson(dynamic json) {
+    
+    return mosques(
+      mosqueid:json['mosque_id']??'',
+      mac: json['mac'] ?? '',
+      name: json['name'] ?? '',
+      countryid: json['country_id'] ?? '',
+      country: json['country'] ?? '',
+      idcity: json['id_city'] ?? '',
+      street: json['street'] ?? '',
+      houseno: json['house_no'] ?? '',
+      zip: json['zip'] ?? '',
+      status: json['status'] ?? '',
+      publicip: json['public_ip'] ?? '',
+      prymethod: json['pry_method'] ?? '',
+      activationcode: json['activation_code'] ?? '',
+      dateofstart: json['date_of_start'] ?? '',
+    );
+  }
+
+  @override
+  String toString() {
+    return '{mosqueid: $mosqueid, mac: $mac, name: $name, countryid: $countryid, country: $country, idcity: $idcity, street: $street, houseno: $houseno, zip: $zip, status: $status, publicip: $publicip, prymethod: $prymethod, activationcode: $activationcode, dateofstart: $dateofstart}';
+  }
+
+  factory mosques.fromMap(Map<String, dynamic> map) {
+    return mosques(
+      mosqueid: map['mosqueid'] ?? '',
+      mac: map['mac'] ?? '',
+      name: map['name'] ?? '',
+      countryid: map['countryid'] ?? '',
+      country: map['country'] ?? '',
+      idcity: map['idcity'] ?? '',
+      street: map['street'] ?? '',
+      houseno: map['houseno'] ?? '',
+      zip: map['zip'] ?? '',
+      status: map['status'] ?? '',
+      publicip: map['publicip'] ?? '',
+      prymethod: map['prymethod'] ?? '',
+      activationcode: map['activationcode'] ?? '',
+      dateofstart: map['dateofstart'] ?? '',
+      isFavrote:map['isFavrote']??'',
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+}
