@@ -1,5 +1,5 @@
-import 'dart:async';
 import 'dart:convert';
+import 'dart:io' show Platform;
 
 import 'package:facemosque/Screen/homescreen.dart';
 import 'package:facemosque/Screen/splachScreen.dart';
@@ -7,46 +7,72 @@ import 'package:facemosque/providers/buttonclick.dart';
 import 'package:facemosque/providers/fatchdata.dart';
 import 'package:facemosque/providers/mosque.dart';
 import 'package:facemosque/widget/notificationHelper.dart';
-//import 'package:facemosque/widget/notificationHelper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:timezone/data/latest_all.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
-import 'package:workmanager/workmanager.dart';
+import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
+
+import 'package:flutter/services.dart';
+import 'package:auto_start_flutter/auto_start_flutter.dart';
+
+changeStatusColor(Color color) async {
+  var _useWhiteStatusBarForeground;
+  var _useWhiteNavigationBarForeground;
+  try {
+    await FlutterStatusbarcolor.setStatusBarColor(color, animate: true);
+    if (useWhiteForeground(color)) {
+      FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
+      FlutterStatusbarcolor.setNavigationBarWhiteForeground(true);
+      _useWhiteStatusBarForeground = true;
+      _useWhiteNavigationBarForeground = true;
+    } else {
+      FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
+      FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
+      _useWhiteStatusBarForeground = false;
+      _useWhiteNavigationBarForeground = false;
+    }
+  } catch (e) {
+    debugPrint(e.toString());
+  }
+}
+
+Future<void> initAutoStart() async {
+  isAutoStartAvailable;
+
+  try {
+    bool? test = await isAutoStartAvailable;
+    print(test);
+    if (!test!) await getAutoStartPermission();
+  } on PlatformException catch (e) {
+    print(e);
+  }
+}
+
+void calladan() async {}
 
 NotificationHelper _notificationHelper = NotificationHelper();
-callbackDispatcher() {
-  Workmanager().executeTask((task, inputData) async {
-    await _notificationHelper.initializeNotification();
-    alarmadan('fajer');
-    alarmadan('dhuhr');
-    alarmadan('asr');
-    alarmadan('magrib');
-    alarmadan('isha');
-    return Future.value(true);
-  });
-}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Workmanager().initialize(callbackDispatcher);
- // await Workmanager().registerPeriodicTask("test_workertask", "test_workertask",frequency: Duration(hours: 12),initialDelay: Duration(days: 1), existingWorkPolicy: ExistingWorkPolicy.replace);
-    await _notificationHelper.initializeNotification();
-    alarmadan('fajer');
-    alarmadan('dhuhr');
-    alarmadan('asr');
-    alarmadan('magrib');
-    alarmadan('isha');
+  changeStatusColor(Color(0xFF1ea345));
 
+  if (Platform.isAndroid) {
+    initAutoStart();
+  }
+
+  _notificationHelper.initializeNotification();
+  // _notificationHelper.cancelAll();
+
+  alarmadan('fajer');
+  alarmadan('dhuhr');
+  alarmadan('asr');
+  alarmadan('magrib');
+  alarmadan('isha');
 
   runApp(const MyApp());
 }
 
 void alarmadan(String adan) async {
-  tz.initializeTimeZones();
-  tz.setLocalLocation(tz.local);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool lang = false;
   if (prefs.containsKey('language')) {
@@ -60,6 +86,7 @@ void alarmadan(String adan) async {
         Mosque mosque =
             Mosque.fromJson(json.decode(prefs.getString('mosque')!));
         if (adan == 'fajer') {
+          //await _notificationHelper.cancel(0);
           if (mosque.fajer != '') {
             var timehm = mosque.fajer.split(':');
             _notificationHelper.scheduledNotification(
@@ -74,9 +101,11 @@ void alarmadan(String adan) async {
           }
         } else if (adan == 'dhuhr') {
           if (mosque.dhuhr != '') {
+            //  _notificationHelper.cancel(1);
+
             var timehm = mosque.dhuhr.split(':');
             print('dhuhr');
-            _notificationHelper.scheduledNotification(
+            await _notificationHelper.scheduledNotification(
               body: lang,
               title: lang ? 'الظهر' : adan,
               hour: int.parse(timehm[0]),
@@ -88,9 +117,11 @@ void alarmadan(String adan) async {
           }
         } else if (adan == 'asr') {
           if (mosque.asr != '') {
+            //_notificationHelper.cancel(2);
+
             var timehm = mosque.asr.split(':');
             print('asr');
-            _notificationHelper.scheduledNotification(
+            await _notificationHelper.scheduledNotification(
               body: lang,
               title: lang ? 'العصر' : adan,
               hour: int.parse(timehm[0]),
@@ -102,6 +133,8 @@ void alarmadan(String adan) async {
           }
         } else if (adan == 'magrib') {
           if (mosque.magrib != '') {
+            // await _notificationHelper.cancel(3);
+
             var timehm = mosque.magrib.split(':');
             print('magrib');
             _notificationHelper.scheduledNotification(
@@ -116,6 +149,8 @@ void alarmadan(String adan) async {
           }
         } else if (adan == 'isha') {
           if (mosque.isha != '') {
+            //await _notificationHelper.cancel(4);
+
             var timehm = mosque.isha.split(':');
             print('isha');
             _notificationHelper.scheduledNotification(

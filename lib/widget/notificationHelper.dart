@@ -2,10 +2,16 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 class NotificationHelper {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
+        Future<void> _configureLocalTimeZone() async {
+    tz.initializeTimeZones();
+    final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timeZone));
+  }
 
   /// Initialize notification
   initializeNotification() async {
@@ -42,12 +48,7 @@ class NotificationHelper {
     return scheduleDate;
   }
 
-  Future<void> _configureLocalTimeZone() async {
-    tz.initializeTimeZones();
-    final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
-    tz.setLocalLocation(tz.getLocation(timeZone));
-    print(tz.getLocation(timeZone));
-  }
+
 
   /// Scheduled Notification
   scheduledNotification({
@@ -63,7 +64,9 @@ class NotificationHelper {
       body == false ? 'It\'s time for adan' : 'حان موعد اذان ',
       title,
       _convertTime(hour, minutes),
+      
       NotificationDetails(
+
         android: AndroidNotificationDetails(
           'your channel id $sound',
           'your channel name',
@@ -74,6 +77,7 @@ class NotificationHelper {
         ),
         iOS: IOSNotificationDetails(sound: '$sound.mp3'),
       ),
+      
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,

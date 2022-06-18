@@ -74,11 +74,11 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                               border: Border.all(color: Colors.grey, width: 2),
                               boxShadow: const [
                                 BoxShadow(
-                                  color: Color(0xff8F9779),
+                                  color: Colors.green,
                                   spreadRadius: 5,
                                   blurRadius: 7,
                                   offset: Offset(
-                                      0, 1), // changes position of shadow
+                                      0, 2), // changes position of shadow
                                 ),
                               ],
                               borderRadius: BorderRadius.circular(40),
@@ -86,7 +86,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                   colors: [
                                     Color(0xFF454545),
                                     //Color(0xFF57E9F2),
-                                    Color(0xFF94C973),
+                                    Color(0xFF1ea345),
                                   ],
                                   begin: FractionalOffset(0.0, 0.0),
                                   end: FractionalOffset(0.1, 0.7),
@@ -116,7 +116,9 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                     Provider.of<FatchData>(context,
                                             listen: false)
                                         .cleandata();
-                                        Provider.of<FatchData>(context,listen: false).fatchandsetallmosque();
+                                    Provider.of<FatchData>(context,
+                                            listen: false)
+                                        .fatchandsetallmosque();
                                   },
                                   icon: Icon(
                                     Icons.star,
@@ -133,14 +135,16 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                     : Container(
                         margin: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 2),
+                           border: Border.all(
+                                            color: const Color(0xffD1B000),
+                                            width: 3),
                           boxShadow: const [
                             BoxShadow(
-                              color: Color(0xff8F9779),
+                              color: Colors.green,
                               spreadRadius: 5,
                               blurRadius: 7,
                               offset:
-                                  Offset(0, 1), // changes position of shadow
+                                  Offset(0, 2), // changes position of shadow
                             ),
                           ],
                           borderRadius: BorderRadius.circular(40),
@@ -148,7 +152,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                               colors: [
                                 Color(0xFF454545),
                                 //Color(0xFF57E9F2),
-                                Color(0xFF94C973),
+                                Color(0xFF1ea345),
                               ],
                               begin: FractionalOffset(0.0, 0.0),
                               end: FractionalOffset(0.1, 0.7),
@@ -172,7 +176,8 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                 Provider.of<Buttonclickp>(context,
                                         listen: false)
                                     .storereplacetoevent(true);
-                                      Provider.of<FatchData>(context,listen: false).fatchandsetallmosque();
+                                Provider.of<FatchData>(context, listen: false)
+                                    .fatchandsetallmosque();
                               },
                               icon: Icon(
                                 Icons.star,
@@ -188,8 +193,8 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
     );
   }
 
-  Column masqveiw(Size sizedphone, BuildContext con,
-      List<mosques> listmosque, bool mymusque) {
+  Column masqveiw(Size sizedphone, BuildContext con, List<mosques> listmosque,
+      bool mymusque) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -200,11 +205,10 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
           width: sizedphone.width * 0.9,
           height: sizedphone.height * 0.08,
           decoration: BoxDecoration(
-              color: Colors.green,
-              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-              border: Border.all(
-                color: Colors.grey,
-              )),
+            color: Color(0xFF1ea345),
+            borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+            border: Border.all(color: const Color(0xffD1B000), width: 3),
+          ),
           child: TextField(
             onChanged: (value) {
               Provider.of<FatchData>(con, listen: false).seachval(value);
@@ -234,20 +238,21 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
           decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.4),
               borderRadius: BorderRadius.circular(30)),
-          height: sizedphone.height * 0.6,
+          height: sizedphone.height * 0.63,
           width: sizedphone.width * 0.96,
           child: ListView(
             children: listmosque
                 .map((item) => Container(
                       margin: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey, width: 2),
+                        border: Border.all(
+                            color: const Color(0xffD1B000), width: 3),
                         boxShadow: const [
                           BoxShadow(
-                            color: Color(0xff8F9779),
+                            color: Colors.green,
                             spreadRadius: 5,
                             blurRadius: 7,
-                            offset: Offset(0, 1), // changes position of shadow
+                            offset: Offset(0, 2), // changes position of shadow
                           ),
                         ],
                         borderRadius: BorderRadius.circular(40),
@@ -255,7 +260,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                             colors: [
                               Color(0xFF454545),
                               //Color(0xFF57E9F2),
-                              Color(0xFF94C973),
+                              Color(0xFF1ea345),
                             ],
                             begin: FractionalOffset(0.0, 0.0),
                             end: FractionalOffset(0.1, 0.7),
@@ -266,8 +271,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                         trailing: IconButton(
                             onPressed: () async {
                               if (mymusque) {
-                                Provider.of<Buttonclickp>(con,
-                                        listen: false)
+                                Provider.of<Buttonclickp>(con, listen: false)
                                     .storereplacetoloc(false);
                                 setState(() {
                                   item.isFavrote = !item.isFavrote;
@@ -277,32 +281,27 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                     (element) =>
                                         element.mosqueid == item.mosqueid);
 
-                                await Provider.of<FatchData>(con,
-                                        listen: false)
+                                await Provider.of<FatchData>(con, listen: false)
                                     .fatchandsetmosque(mosquefollow.mosqueid);
-                                 Provider.of<FatchData>(con,
-                                        listen: false)
+                                await Provider.of<FatchData>(con, listen: false)
                                     .readdata();
                               } else {
-                                Provider.of<Buttonclickp>(con,
-                                        listen: false)
+                                Provider.of<Buttonclickp>(con, listen: false)
                                     .storereplacetoevent(false);
 
                                 setState(() {
                                   item.isFavrote = !item.isFavrote;
                                 });
-                              
-                              
-                              mosquesforevent = listmosque.firstWhere(
-                                  (element) =>
-                                      element.mosqueid == item.mosqueid);
-                              SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              prefs.setString('mosquesforevent',
-                                  json.encode(mosquesforevent.toMap()));
-                                  await Provider.of<FatchData>(con,
-                                      listen: false)
-                                  .readdata();
+
+                                mosquesforevent = listmosque.firstWhere(
+                                    (element) =>
+                                        element.mosqueid == item.mosqueid);
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                prefs.setString('mosquesforevent',
+                                    json.encode(mosquesforevent.toMap()));
+                                await Provider.of<FatchData>(con, listen: false)
+                                    .readdata();
                               }
                             },
                             icon: Icon(

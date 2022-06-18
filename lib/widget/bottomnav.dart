@@ -38,9 +38,9 @@ class _BottomNavState extends State<BottomNav> {
     return CurvedNavigationBar(
 
         animationDuration:const Duration(milliseconds: 500),
-        backgroundColor: Color(0xFF1ea345),
+        backgroundColor: Colors.white,
        // buttonBackgroundColor:const Color(0xFFB7F8DB),
-        color:const Color(0xff76B947),
+        color:const Color(0xFF1ea345),
         
         index: inde,
         height: 60,

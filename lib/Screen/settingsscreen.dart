@@ -39,80 +39,84 @@ class _SettingsScreenState extends State<SettingsScreen> {
       Mylangwch(lang: language['englich']),
       Mylangwch(lang: language['arabic'])
     ];
-    return Center(
+    return SafeArea(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+           SizedBox(height: sizedphone.height*0.02,),
           Container(
-            margin: const EdgeInsets.all(20),
+              alignment: Alignment.center,
+            width: sizedphone.width*0.9,
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                color: Color(0xFF1ea345),
+                borderRadius: BorderRadius.circular(40)),
+            margin: const EdgeInsets.all(10),
             child: Text(
               language['azannotification'],
               style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
           ),
+          SizedBox(height: sizedphone.height*0.07,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               FilterChip(
-                
                 label: Text(language['fajer']),
                 onSelected: (bool i) async {
                   Provider.of<Buttonclickp>(context, listen: false)
                       .chackDayWeek(0);
                   Provider.of<Buttonclickp>(context, listen: false)
                       .storeDaysWeek();
-                      if(!i){
-                        _notificationHelper.cancel(0);
-                      }else{
-                          await _notificationHelper.initializeNotification();
+                  if (!i) {
+                    _notificationHelper.cancel(0);
+                  } else {
+                    await _notificationHelper.initializeNotification();
 
-                        
-                        alarmadan('fajer');
-                      }
-                      
+                    alarmadan('fajer');
+                  }
                 },
                 selected: Provider.of<Buttonclickp>(context).sala[0],
-                backgroundColor: const Color(0xff76B947),
+                backgroundColor: const Color(0xFF1ea345),
                 selectedColor: const Color(0xffD1B000),
-                
               ),
               FilterChip(
                 label: Text(language['dhuhr']),
-                onSelected: (bool i) async{
+                onSelected: (bool i) async {
                   Provider.of<Buttonclickp>(context, listen: false)
                       .chackDayWeek(1);
 
                   Provider.of<Buttonclickp>(context, listen: false)
                       .storeDaysWeek();
-                        if(!i){
-                        _notificationHelper.cancel(1);
-                      }else{
-                                                  await _notificationHelper.initializeNotification();
+                  if (!i) {
+                    _notificationHelper.cancel(1);
+                  } else {
+                    await _notificationHelper.initializeNotification();
 
-                        alarmadan('dhuhr');
-                      }
+                    alarmadan('dhuhr');
+                  }
                 },
                 selected: Provider.of<Buttonclickp>(context).sala[1],
-                backgroundColor: const Color(0xff76B947),
+                backgroundColor:  const Color(0xFF1ea345),
                 selectedColor: const Color(0xffD1B000),
               ),
               FilterChip(
                 label: Text(language['asr']),
-                onSelected: (bool i)async {
+                onSelected: (bool i) async {
                   Provider.of<Buttonclickp>(context, listen: false)
                       .chackDayWeek(2);
 
                   Provider.of<Buttonclickp>(context, listen: false)
                       .storeDaysWeek();
-                        if(!i){
-                           _notificationHelper.cancel(2);
-                      }else{
-                          await _notificationHelper.initializeNotification();
-                        alarmadan('asr');
-                      }
+                  if (!i) {
+                    _notificationHelper.cancel(2);
+                  } else {
+                    await _notificationHelper.initializeNotification();
+                    alarmadan('asr');
+                  }
                 },
                 selected: Provider.of<Buttonclickp>(context).sala[2],
-                backgroundColor: const Color(0xff76B947),
+                backgroundColor:  const Color(0xFF1ea345),
                 selectedColor: const Color(0xffD1B000),
               ),
             ],
@@ -122,47 +126,53 @@ class _SettingsScreenState extends State<SettingsScreen> {
             children: [
               FilterChip(
                 label: Text(language['magrib']),
-                onSelected: (bool i) async{
+                onSelected: (bool i) async {
                   Provider.of<Buttonclickp>(context, listen: false)
                       .chackDayWeek(3);
 
                   Provider.of<Buttonclickp>(context, listen: false)
                       .storeDaysWeek();
-                        if(!i){
-                           _notificationHelper.cancel(3);
-                      }else{
-                          await _notificationHelper.initializeNotification();
-                        alarmadan('magrib');
-                      }
+                  if (!i) {
+                    _notificationHelper.cancel(3);
+                  } else {
+                    await _notificationHelper.initializeNotification();
+                    alarmadan('magrib');
+                  }
                 },
                 selected: Provider.of<Buttonclickp>(context).sala[3],
-                backgroundColor: const Color(0xff76B947),
+                backgroundColor:  const Color(0xFF1ea345),
                 selectedColor: const Color(0xffD1B000),
               ),
               FilterChip(
                 label: Text(language['isha']),
-                onSelected: (bool i) async{
+                onSelected: (bool i) async {
                   Provider.of<Buttonclickp>(context, listen: false)
                       .chackDayWeek(4);
 
                   Provider.of<Buttonclickp>(context, listen: false)
                       .storeDaysWeek();
-                        if(!i){
-                            _notificationHelper.cancel(4);
-                      }else{
-                          await _notificationHelper.initializeNotification();
-                        alarmadan('isha');
-                      }
+                  if (!i) {
+                    _notificationHelper.cancel(4);
+                  } else {
+                    await _notificationHelper.initializeNotification();
+                    alarmadan('isha');
+                  }
                 },
                 selected: Provider.of<Buttonclickp>(context).sala[4],
-                backgroundColor: const Color(0xff76B947),
+                backgroundColor:  const Color(0xFF1ea345),
                 selectedColor: const Color(0xffD1B000),
               ),
             ],
           ),
+           SizedBox(height: sizedphone.height*0.06,),
           Container(
+            alignment: Alignment.center,
+            width: sizedphone.width*0.9,
+               padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                color: Color(0xFF1ea345),
+                borderRadius: BorderRadius.circular(40)),
             margin: const EdgeInsets.all(10),
-            padding: const EdgeInsets.all(10),
             child: Text(
               language['language'],
               style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -172,7 +182,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             height: sizedphone.height * 0.14,
             width: sizedphone.width * 0.3,
             child: PopupMenuButton<Mylangwch>(
-              color: const Color(0xff76B947),
+              color: Color(0xFF1ea345),
               child: Center(
                 child: Text(
                   language['selectlanguage'],

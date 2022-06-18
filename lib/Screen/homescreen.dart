@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:facemosque/Screen/musqScreen.dart';
 import 'package:facemosque/providers/fatchdata.dart';
@@ -73,162 +72,155 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: const BottomNav(),
       body: SafeArea(
           child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              colors: [
-                Color(0xFF1ea345),
-                Color(0xFF1ea345),
-              ],
-              begin: FractionalOffset(0.0, 0.0),
-              end: FractionalOffset(0.7, 0.2),
-              stops: [0.0, 1.0],
-              tileMode: TileMode.clamp),
-        ),
+        color: Colors.white,
         child: ListView(
-            //mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Provider.of<Buttonclickp>(context).indexnavigationbar == 0
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(8),
-                        child: Text(
-                          language['titlenamemasjed'],
+            shrinkWrap: true,
+              //mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Provider.of<Buttonclickp>(context).indexnavigationbar == 0
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(8),
+                          child: Text(
+                            language['titlenamemasjed'],
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                        ),
+                        Text(
+                          Provider.of<FatchData>(context).namemosqs,
                           style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 20),
                         ),
-                      ),
-                      Text(
-                        Provider.of<FatchData>(context).namemosqs,
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      ),
-                      CarouselSlider(
-                          options: CarouselOptions(
-                            scrollDirection: Axis.horizontal,
-                            enableInfiniteScroll: true,
-                            autoPlay: true,
-                            viewportFraction: 1,
-                            disableCenter: false,
-                          ),
-                          items: a
-                              .map(
-                                (item) => Container(
-                                    margin: const EdgeInsets.all(40),
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: const Color(0xffD1B000),
-                                          width: 3),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Color(0xff8F9779),
-                                          spreadRadius: 5,
-                                          blurRadius: 7,
-                                          offset: Offset(0,
-                                              1), // changes position of shadow
-                                        ),
-                                      ],
-                                      borderRadius: BorderRadius.circular(40),
-                                      gradient: const LinearGradient(
-                                          colors: [
-                                            Color(0xFF2F5233),
-                                            Color(0xFF1ea345),
-                                          ],
-                                          begin: FractionalOffset(0.0, 0.0),
-                                          end: FractionalOffset(0.1, 0.7),
-                                          stops: [0.0, 1.0],
-                                          tileMode: TileMode.clamp),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text(
-                                          item.day,
-                                          style: const TextStyle(
-                                              fontSize: 25,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        const SizedBox(),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            Text(item.time,
-                                                style: const TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            const SizedBox(),
-                                            Text(item.timeend,
-                                                style: const TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                          ],
-                                        )
-                                      ],
-                                    )),
-                              )
-                              .toList()),
-                      
-                      Container(
-                        height: sizedphone.height * 0.36,
-                        width: sizedphone.width * 0.8,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              color: const Color(0xffD1B000), width: 3),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color(0xffafb0b2),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset:
-                                  Offset(0, 3), // changes position of shadow
+                        CarouselSlider(
+                            options: CarouselOptions(
+                              scrollDirection: Axis.horizontal,
+                              enableInfiniteScroll: true,
+                              autoPlay: true,
+                              viewportFraction: 1,
+                              disableCenter: false,
                             ),
-                          ],
-                          borderRadius: BorderRadius.circular(40),
-                          gradient: const LinearGradient(
-                              colors: [
-                                Color(0xFF2F5233),
-                                Color(0xFF1ea345),
-                              ],
-                              begin: FractionalOffset(0.0, 0.0),
-                              end: FractionalOffset(1.0, 0.0),
-                              stops: [0.0, 1.0],
-                              tileMode: TileMode.clamp),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            titlel(language['nextparer']),
-                          CountdownTimer(),
-                            titlel(language['todayaya']),
-                            Expanded(
-                                child: Text(
-                              Provider.of<Buttonclickp>(context)
-                                      .languageselected
-                                  ? mosque.haditha
-                                  : mosque.hadithe,
-                            ))
-                          ],
-                        ),
-                      )
-                    ],
-                  )
-                : Provider.of<Buttonclickp>(context).indexnavigationbar == 1
-                    ? const MusqScreen()
-                    : Provider.of<Buttonclickp>(context).indexnavigationbar == 2
-                        ? const EventNotifications()
-                        : const SettingsScreen(),
-          ],
+                            items: a
+                                .map(
+                                  (item) => Container(
+                                      margin: const EdgeInsets.all(40),
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: const Color(0xffD1B000),
+                                            width: 3),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Colors.green,
+                                            spreadRadius: 5,
+                                            blurRadius: 7,
+                                            offset: Offset(0,
+                                                2), // changes position of shadow
+                                          ),
+                                        ],
+                                        borderRadius: BorderRadius.circular(40),
+                                        gradient: const LinearGradient(
+                                            colors: [
+                                              Color(0xFF2F5233),
+                                              Color(0xFF1ea345),
+                                            ],
+                                            begin: FractionalOffset(0.0, 0.0),
+                                            end: FractionalOffset(0.1, 0.7),
+                                            stops: [0.0, 1.0],
+                                            tileMode: TileMode.clamp),
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text(
+                                            item.day,
+                                            style: const TextStyle(
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          const SizedBox(),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Text(item.time,
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              const SizedBox(),
+                                              Text(item.timeend,
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                            ],
+                                          )
+                                        ],
+                                      )),
+                                )
+                                .toList()),
+                        
+                        Container(
+                          height: sizedphone.height * 0.39,
+                          width: sizedphone.width * 0.8,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: const Color(0xffD1B000), width: 3),
+                           boxShadow: const [
+                                          BoxShadow(
+                                            color: Colors.green,
+                                            spreadRadius: 5,
+                                            blurRadius: 7,
+                                            offset: Offset(0,
+                                                2), // changes position of shadow
+                                          ),
+                                        ],
+                            borderRadius: BorderRadius.circular(40),
+                            gradient: const LinearGradient(
+                                colors: [
+                                  Color(0xFF2F5233),
+                                  Color(0xFF1ea345),
+                                ],
+                                begin: FractionalOffset(0.0, 0.0),
+                                end: FractionalOffset(1.0, 0.0),
+                                stops: [0.0, 1.0],
+                                tileMode: TileMode.clamp),
+                          ),
+                          child: Column(
+                          
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              titlel(language['nextparer']),
+                            CountdownTimer(),
+                              titlel(language['todayaya']),
+                              Expanded(
+                                  child: Text(
+                                Provider.of<Buttonclickp>(context)
+                                        .languageselected
+                                    ? mosque.haditha
+                                    : mosque.hadithe,
+                              ))
+                            ],
+                          ),
+                        )
+                      ],
+                    )
+                  : Provider.of<Buttonclickp>(context).indexnavigationbar == 1
+                      ? const MusqScreen()
+                      : Provider.of<Buttonclickp>(context).indexnavigationbar == 2
+                          ? const EventNotifications()
+                          : const SettingsScreen(),
+            ],
+          ),
         ),
-      )),
+      )
     );
   }
 
@@ -237,17 +229,8 @@ class _HomeScreenState extends State<HomeScreen> {
       margin: const EdgeInsets.all(15),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(40),
-        gradient: const LinearGradient(
-            colors: [
-              Color(0xFF454545),
-              //Color(0xFF57E9F2),
-              Color(0xFF94C973),
-            ],
-            begin: FractionalOffset(0.0, 0.0),
-            end: FractionalOffset(0.1, 0.7),
-            stops: [0.0, 1.0],
-            tileMode: TileMode.clamp),
+        borderRadius: BorderRadius.circular(30),
+         color: Color(0xFF94C973),
       ),
       alignment: Alignment.center,
       child: Text(titlel,
