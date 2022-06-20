@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../widget/notificationHelper.dart';
+
 class MusqScreen extends StatefulWidget {
   const MusqScreen({Key? key}) : super(key: key);
 
@@ -16,6 +18,8 @@ class MusqScreen extends StatefulWidget {
 }
 
 class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
+  NotificationHelper _notificationHelper = NotificationHelper();
+
   late mosques mosquesforevent;
   late mosques mosquefollow;
   @override
@@ -149,6 +153,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                           trailing: IconButton(
                               onPressed: () {
                                 setState(() {
+                                  _notificationHelper.cancelAll();
                                   mosquesforevent.isFavrote =
                                       !mosquesforevent.isFavrote;
                                 });
