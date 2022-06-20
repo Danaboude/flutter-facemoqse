@@ -33,7 +33,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
     var listmosque = Provider.of<FatchData>(context).mosquelist;
     // var listmosqueother = Provider.of<FatchData>(context).mosquelist;
     //print(mosques.isFavrote);
-    mosquefollow.isFavrote = true;
+    // mosquefollow.isFavrote = true;
     mosquesforevent.isFavrote = true;
 
     // print(listmosque);
@@ -54,8 +54,10 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                     InkWell(
                       child: Text(
                         language['mymosque'],
-                        style: Theme.of(context).textTheme.headline2?.copyWith(
-                             fontSize: 16),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline2
+                            ?.copyWith(fontSize: 16),
                       ),
                       onTap: () {
                         Provider.of<Buttonclickp>(context, listen: false)
@@ -65,8 +67,10 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                     InkWell(
                       child: Text(
                         language['othermosque'],
-                         style: Theme.of(context).textTheme.headline2?.copyWith(
-                             fontSize: 16),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline2
+                            ?.copyWith(fontSize: 16),
                       ),
                       onTap: () {
                         Provider.of<Buttonclickp>(context, listen: false)
@@ -92,14 +96,19 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                               leading: Image.asset('assets/images/mosque.png'),
                               title: Text(
                                 mosquefollow.name,
- style: Theme.of(context).textTheme.headline1?.copyWith(
-                             fontSize: 16),                              ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1
+                                    ?.copyWith(fontSize: 16),
+                              ),
                               subtitle: Text(
                                 '${mosquefollow.country} , ${mosquefollow.street}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline1
-                                    ?.copyWith(fontWeight: FontWeight.normal,fontSize: 14),
+                                    ?.copyWith(
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 14),
                               ),
                               trailing: IconButton(
                                   onPressed: () {
@@ -107,6 +116,10 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                       mosquefollow.isFavrote =
                                           !mosquefollow.isFavrote;
                                     });
+                                    Provider.of<FatchData>(context,
+                                            listen: false)
+                                        .setisFavrote(false);
+
                                     Provider.of<Buttonclickp>(context,
                                             listen: false)
                                         .storereplacetoloc(true);
@@ -142,13 +155,18 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                           leading: Image.asset('assets/images/mosque.png'),
                           title: Text(
                             mosquesforevent.name,
-                            style: Theme.of(context).textTheme.headline1?.copyWith(
-                             fontSize:16),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1
+                                ?.copyWith(fontSize: 16),
                           ),
                           subtitle: Text(
                             '${mosquesforevent.country} , ${mosquesforevent.street}',
-                           style: Theme.of(context).textTheme.headline1?.copyWith(
-                             fontSize: 8,fontWeight: FontWeight.normal),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1
+                                ?.copyWith(
+                                    fontSize: 8, fontWeight: FontWeight.normal),
                           ),
                           trailing: IconButton(
                               onPressed: () {
@@ -197,8 +215,11 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
             onChanged: (value) {
               Provider.of<FatchData>(con, listen: false).seachval(value);
             },
- style: Theme.of(context).textTheme.headline1?.copyWith(
-                             fontSize: 12,fontWeight: FontWeight.normal),            decoration: InputDecoration(
+            style: Theme.of(context)
+                .textTheme
+                .headline1
+                ?.copyWith(fontSize: 12, fontWeight: FontWeight.normal),
+            decoration: InputDecoration(
               filled: false,
 
               fillColor: Colors.black,
@@ -243,6 +264,8 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                 setState(() {
                                   item.isFavrote = !item.isFavrote;
                                 });
+                                                                
+
 
                                 mosquefollow = listmosque.firstWhere(
                                     (element) =>
@@ -252,6 +275,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                     .fatchandsetmosque(mosquefollow.mosqueid);
                                 await Provider.of<FatchData>(con, listen: false)
                                     .readdata();
+                                    Provider.of<FatchData>(context,listen: false).setisFavrote(true);
                               } else {
                                 Provider.of<Buttonclickp>(con, listen: false)
                                     .storereplacetoevent(false);
@@ -278,13 +302,18 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                         leading: Image.asset('assets/images/mosque.png'),
                         title: Text(
                           item.name,
-                           style: Theme.of(context).textTheme.headline1?.copyWith(
-                             fontSize: 16),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline1
+                              ?.copyWith(fontSize: 16),
                         ),
                         subtitle: Text(
                           '${item.country} , ${item.street}',
-                           style: Theme.of(context).textTheme.headline1?.copyWith(
-                             fontSize: 14,fontWeight: FontWeight.normal),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline1
+                              ?.copyWith(
+                                  fontSize: 14, fontWeight: FontWeight.normal),
                         ),
                       ),
                     ))

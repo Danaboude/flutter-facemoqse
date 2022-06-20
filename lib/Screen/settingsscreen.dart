@@ -1,6 +1,7 @@
 import 'package:facemosque/providers/buttonclick.dart';
 import 'package:facemosque/providers/fatchdata.dart';
 import 'package:facemosque/providers/mosque.dart';
+import 'package:facemosque/providers/mosques.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+      mosques  mosquefollow = Provider.of<FatchData>(context, listen: false).mosqueFollow;
+
     var sizedphone = MediaQuery.of(context).size;
     Map language = Provider.of<Buttonclickp>(context).languagepro;
 
@@ -64,6 +67,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               FilterChip(
+                
+                
                 checkmarkColor: Colors.white,
                 label: Text(
                   language['fajer'],
@@ -72,7 +77,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       .headline1
                       ?.copyWith(fontSize: 14),
                 ),
-                onSelected: (bool i) async {
+                onSelected: mosquefollow.isFavrote?(bool i) async {
                   Provider.of<Buttonclickp>(context, listen: false)
                       .chackDayWeek(0);
                   Provider.of<Buttonclickp>(context, listen: false)
@@ -84,7 +89,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                     alarmadan('fajer');
                   }
-                },
+                }:null,
                 selected: Provider.of<Buttonclickp>(context).sala[0],
                 backgroundColor: Theme.of(context).primaryColor,
                 selectedColor: const Color(0xffD1B000),
@@ -98,7 +103,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       .headline1
                       ?.copyWith(fontSize: 14),
                 ),
-                onSelected: (bool i) async {
+                onSelected: mosquefollow.isFavrote? (bool i) async {
                   Provider.of<Buttonclickp>(context, listen: false)
                       .chackDayWeek(1);
 
@@ -111,7 +116,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                     alarmadan('dhuhr');
                   }
-                },
+                }:null,
                 selected: Provider.of<Buttonclickp>(context).sala[1],
                 backgroundColor: Theme.of(context).primaryColor,
                 selectedColor: const Color(0xffD1B000),
@@ -125,7 +130,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       .headline1
                       ?.copyWith(fontSize: 14),
                 ),
-                onSelected: (bool i) async {
+                onSelected:  mosquefollow.isFavrote?(bool i) async {
                   Provider.of<Buttonclickp>(context, listen: false)
                       .chackDayWeek(2);
 
@@ -137,7 +142,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     await _notificationHelper.initializeNotification();
                     alarmadan('asr');
                   }
-                },
+                }:null,
                 selected: Provider.of<Buttonclickp>(context).sala[2],
                 backgroundColor: Theme.of(context).primaryColor,
                 selectedColor: const Color(0xffD1B000),
@@ -156,7 +161,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       .headline1
                       ?.copyWith(fontSize: 14),
                 ),
-                onSelected: (bool i) async {
+                onSelected:  mosquefollow.isFavrote?(bool i) async {
                   Provider.of<Buttonclickp>(context, listen: false)
                       .chackDayWeek(3);
 
@@ -168,7 +173,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     await _notificationHelper.initializeNotification();
                     alarmadan('magrib');
                   }
-                },
+                }:null,
                 selected: Provider.of<Buttonclickp>(context).sala[3],
                 backgroundColor: Theme.of(context).primaryColor,
                 selectedColor: const Color(0xffD1B000),
@@ -182,7 +187,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       .headline1
                       ?.copyWith(fontSize: 14),
                 ),
-                onSelected: (bool i) async {
+                onSelected: mosquefollow.isFavrote? (bool i) async {
                   Provider.of<Buttonclickp>(context, listen: false)
                       .chackDayWeek(4);
 
@@ -194,7 +199,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     await _notificationHelper.initializeNotification();
                     alarmadan('isha');
                   }
-                },
+                }:null,
                 selected: Provider.of<Buttonclickp>(context).sala[4],
                 backgroundColor: Theme.of(context).primaryColor,
                 selectedColor: const Color(0xffD1B000),

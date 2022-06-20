@@ -46,8 +46,13 @@ class FatchData with ChangeNotifier {
       publicip: '',
       prymethod: '',
       activationcode: '',
-      dateofstart: '');
+      dateofstart: '',isFavrote: false);
   // List<mosques> get mosquelist => _mosquelist;
+  void setisFavrote(bool val){
+    mosqueFollow.isFavrote=val;
+    notifyListeners();
+
+  }
   String namemosqs = '';
   mosques mosqueFollowevent = mosques(
       mosqueid: '',
