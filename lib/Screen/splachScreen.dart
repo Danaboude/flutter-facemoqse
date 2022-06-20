@@ -47,7 +47,7 @@ class _SplachScreenState extends State<SplachScreen> {
             child: Container(
               decoration: BoxDecoration(
                 // borderRadius: BorderRadius.circular(1),
-                color: const Color(0xFF1ea345).withOpacity(0.3),
+                color: Theme.of(context).primaryColor.withOpacity(0.3),
               ),
               height: sizedphone.height * 0.3,
               width: sizedphone.width,
@@ -56,10 +56,9 @@ class _SplachScreenState extends State<SplachScreen> {
           ClipPath(
             clipper: CustomClipPath(),
             child: Container(
-              decoration: const BoxDecoration(
-                // borderRadius: BorderRadius.circular(40),
-                color: Color(0xFF1ea345),
-              ),
+            
+                color: Theme.of(context).primaryColor,
+              
               height: sizedphone.height * 0.2,
               width: sizedphone.width,
             ),
@@ -78,7 +77,7 @@ class _SplachScreenState extends State<SplachScreen> {
                     decoration: BoxDecoration(
                       color: index.isEven
                           ? const Color(0xFFEACE09)
-                          : const Color(0xFF1ea345),
+                          : Theme.of(context).primaryColor,
                     ),
                   );
                 },

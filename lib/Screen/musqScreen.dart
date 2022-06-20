@@ -48,14 +48,22 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     InkWell(
-                      child: Text(language['mymosque']),
+                      child: Text(
+                        language['mymosque'],
+                        style: Theme.of(context).textTheme.headline2?.copyWith(
+                             fontSize: 16),
+                      ),
                       onTap: () {
                         Provider.of<Buttonclickp>(context, listen: false)
                             .setindextab(0);
                       },
                     ),
                     InkWell(
-                      child: Text(language['othermosque']),
+                      child: Text(
+                        language['othermosque'],
+                         style: Theme.of(context).textTheme.headline2?.copyWith(
+                             fontSize: 16),
+                      ),
                       onTap: () {
                         Provider.of<Buttonclickp>(context, listen: false)
                             .setindextab(1);
@@ -71,37 +79,24 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                           Container(
                             margin: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey, width: 2),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.green,
-                                  spreadRadius: 5,
-                                  blurRadius: 7,
-                                  offset: Offset(
-                                      0, 2), // changes position of shadow
-                                ),
-                              ],
+                              border: Border.all(
+                                  color: const Color(0xffD1B000), width: 2),
                               borderRadius: BorderRadius.circular(40),
-                              gradient: const LinearGradient(
-                                  colors: [
-                                    Color(0xFF454545),
-                                    //Color(0xFF57E9F2),
-                                    Color(0xFF1ea345),
-                                  ],
-                                  begin: FractionalOffset(0.0, 0.0),
-                                  end: FractionalOffset(0.1, 0.7),
-                                  stops: [0.0, 1.0],
-                                  tileMode: TileMode.clamp),
+                              color: Theme.of(context).primaryColor,
                             ),
                             child: ListTile(
                               leading: Image.asset('assets/images/mosque.png'),
                               title: Text(
                                 mosquefollow.name,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              ),
+ style: Theme.of(context).textTheme.headline1?.copyWith(
+                             fontSize: 16),                              ),
                               subtitle: Text(
-                                  '${mosquefollow.country} , ${mosquefollow.street}'),
+                                '${mosquefollow.country} , ${mosquefollow.street}',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1
+                                    ?.copyWith(fontWeight: FontWeight.normal,fontSize: 14),
+                              ),
                               trailing: IconButton(
                                   onPressed: () {
                                     setState(() {
@@ -135,38 +130,22 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                     : Container(
                         margin: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                           border: Border.all(
-                                            color: const Color(0xffD1B000),
-                                            width: 3),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.green,
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                              offset:
-                                  Offset(0, 2), // changes position of shadow
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(40),
-                          gradient: const LinearGradient(
-                              colors: [
-                                Color(0xFF454545),
-                                //Color(0xFF57E9F2),
-                                Color(0xFF1ea345),
-                              ],
-                              begin: FractionalOffset(0.0, 0.0),
-                              end: FractionalOffset(0.1, 0.7),
-                              stops: [0.0, 1.0],
-                              tileMode: TileMode.clamp),
+                          border: Border.all(
+                              color: const Color(0xffD1B000), width: 3),
+                          color: Theme.of(context).primaryColor,
                         ),
                         child: ListTile(
                           leading: Image.asset('assets/images/mosque.png'),
                           title: Text(
                             mosquesforevent.name,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            style: Theme.of(context).textTheme.headline1?.copyWith(
+                             fontSize:16),
                           ),
                           subtitle: Text(
-                              '${mosquesforevent.country} , ${mosquesforevent.street}'),
+                            '${mosquesforevent.country} , ${mosquesforevent.street}',
+                           style: Theme.of(context).textTheme.headline1?.copyWith(
+                             fontSize: 8,fontWeight: FontWeight.normal),
+                          ),
                           trailing: IconButton(
                               onPressed: () {
                                 setState(() {
@@ -205,7 +184,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
           width: sizedphone.width * 0.9,
           height: sizedphone.height * 0.08,
           decoration: BoxDecoration(
-            color: Color(0xFF1ea345),
+            color: Theme.of(context).primaryColor,
             borderRadius: const BorderRadius.all(Radius.circular(20.0)),
             border: Border.all(color: const Color(0xffD1B000), width: 3),
           ),
@@ -213,8 +192,8 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
             onChanged: (value) {
               Provider.of<FatchData>(con, listen: false).seachval(value);
             },
-            style: const TextStyle(color: Colors.white),
-            decoration: InputDecoration(
+ style: Theme.of(context).textTheme.headline1?.copyWith(
+                             fontSize: 12,fontWeight: FontWeight.normal),            decoration: InputDecoration(
               filled: false,
 
               fillColor: Colors.black,
@@ -247,25 +226,8 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                       decoration: BoxDecoration(
                         border: Border.all(
                             color: const Color(0xffD1B000), width: 3),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.green,
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: Offset(0, 2), // changes position of shadow
-                          ),
-                        ],
                         borderRadius: BorderRadius.circular(40),
-                        gradient: const LinearGradient(
-                            colors: [
-                              Color(0xFF454545),
-                              //Color(0xFF57E9F2),
-                              Color(0xFF1ea345),
-                            ],
-                            begin: FractionalOffset(0.0, 0.0),
-                            end: FractionalOffset(0.1, 0.7),
-                            stops: [0.0, 1.0],
-                            tileMode: TileMode.clamp),
+                        color: Theme.of(context).primaryColor,
                       ),
                       child: ListTile(
                         trailing: IconButton(
@@ -311,9 +273,14 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                         leading: Image.asset('assets/images/mosque.png'),
                         title: Text(
                           item.name,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                           style: Theme.of(context).textTheme.headline1?.copyWith(
+                             fontSize: 16),
                         ),
-                        subtitle: Text('${item.country} , ${item.street}'),
+                        subtitle: Text(
+                          '${item.country} , ${item.street}',
+                           style: Theme.of(context).textTheme.headline1?.copyWith(
+                             fontSize: 14,fontWeight: FontWeight.normal),
+                        ),
                       ),
                     ))
                 .toList(),

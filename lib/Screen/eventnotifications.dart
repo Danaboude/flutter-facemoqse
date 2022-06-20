@@ -11,11 +11,12 @@ class EventNotifications extends StatelessWidget {
     return Column(
       children: [
       Container(
-        decoration: BoxDecoration(color: Color(0xFF1ea345),
+        decoration: BoxDecoration(color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(40)),
             margin: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(12),
         alignment: Alignment.topCenter,
-        child: Text(language['eventnotifications'],style:const TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+        child: Text(language['eventnotifications'], style: Theme.of(context).textTheme.headline1,),
       )
       ],
     );

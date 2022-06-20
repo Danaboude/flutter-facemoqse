@@ -31,8 +31,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     var sizedphone = MediaQuery.of(context).size;
-
-    Mosque mosque = Provider.of<FatchData>(context).mosque;
     Map language = Provider.of<Buttonclickp>(context).languagepro;
 
     List<Mylangwch> l = [
@@ -43,26 +41,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-           SizedBox(height: sizedphone.height*0.02,),
+          SizedBox(
+            height: sizedphone.height * 0.02,
+          ),
           Container(
-              alignment: Alignment.center,
-            width: sizedphone.width*0.9,
+            alignment: Alignment.center,
+            width: sizedphone.width * 0.9,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: Color(0xFF1ea345),
+                color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(40)),
             margin: const EdgeInsets.all(10),
             child: Text(
               language['azannotification'],
-              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.headline1,
             ),
           ),
-          SizedBox(height: sizedphone.height*0.07,),
+          SizedBox(
+            height: sizedphone.height * 0.07,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               FilterChip(
-                label: Text(language['fajer']),
+                checkmarkColor: Colors.white,
+                label: Text(
+                  language['fajer'],
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1
+                      ?.copyWith(fontSize: 14),
+                ),
                 onSelected: (bool i) async {
                   Provider.of<Buttonclickp>(context, listen: false)
                       .chackDayWeek(0);
@@ -77,11 +86,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   }
                 },
                 selected: Provider.of<Buttonclickp>(context).sala[0],
-                backgroundColor: const Color(0xFF1ea345),
+                backgroundColor: Theme.of(context).primaryColor,
                 selectedColor: const Color(0xffD1B000),
               ),
               FilterChip(
-                label: Text(language['dhuhr']),
+                checkmarkColor: Colors.white,
+                label: Text(
+                  language['dhuhr'],
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1
+                      ?.copyWith(fontSize: 14),
+                ),
                 onSelected: (bool i) async {
                   Provider.of<Buttonclickp>(context, listen: false)
                       .chackDayWeek(1);
@@ -97,11 +113,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   }
                 },
                 selected: Provider.of<Buttonclickp>(context).sala[1],
-                backgroundColor:  const Color(0xFF1ea345),
+                backgroundColor: Theme.of(context).primaryColor,
                 selectedColor: const Color(0xffD1B000),
               ),
               FilterChip(
-                label: Text(language['asr']),
+                checkmarkColor: Colors.white,
+                label: Text(
+                  language['asr'],
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1
+                      ?.copyWith(fontSize: 14),
+                ),
                 onSelected: (bool i) async {
                   Provider.of<Buttonclickp>(context, listen: false)
                       .chackDayWeek(2);
@@ -116,7 +139,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   }
                 },
                 selected: Provider.of<Buttonclickp>(context).sala[2],
-                backgroundColor:  const Color(0xFF1ea345),
+                backgroundColor: Theme.of(context).primaryColor,
                 selectedColor: const Color(0xffD1B000),
               ),
             ],
@@ -125,7 +148,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               FilterChip(
-                label: Text(language['magrib']),
+                checkmarkColor: Colors.white,
+                label: Text(
+                  language['magrib'],
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1
+                      ?.copyWith(fontSize: 14),
+                ),
                 onSelected: (bool i) async {
                   Provider.of<Buttonclickp>(context, listen: false)
                       .chackDayWeek(3);
@@ -140,11 +170,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   }
                 },
                 selected: Provider.of<Buttonclickp>(context).sala[3],
-                backgroundColor:  const Color(0xFF1ea345),
+                backgroundColor: Theme.of(context).primaryColor,
                 selectedColor: const Color(0xffD1B000),
               ),
               FilterChip(
-                label: Text(language['isha']),
+                checkmarkColor: Colors.white,
+                label: Text(
+                  language['isha'],
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1
+                      ?.copyWith(fontSize: 14),
+                ),
                 onSelected: (bool i) async {
                   Provider.of<Buttonclickp>(context, listen: false)
                       .chackDayWeek(4);
@@ -159,34 +196,36 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   }
                 },
                 selected: Provider.of<Buttonclickp>(context).sala[4],
-                backgroundColor:  const Color(0xFF1ea345),
+                backgroundColor: Theme.of(context).primaryColor,
                 selectedColor: const Color(0xffD1B000),
               ),
             ],
           ),
-           SizedBox(height: sizedphone.height*0.06,),
+          SizedBox(
+            height: sizedphone.height * 0.06,
+          ),
           Container(
             alignment: Alignment.center,
-            width: sizedphone.width*0.9,
-               padding: const EdgeInsets.all(10),
+            width: sizedphone.width * 0.9,
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: Color(0xFF1ea345),
+                color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(40)),
             margin: const EdgeInsets.all(10),
             child: Text(
               language['language'],
-              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.headline1,
             ),
           ),
           SizedBox(
             height: sizedphone.height * 0.14,
             width: sizedphone.width * 0.3,
             child: PopupMenuButton<Mylangwch>(
-              color: Color(0xFF1ea345),
+              color: Theme.of(context).primaryColor,
               child: Center(
                 child: Text(
                   language['selectlanguage'],
-                  style: const TextStyle(color: Colors.black),
+                  style: Theme.of(context).textTheme.headline2,
                 ),
               ),
               onSelected: (Mylangwch select) {
@@ -211,6 +250,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           value: item,
                           child: Text(
                             item.lang,
+                            style: Theme.of(context).textTheme.headline1,
                           ),
                         ))
                     .toList();

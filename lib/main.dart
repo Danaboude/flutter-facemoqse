@@ -62,7 +62,6 @@ void main() async {
 
   _notificationHelper.initializeNotification();
   // _notificationHelper.cancelAll();
-
   alarmadan('fajer');
   alarmadan('dhuhr');
   alarmadan('asr');
@@ -171,6 +170,23 @@ void alarmadan(String adan) async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+   static const MaterialColor green = MaterialColor(
+    _bluePrimaryValue,
+    <int, Color>{
+       50: Color(0xFFE3F2FD),
+      100: Color(0xFFBBDEFB),
+      200: Color(0xFF90CAF9),
+      300: Color(0xFF64B5F6),
+      400: Color(0xFF42A5F5),
+      500: Color(_bluePrimaryValue),
+      600: Color(0xFF1E88E5),
+      700: Color(0xFF1976D2),
+      800: Color(0xFF1565C0),
+      900: Color(0xFF0D47A1),
+    },
+  );
+  static const int _bluePrimaryValue = 0xFF1ea345;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -183,11 +199,16 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Al-Jazeera',
-          primarySwatch: Colors.blue,
+          primarySwatch: green,
+          primaryColor:green,
           textTheme: const TextTheme(
-            //  headline1: TextStyle(color: Colors.white),
-            // headline2: TextStyle(color: Colors.white),
-            bodyText2: TextStyle(color: Colors.black),
+            
+       
+              headline1: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,
+                                  fontSize: 20),
+             headline2: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,
+                                  fontSize: 20),
+            //bodyText2: TextStyle(color: Colors.black),
             //  subtitle1: TextStyle(color: Colors.pinkAccent),
           ),
         ),

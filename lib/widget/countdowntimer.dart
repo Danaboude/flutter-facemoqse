@@ -31,7 +31,6 @@ class _CountdownTimerState extends State<CountdownTimer> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     countdownTimer?.cancel();
     super.dispose();
   }
@@ -129,8 +128,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
         // Step 8
         Text(
       '$hours:$minutes:$seconds',
-      style: TextStyle(
-          fontWeight: FontWeight.bold, color: Colors.black, fontSize: 25),
+      style: Theme.of(context).textTheme.headline1,
     );
   }
 }

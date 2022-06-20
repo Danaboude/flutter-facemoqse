@@ -30,6 +30,9 @@ class Buttonclickp with ChangeNotifier {
     'arabic': 'Arabic',
     'searchbar': 'Search for mosque...',
     'azannotification': 'Azen Notification'
+    ,
+    'adan': 'Adan',
+    'prayer': 'prayer'
   };
   Map<String, String> ar = {
     'titlenamemasjed': 'مواقيات الصلاة والاقامة لجامع',
@@ -51,7 +54,8 @@ class Buttonclickp with ChangeNotifier {
     'englich': 'انكليزي',
     'arabic': 'عربي',
     'searchbar': 'ابحث عن مسجد',
-    'azannotification': 'تنبهات الاذان'
+    'azannotification': 'تنبهات الاذان',   'adan': 'الاذان',
+    'prayer': 'الصلاة'
   };
   Map<String, String> get languagepro {
     return languageselected ? ar : en;

@@ -40,7 +40,7 @@ class _BottomNavState extends State<BottomNav> {
         animationDuration:const Duration(milliseconds: 500),
         backgroundColor: Colors.white,
        // buttonBackgroundColor:const Color(0xFFB7F8DB),
-        color:const Color(0xFF1ea345),
+        color:Theme.of(context).primaryColor,
         
         index: inde,
         height: 60,

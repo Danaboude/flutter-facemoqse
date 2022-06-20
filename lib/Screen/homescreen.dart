@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:facemosque/Screen/musqScreen.dart';
 import 'package:facemosque/providers/fatchdata.dart';
@@ -68,160 +66,126 @@ class _HomeScreenState extends State<HomeScreen> {
     var sizedphone = MediaQuery.of(context).size;
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      bottomNavigationBar: const BottomNav(),
-      body: SafeArea(
+        resizeToAvoidBottomInset: false,
+        bottomNavigationBar: const BottomNav(),
+        body: SafeArea(
           child: Container(
-        color: Colors.white,
-        child: ListView(
-            shrinkWrap: true,
+            color: Colors.white,
+            child: ListView(
+              shrinkWrap: true,
               //mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Provider.of<Buttonclickp>(context).indexnavigationbar == 0
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(8),
-                          child: Text(
-                            language['titlenamemasjed'],
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
-                          ),
-                        ),
-                        Text(
-                          Provider.of<FatchData>(context).namemosqs,
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        ),
-                        CarouselSlider(
-                            options: CarouselOptions(
-                              scrollDirection: Axis.horizontal,
-                              enableInfiniteScroll: true,
-                              autoPlay: true,
-                              viewportFraction: 1,
-                              disableCenter: false,
+              children: [
+                Provider.of<Buttonclickp>(context).indexnavigationbar == 0
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            child: Text(
+                              language['titlenamemasjed'],
+                              style:Theme.of(context).textTheme.headline2,
                             ),
-                            items: a
-                                .map(
-                                  (item) => Container(
-                                      margin: const EdgeInsets.all(40),
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: const Color(0xffD1B000),
-                                            width: 3),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Colors.green,
-                                            spreadRadius: 5,
-                                            blurRadius: 7,
-                                            offset: Offset(0,
-                                                2), // changes position of shadow
-                                          ),
-                                        ],
-                                        borderRadius: BorderRadius.circular(40),
-                                        gradient: const LinearGradient(
-                                            colors: [
-                                              Color(0xFF2F5233),
-                                              Color(0xFF1ea345),
-                                            ],
-                                            begin: FractionalOffset(0.0, 0.0),
-                                            end: FractionalOffset(0.1, 0.7),
-                                            stops: [0.0, 1.0],
-                                            tileMode: TileMode.clamp),
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Text(
-                                            item.day,
-                                            style: const TextStyle(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          const SizedBox(),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Text(item.time,
-                                                  style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              const SizedBox(),
-                                              Text(item.timeend,
-                                                  style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ],
-                                          )
-                                        ],
-                                      )),
-                                )
-                                .toList()),
-                        
-                        Container(
-                          height: sizedphone.height * 0.39,
-                          width: sizedphone.width * 0.8,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                color: const Color(0xffD1B000), width: 3),
-                           boxShadow: const [
-                                          BoxShadow(
-                                            color: Colors.green,
-                                            spreadRadius: 5,
-                                            blurRadius: 7,
-                                            offset: Offset(0,
-                                                2), // changes position of shadow
-                                          ),
-                                        ],
-                            borderRadius: BorderRadius.circular(40),
-                            gradient: const LinearGradient(
-                                colors: [
-                                  Color(0xFF2F5233),
-                                  Color(0xFF1ea345),
-                                ],
-                                begin: FractionalOffset(0.0, 0.0),
-                                end: FractionalOffset(1.0, 0.0),
-                                stops: [0.0, 1.0],
-                                tileMode: TileMode.clamp),
                           ),
-                          child: Column(
-                          
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              titlel(language['nextparer']),
-                            CountdownTimer(),
-                              titlel(language['todayaya']),
-                              Expanded(
-                                  child: Text(
-                                Provider.of<Buttonclickp>(context)
-                                        .languageselected
-                                    ? mosque.haditha
-                                    : mosque.hadithe,
-                              ))
-                            ],
+                          Text(
+                            Provider.of<FatchData>(context).namemosqs,
+                            style:Theme.of(context).textTheme.headline2,
                           ),
-                        )
-                      ],
-                    )
-                  : Provider.of<Buttonclickp>(context).indexnavigationbar == 1
-                      ? const MusqScreen()
-                      : Provider.of<Buttonclickp>(context).indexnavigationbar == 2
-                          ? const EventNotifications()
-                          : const SettingsScreen(),
-            ],
+                          CarouselSlider(
+                              options: CarouselOptions(
+                                scrollDirection: Axis.horizontal,
+                                enableInfiniteScroll: true,
+                                autoPlay: true,
+                                viewportFraction: 1,
+                                disableCenter: false,
+                              ),
+                              items: a
+                                  .map(
+                                    (item) => Container(
+                                        margin: const EdgeInsets.all(40),
+                                        padding: const EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context).primaryColor,
+                                          border: Border.all(
+                                              color: const Color(0xffD1B000),
+                                              width: 3),
+                                          borderRadius:
+                                              BorderRadius.circular(40),
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Text(
+                                              item.day,
+                                              style: Theme.of(context).textTheme.headline1,
+                                            ),
+                                            const SizedBox(),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Text(language['adan'],
+                                                    style:  Theme.of(context).textTheme.headline1),
+                                                const SizedBox(),
+                                                Text(language['prayer'],
+                                                    style : Theme.of(context).textTheme.headline1),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Text(item.time,
+                                                    style:  Theme.of(context).textTheme.headline1),
+                                                 SizedBox(width: sizedphone.width*0.09,),
+                                                Text(item.timeend,
+                                                    style:Theme.of(context).textTheme.headline1),
+                                              ],
+                                            ),
+                                          ],
+                                        )),
+                                  )
+                                  .toList()),
+                          Container(
+                            height: sizedphone.height * 0.5,
+                            width: sizedphone.width * 0.8,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: const Color(0xffD1B000), width: 3),
+                         
+                              borderRadius: BorderRadius.circular(40),
+                           color: Theme.of(context).primaryColor,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                titlel(language['nextparer']),
+                                CountdownTimer(),
+                                titlel(language['todayaya']),
+                                Expanded(
+                                    child: Text(
+                                  Provider.of<Buttonclickp>(context)
+                                          .languageselected
+                                      ? mosque.qurana
+                                      : mosque.qurane,style:  Theme.of(context).textTheme.headline1,
+                                ))
+                              ],
+                            ),
+                          )
+                        ],
+                      )
+                    : Provider.of<Buttonclickp>(context).indexnavigationbar == 1
+                        ? const MusqScreen()
+                        : Provider.of<Buttonclickp>(context)
+                                    .indexnavigationbar ==
+                                2
+                            ? const EventNotifications()
+                            : const SettingsScreen(),
+              ],
+            ),
           ),
-        ),
-      )
-    );
+        ));
   }
 
   Container titlel(String titlel) {
@@ -230,11 +194,11 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-         color: Color(0xFF94C973),
+        color: Color(0xFF94C973),
       ),
       alignment: Alignment.center,
       child: Text(titlel,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+          style:  Theme.of(context).textTheme.headline1),
     );
   }
 }
