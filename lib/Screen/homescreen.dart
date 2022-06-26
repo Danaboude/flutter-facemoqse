@@ -42,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     Mosque mosque = Provider.of<FatchData>(context).mosque;
     Map language = Provider.of<Buttonclickp>(context).languagepro;
+    print( mosque.haditha);
 
     List<MySlider> a = [
       MySlider(
@@ -167,8 +168,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Text(
                                   Provider.of<Buttonclickp>(context)
                                           .languageselected
-                                      ? mosque.qurana
-                                      : mosque.qurane,style:  Theme.of(context).textTheme.headline1,
+                                      ? mosque.qurana.toString()
+                                      : mosque.qurane.toString(),style:  Theme.of(context).textTheme.headline1,
                                 ))
                               ],
                             ),

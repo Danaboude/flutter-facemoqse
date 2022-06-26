@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:facemosque/providers/buttonclick.dart';
 import 'package:facemosque/providers/fatchdata.dart';
 import 'package:facemosque/providers/mosques.dart';
-import 'package:facemosque/widget/loctionmosque.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../main.dart';
 import '../widget/notificationHelper.dart';
 
 class MusqScreen extends StatefulWidget {
@@ -31,13 +31,8 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
 
     var sizedphone = MediaQuery.of(context).size;
     var listmosque = Provider.of<FatchData>(context).mosquelist;
-    // var listmosqueother = Provider.of<FatchData>(context).mosquelist;
-    //print(mosques.isFavrote);
-    // mosquefollow.isFavrote = true;
+  
     mosquesforevent.isFavrote = true;
-
-    // print(listmosque);
-
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
@@ -112,10 +107,6 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                               ),
                               trailing: IconButton(
                                   onPressed: () {
-                                    setState(() {
-                                      mosquefollow.isFavrote =
-                                          !mosquefollow.isFavrote;
-                                    });
                                     Provider.of<FatchData>(context,
                                             listen: false)
                                         .setisFavrote(false);
@@ -131,6 +122,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                     Provider.of<FatchData>(context,
                                             listen: false)
                                         .fatchandsetallmosque();
+                                        _notificationHelper.cancelAll();
                                   },
                                   icon: Icon(
                                     Icons.star,
@@ -261,21 +253,23 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                               if (mymusque) {
                                 Provider.of<Buttonclickp>(con, listen: false)
                                     .storereplacetoloc(false);
-                                setState(() {
-                                  item.isFavrote = !item.isFavrote;
-                                });
-                                                                
-
-
                                 mosquefollow = listmosque.firstWhere(
                                     (element) =>
                                         element.mosqueid == item.mosqueid);
 
                                 await Provider.of<FatchData>(con, listen: false)
                                     .fatchandsetmosque(mosquefollow.mosqueid);
+                         await  Provider.of<FatchData>(context,listen: false).setisFavrote(true);
+                               Provider.of<Buttonclickp>(context,listen: false).statesala( [true, true, true, true, true, true, true]);
+
+                               
+
+                               calladan();
+
+
                                 await Provider.of<FatchData>(con, listen: false)
                                     .readdata();
-                                    Provider.of<FatchData>(context,listen: false).setisFavrote(true);
+
                               } else {
                                 Provider.of<Buttonclickp>(con, listen: false)
                                     .storereplacetoevent(false);

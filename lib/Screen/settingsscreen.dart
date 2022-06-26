@@ -26,15 +26,16 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   NotificationHelper _notificationHelper = NotificationHelper();
-
-  bool selectedv = false;
-
   @override
   Widget build(BuildContext context) {
       mosques  mosquefollow = Provider.of<FatchData>(context, listen: false).mosqueFollow;
 
     var sizedphone = MediaQuery.of(context).size;
     Map language = Provider.of<Buttonclickp>(context).languagepro;
+    if(!mosquefollow.isFavrote){
+      Provider.of<Buttonclickp>(context,listen: false).statesala( [false, false, false, false, false, false, false]);
+
+    }
 
     List<Mylangwch> l = [
       Mylangwch(lang: language['englich']),
@@ -69,12 +70,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               FilterChip(
                 
                 
-                checkmarkColor: Colors.white,
+                checkmarkColor: Colors.black,
                 label: Text(
                   language['fajer'],
                   style: Theme.of(context)
                       .textTheme
-                      .headline1
+                      .headline2
                       ?.copyWith(fontSize: 14),
                 ),
                 onSelected: mosquefollow.isFavrote?(bool i) async {
@@ -95,12 +96,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 selectedColor: const Color(0xffD1B000),
               ),
               FilterChip(
-                checkmarkColor: Colors.white,
+                checkmarkColor: Colors.black,
                 label: Text(
                   language['dhuhr'],
                   style: Theme.of(context)
                       .textTheme
-                      .headline1
+                      .headline2
                       ?.copyWith(fontSize: 14),
                 ),
                 onSelected: mosquefollow.isFavrote? (bool i) async {
@@ -122,12 +123,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 selectedColor: const Color(0xffD1B000),
               ),
               FilterChip(
-                checkmarkColor: Colors.white,
+                checkmarkColor: Colors.black,
                 label: Text(
                   language['asr'],
                   style: Theme.of(context)
                       .textTheme
-                      .headline1
+                      .headline2
                       ?.copyWith(fontSize: 14),
                 ),
                 onSelected:  mosquefollow.isFavrote?(bool i) async {
@@ -153,12 +154,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               FilterChip(
-                checkmarkColor: Colors.white,
+                checkmarkColor: Colors.black,
                 label: Text(
                   language['magrib'],
                   style: Theme.of(context)
                       .textTheme
-                      .headline1
+                      .headline2
                       ?.copyWith(fontSize: 14),
                 ),
                 onSelected:  mosquefollow.isFavrote?(bool i) async {
@@ -179,12 +180,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 selectedColor: const Color(0xffD1B000),
               ),
               FilterChip(
-                checkmarkColor: Colors.white,
+                checkmarkColor: Colors.black,
                 label: Text(
                   language['isha'],
                   style: Theme.of(context)
                       .textTheme
-                      .headline1
+                      .headline2
                       ?.copyWith(fontSize: 14),
                 ),
                 onSelected: mosquefollow.isFavrote? (bool i) async {

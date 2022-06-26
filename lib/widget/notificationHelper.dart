@@ -98,6 +98,7 @@ class NotificationHelper {
         );
   }
 
-  cancelAll() async => await flutterLocalNotificationsPlugin.cancelAll();
+  cancelAll() async{ 
+    await flutterLocalNotificationsPlugin.cancelAll();}
   cancel(id) async => await flutterLocalNotificationsPlugin.cancel(id);
 }

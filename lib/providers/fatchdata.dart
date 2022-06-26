@@ -48,8 +48,11 @@ class FatchData with ChangeNotifier {
       activationcode: '',
       dateofstart: '',isFavrote: false);
   // List<mosques> get mosquelist => _mosquelist;
-  void setisFavrote(bool val){
+  Future<void> setisFavrote(bool val)async{
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+
     mosqueFollow.isFavrote=val;
+    preferences.setBool('favortemosqe',val);
     notifyListeners();
 
   }
@@ -116,7 +119,9 @@ class FatchData with ChangeNotifier {
 
     try {
       if (preferences.containsKey('mosque')) {
+        print(preferences.containsKey('mosque').toString());
         mosque = Mosque.fromJson(json.decode(preferences.getString('mosque')!));
+        
       }
       if (preferences.containsKey('mosqueFollow')) {
         mosqueFollow = mosques.fromJson(
@@ -129,6 +134,9 @@ class FatchData with ChangeNotifier {
       if (preferences.containsKey('namemosqs')) {
         namemosqs = preferences.getString('namemosqs')!;
       }
+      if (preferences.containsKey('favortemosqe')) {
+        mosqueFollow.isFavrote = preferences.getBool('favortemosqe')!;
+      }
       //logLongString(mosquelist.toString());
       // logLongString(mosque.toString());
 
@@ -140,8 +148,8 @@ class FatchData with ChangeNotifier {
 
   Future<void> fatchandsetmosque(String mosqid) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    // logLongString(mosque.toString());
+    try {
+       // logLongString(mosque.toString());
     http.Response response = await http.get(
       Uri.parse(
         "https://facemosque.eu/api/api.php?client=app&cmd=get_database_method_time&mosque_id=$mosqid",
@@ -153,7 +161,7 @@ class FatchData with ChangeNotifier {
       },
     );
     //print(response.body);
-    Mosque mosqu = Mosque.fromJson(json.decode(response.body));
+    Mosque mosqu =await Mosque.fromJson(json.decode(response.body));
     mosqueFollow = mosquelist.firstWhere(
         (element) => int.parse(element.mosqueid) == int.parse(mosqid));
 
@@ -166,8 +174,7 @@ class FatchData with ChangeNotifier {
     mosquelist
         .removeWhere((element) => element.mosqueid == mosqueFollow.mosqueid);
     notifyListeners();
-
-    try {} catch (e) {
+    } catch (e) {
       print(e);
     }
   }

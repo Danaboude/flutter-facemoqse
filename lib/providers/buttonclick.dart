@@ -60,6 +60,12 @@ class Buttonclickp with ChangeNotifier {
   Map<String, String> get languagepro {
     return languageselected ? ar : en;
   }
+  void statesala(List<bool> s){
+    sala=s;
+
+    
+
+  }
 
   void readlanguage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

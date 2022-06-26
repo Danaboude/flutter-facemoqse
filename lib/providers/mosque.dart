@@ -50,7 +50,7 @@ class Mosque {
     required this.dataid,
   });
   factory Mosque.fromJson(dynamic json) {
-    //print(json);
+    //print(json['Quran_A'].toString());
     return Mosque(
         fajer: json['fajer']??'',
         fajeri: json['fajer_i']??'',

@@ -48,7 +48,16 @@ Future<void> initAutoStart() async {
   }
 }
 
-void calladan() async {}
+void calladan() async {
+    _notificationHelper.initializeNotification();
+  // _notificationHelper.cancelAll();
+  alarmadan('fajer');
+  alarmadan('dhuhr');
+  alarmadan('asr');
+  alarmadan('magrib');
+  alarmadan('isha');
+
+}
 
 NotificationHelper _notificationHelper = NotificationHelper();
 
@@ -59,14 +68,9 @@ void main() async {
   if (Platform.isAndroid) {
     initAutoStart();
   }
+  calladan();
 
-  _notificationHelper.initializeNotification();
-  // _notificationHelper.cancelAll();
-  alarmadan('fajer');
-  alarmadan('dhuhr');
-  alarmadan('asr');
-  alarmadan('magrib');
-  alarmadan('isha');
+
 
   runApp(const MyApp());
 }

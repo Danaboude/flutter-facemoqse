@@ -18,11 +18,11 @@ class _SplachScreenState extends State<SplachScreen> {
   Timer? timer;
   @override
   void initState() {
-    Provider.of<FatchData>(context, listen: false).readdata();
+    
     Provider.of<FatchData>(context, listen: false).fatchandsetallmosque();
+    Provider.of<FatchData>(context, listen: false).readdata();
     timer = Timer.periodic(const Duration(hours: 3), (Timer t) {
-      Provider.of<FatchData>(context, listen: false).fatchandsetallmosque();
-    });
+      Provider.of<FatchData>(context, listen: false).fatchandsetallmosque(); });
 
     Provider.of<Buttonclickp>(context, listen: false).storereplacetoloc(null);
     Provider.of<Buttonclickp>(context, listen: false).readDaysWeek();
