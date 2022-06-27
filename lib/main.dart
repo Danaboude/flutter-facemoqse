@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io' show Platform;
 
@@ -15,18 +16,17 @@ import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:flutter/services.dart';
 import 'package:auto_start_flutter/auto_start_flutter.dart';
 
-
 Future<void> initAutoStart() async {
-  isAutoStartAvailable;
-
-  try {
-    bool? test = await isAutoStartAvailable;
-    print(test);
-    if (test!) await getAutoStartPermission();
-  } on PlatformException catch (e) {
-    print(e);
+    try {
+      //check auto-start availability.
+      var test = await (isAutoStartAvailable as FutureOr<bool>);
+      print(test);
+      //if available then navigate to auto-start setting page.
+      if (test) await getAutoStartPermission();
+    } on PlatformException catch (e) {
+      print(e);
+    }
   }
-}
 
 void calladan() async {
  //   _notificationHelper.initializeNotification();
