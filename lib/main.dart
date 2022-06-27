@@ -15,26 +15,6 @@ import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:flutter/services.dart';
 import 'package:auto_start_flutter/auto_start_flutter.dart';
 
-changeStatusColor(Color color) async {
-  var _useWhiteStatusBarForeground;
-  var _useWhiteNavigationBarForeground;
-  try {
-    await FlutterStatusbarcolor.setStatusBarColor(color, animate: true);
-    if (useWhiteForeground(color)) {
-      FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
-      FlutterStatusbarcolor.setNavigationBarWhiteForeground(true);
-      _useWhiteStatusBarForeground = true;
-      _useWhiteNavigationBarForeground = true;
-    } else {
-      FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
-      FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
-      _useWhiteStatusBarForeground = false;
-      _useWhiteNavigationBarForeground = false;
-    }
-  } catch (e) {
-    debugPrint(e.toString());
-  }
-}
 
 Future<void> initAutoStart() async {
   isAutoStartAvailable;
@@ -42,14 +22,14 @@ Future<void> initAutoStart() async {
   try {
     bool? test = await isAutoStartAvailable;
     print(test);
-    if (!test!) await getAutoStartPermission();
+    if (test!) await getAutoStartPermission();
   } on PlatformException catch (e) {
     print(e);
   }
 }
 
 void calladan() async {
-    _notificationHelper.initializeNotification();
+ //   _notificationHelper.initializeNotification();
   // _notificationHelper.cancelAll();
   alarmadan('fajer');
   alarmadan('dhuhr');
@@ -63,12 +43,19 @@ NotificationHelper _notificationHelper = NotificationHelper();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  changeStatusColor(Color(0xFF1ea345));
+  
+   _notificationHelper.initializeNotification();
+    
 
-  if (Platform.isAndroid) {
+  if (Platform.isIOS==false) {
     initAutoStart();
+   
   }
-  calladan();
+  alarmadan('fajer');
+  alarmadan('dhuhr');
+  alarmadan('asr');
+  alarmadan('magrib');
+  alarmadan('isha');
 
 
 
