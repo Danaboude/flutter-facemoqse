@@ -1,33 +1,62 @@
-/*import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:facemosque/providers/fatchdata.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart' as latlong;
+import 'package:provider/provider.dart';
 
-class LocationMosque extends StatefulWidget {
-  const LocationMosque({Key? key}) : super(key: key);
-
+class LoctionMosque extends StatefulWidget {
   @override
-  State<LocationMosque> createState() => _LocationMosque();
+  State<LoctionMosque> createState() => _LoctionMosqueState();
 }
 
-class _LocationMosque extends State<LocationMosque> {
-  late GoogleMapController googleMapController;
+class _LoctionMosqueState extends State<LoctionMosque> {
+  late MapController mapController;
+  @override
+  void initState() {
+mapController = MapController();
+    super.initState();
+  }
 
-  static const CameraPosition initialCameraPosition =
-      CameraPosition(target: LatLng(37.42, -122.96), zoom: 2);
-  Set<Marker> marker = Set();
+  @override
+  void dispose() {
+    mapController.dispose();
+
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    return  GoogleMap(
-      initialCameraPosition: initialCameraPosition,
-      markers: marker,
-        myLocationEnabled: true,
+    latlong.LatLng l = Provider.of<FatchData>(context).latlng1;
+   
+    return new FlutterMap(
+      mapController: mapController,
+      options: new MapOptions(
+        center: l,
+        zoom: 20.0,
+        maxZoom: 18,
+      ),
+      layers: [
+        TileLayerOptions(
 
-      zoomControlsEnabled: false,
-      mapType: MapType.normal,
-      onMapCreated: (GoogleMapController controller){
-        googleMapController=controller;
-      },
+          urlTemplate:
+              'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZmFjZW1vc3F1ZSIsImEiOiJja2dwOTVkdzQwM21hMnZzMjQ1amJhaWxmIn0.fqW1E4WO3RSMu3tAPkz25g',
+        ),
+        MarkerLayerOptions(markers: [
+          Marker(
+              width: 80,
+              height: 80,
+              point: l,
+              builder: (ctx) => const Icon(
+                    Icons.location_on,
+                    size: 20,
+                    color: Colors.red,
+                  )),
+                  
+        ]),
+        
+      ],
+      
     );
   }
-}*/
+}

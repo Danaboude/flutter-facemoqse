@@ -34,7 +34,7 @@ class _BottomNavState extends State<BottomNav> {
       ),
 
     ];
-    int inde = Provider.of<Buttonclickp>(context).indexnavigationbar;
+    int inde = Provider.of<Buttonclickp>(context).indexnavigationbottmbar;
     return CurvedNavigationBar(
 
         animationDuration:const Duration(milliseconds: 500),

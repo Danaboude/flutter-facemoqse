@@ -5,6 +5,7 @@ import 'package:facemosque/providers/buttonclick.dart';
 import 'package:facemosque/providers/fatchdata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:provider/provider.dart';
 
 class SplachScreen extends StatefulWidget {
@@ -15,17 +16,32 @@ class SplachScreen extends StatefulWidget {
 }
 
 class _SplachScreenState extends State<SplachScreen> {
-  Timer? timer;
+  changeStatusColor(Color color) async {
+  try {
+    await FlutterStatusbarcolor.setStatusBarColor(color, animate: true);
+    if (useWhiteForeground(color)) {
+      FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
+      FlutterStatusbarcolor.setNavigationBarWhiteForeground(true);
+  
+    } else {
+      FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
+      FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
+    }
+  } catch (e) {
+    debugPrint(e.toString());
+  }
+}
+
   @override
   void initState() {
+    changeStatusColor(Color(0xFF1ea345));
     
     Provider.of<FatchData>(context, listen: false).fatchandsetallmosque();
     Provider.of<FatchData>(context, listen: false).readdata();
-    timer = Timer.periodic(const Duration(hours: 3), (Timer t) {
-      Provider.of<FatchData>(context, listen: false).fatchandsetallmosque(); });
+
 
     Provider.of<Buttonclickp>(context, listen: false).storereplacetoloc(null);
-    Provider.of<Buttonclickp>(context, listen: false).readDaysWeek();
+    Provider.of<Buttonclickp>(context, listen: false).readsalaDay();
     Provider.of<Buttonclickp>(context, listen: false).getreplacetoloc();
     Provider.of<Buttonclickp>(context, listen: false).getreplacetoevent();
     Provider.of<Buttonclickp>(context, listen: false).readlanguage();
@@ -34,6 +50,7 @@ class _SplachScreenState extends State<SplachScreen> {
 
     super.initState();
   }
+  
 
   @override
   Widget build(BuildContext context) {

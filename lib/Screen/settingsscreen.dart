@@ -1,9 +1,7 @@
 import 'package:facemosque/providers/buttonclick.dart';
 import 'package:facemosque/providers/fatchdata.dart';
-import 'package:facemosque/providers/mosque.dart';
 import 'package:facemosque/providers/mosques.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 
 import '../main.dart';
@@ -28,14 +26,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   NotificationHelper _notificationHelper = NotificationHelper();
   @override
   Widget build(BuildContext context) {
-      mosques  mosquefollow = Provider.of<FatchData>(context, listen: false).mosqueFollow;
+      Mosques  mosquefollow = Provider.of<FatchData>(context, listen: false).mosqueFollow;
 
     var sizedphone = MediaQuery.of(context).size;
     Map language = Provider.of<Buttonclickp>(context).languagepro;
-    if(!mosquefollow.isFavrote){
-      Provider.of<Buttonclickp>(context,listen: false).statesala( [false, false, false, false, false, false, false]);
-
-    }
+    
 
     List<Mylangwch> l = [
       Mylangwch(lang: language['englich']),
@@ -82,7 +77,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Provider.of<Buttonclickp>(context, listen: false)
                       .chackDayWeek(0);
                   Provider.of<Buttonclickp>(context, listen: false)
-                      .storeDaysWeek();
+                      .storesalaDay();
                   if (!i) {
                     _notificationHelper.cancel(0);
                   } else {
@@ -109,7 +104,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       .chackDayWeek(1);
 
                   Provider.of<Buttonclickp>(context, listen: false)
-                      .storeDaysWeek();
+                      .storesalaDay();
                   if (!i) {
                     _notificationHelper.cancel(1);
                   } else {
@@ -136,7 +131,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       .chackDayWeek(2);
 
                   Provider.of<Buttonclickp>(context, listen: false)
-                      .storeDaysWeek();
+                      .storesalaDay();
                   if (!i) {
                     _notificationHelper.cancel(2);
                   } else {
@@ -167,7 +162,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       .chackDayWeek(3);
 
                   Provider.of<Buttonclickp>(context, listen: false)
-                      .storeDaysWeek();
+                      .storesalaDay();
                   if (!i) {
                     _notificationHelper.cancel(3);
                   } else {
@@ -193,7 +188,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       .chackDayWeek(4);
 
                   Provider.of<Buttonclickp>(context, listen: false)
-                      .storeDaysWeek();
+                      .storesalaDay();
                   if (!i) {
                     _notificationHelper.cancel(4);
                   } else {
@@ -237,11 +232,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onSelected: (Mylangwch select) {
                 if (select.lang == 'عربي' || select.lang == 'Arabic') {
                   Provider.of<Buttonclickp>(context, listen: false)
-                      .selectlanguage(true);
+                      .storelanguage(true);
                 } else if (select.lang == 'انكليزي' ||
                     select.lang == 'englich') {
                   Provider.of<Buttonclickp>(context, listen: false)
-                      .selectlanguage(false);
+                      .storelanguage(false);
                 }
                 {}
               },

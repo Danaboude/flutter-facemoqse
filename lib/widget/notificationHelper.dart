@@ -1,13 +1,13 @@
+import 'package:firebase_messaging_platform_interface/src/remote_message.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 class NotificationHelper {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-        Future<void> _configureLocalTimeZone() async {
+  Future<void> _configureLocalTimeZone() async {
     tz.initializeTimeZones();
     final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
     tz.setLocalLocation(tz.getLocation(timeZone));
@@ -48,7 +48,26 @@ class NotificationHelper {
     return scheduleDate;
   }
 
-
+  showNot(RemoteMessage message, int id) async {
+    await flutterLocalNotificationsPlugin.show(
+      id,
+      message.notification?.title,
+      message.notification?.body,
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          'your channel id asdf',
+          'abdalkremm',
+          channelDescription: 'socool',
+          importance: Importance.max,
+          priority: Priority.high,
+          sound: RawResourceAndroidNotificationSound('adan'),
+          playSound: true,
+        ),
+        iOS: IOSNotificationDetails(sound: 'adan.mp3'),
+      ),
+      payload: 'It could be anything you pass',
+    );
+  }
 
   /// Scheduled Notification
   scheduledNotification({
@@ -59,14 +78,13 @@ class NotificationHelper {
     required int id,
     required String sound,
   }) async {
+    print(_convertTime(hour, minutes));
     await flutterLocalNotificationsPlugin.zonedSchedule(
       id,
       body == false ? 'It\'s time for adan' : 'حان موعد اذان ',
       title,
       _convertTime(hour, minutes),
-      
       NotificationDetails(
-
         android: AndroidNotificationDetails(
           'your channel id $sound',
           'your channel name',
@@ -77,7 +95,6 @@ class NotificationHelper {
         ),
         iOS: IOSNotificationDetails(sound: '$sound.mp3'),
       ),
-      
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
@@ -98,7 +115,9 @@ class NotificationHelper {
         );
   }
 
-  cancelAll() async{ 
-    await flutterLocalNotificationsPlugin.cancelAll();}
+  cancelAll() async {
+    await flutterLocalNotificationsPlugin.cancelAll();
+  }
+
   cancel(id) async => await flutterLocalNotificationsPlugin.cancel(id);
 }

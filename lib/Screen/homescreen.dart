@@ -11,6 +11,8 @@ import 'package:facemosque/Screen/eventnotifications.dart';
 import 'package:facemosque/Screen/settingsscreen.dart';
 import 'package:facemosque/providers/buttonclick.dart';
 import 'package:facemosque/widget/bottomnav.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+
 
 class MySlider {
   String time;
@@ -33,6 +35,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   @override
   void dispose() {
     super.dispose();
@@ -40,9 +43,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<FatchData>(context,listen: false).locationPermission();
     Mosque mosque = Provider.of<FatchData>(context).mosque;
     Map language = Provider.of<Buttonclickp>(context).languagepro;
-    print( mosque.haditha);
+    print(mosque.haditha);
 
     List<MySlider> a = [
       MySlider(
@@ -65,7 +69,6 @@ class _HomeScreenState extends State<HomeScreen> {
       MySlider(time: mosque.isha, timeend: mosque.isha, day: language['isha']),
     ];
     var sizedphone = MediaQuery.of(context).size;
-
     return Scaffold(
         resizeToAvoidBottomInset: false,
         bottomNavigationBar: const BottomNav(),
@@ -76,24 +79,25 @@ class _HomeScreenState extends State<HomeScreen> {
               shrinkWrap: true,
               //mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Provider.of<Buttonclickp>(context).indexnavigationbar == 0
+                Provider.of<Buttonclickp>(context).indexnavigationbottmbar == 0
                     ? Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
                             padding: EdgeInsets.all(8),
-                            child: Text(
+                            child: AutoSizeText(
                               language['titlenamemasjed'],
-                              style:Theme.of(context).textTheme.headline2,
+                              style: Theme.of(context).textTheme.headline2,
                             ),
                           ),
                           Text(
-                            Provider.of<FatchData>(context).namemosqs,
-                            style:Theme.of(context).textTheme.headline2,
+                            Provider.of<FatchData>(context).mosqueFollow.name,
+                            style: Theme.of(context).textTheme.headline2,
                           ),
                           CarouselSlider(
                               options: CarouselOptions(
+                                height: sizedphone.height * 0.28,
                                 scrollDirection: Axis.horizontal,
                                 enableInfiniteScroll: true,
                                 autoPlay: true,
@@ -103,8 +107,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               items: a
                                   .map(
                                     (item) => Container(
-                                        margin: const EdgeInsets.all(40),
-                                        padding: const EdgeInsets.all(10),
+                                        height: sizedphone.height * 0.28,
+                                        width: sizedphone.width * 0.9,
+                                         margin: const EdgeInsets.symmetric(vertical: 8),
+                                        padding: const EdgeInsets.all(8),
                                         decoration: BoxDecoration(
                                           color: Theme.of(context).primaryColor,
                                           border: Border.all(
@@ -119,7 +125,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           children: [
                                             Text(
                                               item.day,
-                                              style: Theme.of(context).textTheme.headline1,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline1,
                                             ),
                                             const SizedBox(),
                                             Row(
@@ -127,10 +135,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   MainAxisAlignment.spaceAround,
                                               children: [
                                                 Text(language['adan'],
-                                                    style:  Theme.of(context).textTheme.headline1),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline1),
                                                 const SizedBox(),
                                                 Text(language['prayer'],
-                                                    style : Theme.of(context).textTheme.headline1),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline1),
                                               ],
                                             ),
                                             Row(
@@ -138,10 +150,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   MainAxisAlignment.spaceAround,
                                               children: [
                                                 Text(item.time,
-                                                    style:  Theme.of(context).textTheme.headline1),
-                                                 SizedBox(width: sizedphone.width*0.09,),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline1),
+                                                SizedBox(
+                                                  width:
+                                                      sizedphone.width * 0.09,
+                                                ),
                                                 Text(item.timeend,
-                                                    style:Theme.of(context).textTheme.headline1),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline1),
                                               ],
                                             ),
                                           ],
@@ -150,13 +169,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   .toList()),
                           Container(
                             height: sizedphone.height * 0.5,
-                            width: sizedphone.width * 0.8,
+                            width: sizedphone.width * 0.9,
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: const Color(0xffD1B000), width: 3),
-                         
                               borderRadius: BorderRadius.circular(40),
-                           color: Theme.of(context).primaryColor,
+                              color: Theme.of(context).primaryColor,
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -165,21 +183,33 @@ class _HomeScreenState extends State<HomeScreen> {
                                 CountdownTimer(),
                                 titlel(language['todayaya']),
                                 Expanded(
-                                    child: Text(
-                                  Provider.of<Buttonclickp>(context)
-                                          .languageselected
-                                      ? mosque.qurana.toString()
-                                      : mosque.qurane.toString(),style:  Theme.of(context).textTheme.headline1,
+                                    child: Container(
+                                  alignment: Alignment.topCenter,
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 9),
+                                  child: AutoSizeText(
+                                    textAlign: TextAlign.center,
+                                    Provider.of<Buttonclickp>(context)
+                                            .languageselected
+                                        ? mosque.haditha.toString()
+                                        : mosque.hadithe.toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline1!
+                                        .copyWith(
+                                          fontSize: 20,
+                                        ),
+                                  ),
                                 ))
                               ],
                             ),
                           )
                         ],
                       )
-                    : Provider.of<Buttonclickp>(context).indexnavigationbar == 1
+                    : Provider.of<Buttonclickp>(context).indexnavigationbottmbar == 1
                         ? const MusqScreen()
                         : Provider.of<Buttonclickp>(context)
-                                    .indexnavigationbar ==
+                                    .indexnavigationbottmbar ==
                                 2
                             ? const EventNotifications()
                             : const SettingsScreen(),
@@ -198,8 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
         color: Color(0xFF94C973),
       ),
       alignment: Alignment.center,
-      child: Text(titlel,
-          style:  Theme.of(context).textTheme.headline1),
+      child: Text(titlel, style: Theme.of(context).textTheme.headline1),
     );
   }
 }

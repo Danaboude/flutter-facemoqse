@@ -1,7 +1,5 @@
-import 'dart:async';
 import 'dart:convert';
-import 'dart:io' show Platform;
-
+//import 'firebase_options.dart';
 import 'package:facemosque/Screen/homescreen.dart';
 import 'package:facemosque/Screen/splachScreen.dart';
 import 'package:facemosque/providers/buttonclick.dart';
@@ -11,53 +9,49 @@ import 'package:facemosque/widget/notificationHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/services.dart';
 import 'package:auto_start_flutter/auto_start_flutter.dart';
 
 Future<void> initAutoStart() async {
-    try {
-      //check auto-start availability.
-      var test = await (isAutoStartAvailable as FutureOr<bool>);
-      print(test);
-      //if available then navigate to auto-start setting page.
-      if (test) await getAutoStartPermission();
-    } on PlatformException catch (e) {
-      print(e);
-    }
+  isAutoStartAvailable;
+
+  try {
+    bool? test = await isAutoStartAvailable;
+    print(test);
+    if (!test!) await getAutoStartPermission();
+  } on PlatformException catch (e) {
+    print(e);
   }
+}
 
 void calladan() async {
- //   _notificationHelper.initializeNotification();
+  _notificationHelper.initializeNotification();
   // _notificationHelper.cancelAll();
   alarmadan('fajer');
   alarmadan('dhuhr');
   alarmadan('asr');
   alarmadan('magrib');
   alarmadan('isha');
-
 }
 
+Future<void> _firebasePushHandler(RemoteMessage message) async{
+  print('massage fcom push ${message.data}');
+  _notificationHelper.showNot(message,70);
+}
 NotificationHelper _notificationHelper = NotificationHelper();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
-   _notificationHelper.initializeNotification();
-    
-
-  if (Platform.isIOS==false) {
-    initAutoStart();
-   
-  }
+  _notificationHelper.initializeNotification();
+  //await Firebase.initializeApp( options:DefaultFirebaseOptions.currentPlatform  );
+ // FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
   alarmadan('fajer');
   alarmadan('dhuhr');
   alarmadan('asr');
   alarmadan('magrib');
   alarmadan('isha');
-
-
 
   runApp(const MyApp());
 }
@@ -159,12 +153,12 @@ void alarmadan(String adan) async {
   }
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
-   static const MaterialColor green = MaterialColor(
+  static const MaterialColor green = MaterialColor(
     _bluePrimaryValue,
     <int, Color>{
-       50: Color(0xFFE3F2FD),
+      50: Color(0xFFE3F2FD),
       100: Color(0xFFBBDEFB),
       200: Color(0xFF90CAF9),
       300: Color(0xFF64B5F6),
@@ -177,7 +171,13 @@ class MyApp extends StatelessWidget {
     },
   );
   static const int _bluePrimaryValue = 0xFF1ea345;
-  
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -190,18 +190,14 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Al-Jazeera',
-          primarySwatch: green,
-          primaryColor:green,
+          primarySwatch: MyApp.green,
+          primaryColor: MyApp.green,
           textTheme: const TextTheme(
-            
-       
-              headline1: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,
-                                  fontSize: 20),
-             headline2: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,
-                                  fontSize: 20),
-            //bodyText2: TextStyle(color: Colors.black),
-            //  subtitle1: TextStyle(color: Colors.pinkAccent),
-          ),
+            headline1: TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+            headline2: TextStyle(
+                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
+         ),
         ),
         routes: {
           HomeScreen.routeName: (_) => const HomeScreen(),

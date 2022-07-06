@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:intl/intl.dart';
-import 'dart:math' as math;
 
 import 'package:facemosque/providers/mosque.dart';
 import 'package:flutter/material.dart';
@@ -117,7 +116,6 @@ class _CountdownTimerState extends State<CountdownTimer> {
   @override
   Widget build(BuildContext context) {
     String strDigits(int n) => n.toString().padLeft(2, '0');
-    var sizedphone = MediaQuery.of(context).size;
 
     // Step 7
     final hours = strDigits(myDuration.inHours.remainder(24));

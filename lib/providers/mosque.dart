@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+//Model Mosque
 class Mosque {
   String fajer;
   String fajeri;
@@ -49,9 +49,10 @@ class Mosque {
     required this.ayanum,
     required this.dataid,
   });
-  factory Mosque.fromJson(dynamic json) {
+  factory Mosque.fromJson(Map<String, dynamic> json) {
     //print(json['Quran_A'].toString());
-    return Mosque(
+    if(json['Quran_A']!=null)
+    {return Mosque(
         fajer: json['fajer']??'',
         fajeri: json['fajer_i']??'',
         sharouq: json['sharouq']??'',
@@ -74,7 +75,33 @@ class Mosque {
        historicalevent:json['Historical_event']??'',
         surhnum: json['Surh_num']??'',
         ayanum: json['Aya_num']??'',
-        dataid: json['date_id']??'');
+        dataid: json['date_id']??'');}
+        else{
+          return Mosque(
+        fajer: json['fajer']??'',
+        fajeri: json['fajeri']??'',
+        sharouq: json['sharouq']??'',
+        dhuhr: json['dhuhr']??'',
+        dhuhri: json['dhuhri']??'',
+        asr: json['asr']??'',
+        asri: json['asri']??'',
+        magrib: json['magrib']??'',
+        magribi: json['magribi']??'',
+        isha: json['isha']??'',
+        ishai: json['ishai']??'',
+        friday_1: json['friday_1']??'',
+        friday_2: json['friday_2']??'',
+        horA: json['horA']??0,
+        qurane: json['qurane']??'',
+        qurana: json['qurana']??'',
+        haditha: json['haditha']??'',
+        hadithe: json['hadithe']??'',
+        islamicevent: json['islamicevent']??'',
+       historicalevent:json['historicalevent']??'',
+        surhnum: json['surhnum']??'',
+        ayanum: json['ayanum']??'',
+        dataid: json['dataid']??'');
+        }
   }
 
   @override

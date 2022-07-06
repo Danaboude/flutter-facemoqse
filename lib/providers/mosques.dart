@@ -1,7 +1,6 @@
 import 'dart:convert';
-
-
-class mosques {
+//Model Mosques
+class Mosques {
   String mosqueid;
   String mac;
   String name;
@@ -17,7 +16,7 @@ class mosques {
   String activationcode;
   String dateofstart;
   bool isFavrote;
-  mosques({
+  Mosques({
     required this.mosqueid,
     required this.mac,
     required this.name,
@@ -32,9 +31,26 @@ class mosques {
     required this.prymethod,
     required this.activationcode,
     required this.dateofstart,
-    this.isFavrote=false,
+    this.isFavrote = false,
+  });
+  clean() {
+    mosqueid = '';
+
+    mac = '';
+    name = '';
+    countryid = '';
+    country = '';
+    idcity = '';
+    street = '';
+    houseno = '';
+    zip = '';
+    status = '';
+    publicip = '';
+    prymethod = '';
+    activationcode = '';
+    dateofstart = '';
+    isFavrote = false;
   }
-  );
 
   Map<String, dynamic> toMap() {
     return {
@@ -57,10 +73,9 @@ class mosques {
   }
 
   //factory mosques.fromJson(String source) => mosques.fromMap(json.decode(source));
-  factory mosques.fromJson(dynamic json) {
-    
-    return mosques(
-      mosqueid:json['mosque_id']??'',
+  factory Mosques.fromJson(dynamic json) {
+    return Mosques(
+      mosqueid: json['mosque_id'] ?? '',
       mac: json['mac'] ?? '',
       name: json['name'] ?? '',
       countryid: json['country_id'] ?? '',
@@ -82,8 +97,8 @@ class mosques {
     return '{mosqueid: $mosqueid, mac: $mac, name: $name, countryid: $countryid, country: $country, idcity: $idcity, street: $street, houseno: $houseno, zip: $zip, status: $status, publicip: $publicip, prymethod: $prymethod, activationcode: $activationcode, dateofstart: $dateofstart}';
   }
 
-  factory mosques.fromMap(Map<String, dynamic> map) {
-    return mosques(
+  factory Mosques.fromMap(Map<String, dynamic> map) {
+    return Mosques(
       mosqueid: map['mosqueid'] ?? '',
       mac: map['mac'] ?? '',
       name: map['name'] ?? '',
@@ -98,10 +113,9 @@ class mosques {
       prymethod: map['prymethod'] ?? '',
       activationcode: map['activationcode'] ?? '',
       dateofstart: map['dateofstart'] ?? '',
-      isFavrote:map['isFavrote']??'',
+      isFavrote: map['isFavrote'] ?? '',
     );
   }
 
   String toJson() => json.encode(toMap());
-
 }

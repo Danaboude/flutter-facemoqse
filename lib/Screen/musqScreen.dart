@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:facemosque/widget/loctionmosque.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:facemosque/providers/buttonclick.dart';
 import 'package:facemosque/providers/fatchdata.dart';
@@ -15,13 +18,15 @@ class MusqScreen extends StatefulWidget {
 
   @override
   State<MusqScreen> createState() => _MusqScreenState();
+
+  static getState() => _MusqScreenState;
 }
 
 class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
   NotificationHelper _notificationHelper = NotificationHelper();
 
-  late mosques mosquesforevent;
-  late mosques mosquefollow;
+  late Mosques mosquesforevent;
+  late Mosques mosquefollow;
   @override
   Widget build(BuildContext context) {
     mosquefollow = Provider.of<FatchData>(context, listen: false).mosqueFollow;
@@ -31,8 +36,8 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
 
     var sizedphone = MediaQuery.of(context).size;
     var listmosque = Provider.of<FatchData>(context).mosquelist;
+
   
-    mosquesforevent.isFavrote = true;
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
@@ -89,14 +94,16 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                             ),
                             child: ListTile(
                               leading: Image.asset('assets/images/mosque.png'),
-                              title: Text(
+                              title: AutoSizeText(
+                                 maxLines: 1,
                                 mosquefollow.name,
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline1
                                     ?.copyWith(fontSize: 16),
                               ),
-                              subtitle: Text(
+                              subtitle: AutoSizeText(
+                                 maxLines: 1,
                                 '${mosquefollow.country} , ${mosquefollow.street}',
                                 style: Theme.of(context)
                                     .textTheme
@@ -109,20 +116,19 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                   onPressed: () {
                                     Provider.of<FatchData>(context,
                                             listen: false)
-                                        .setisFavrote(false);
+                                        .setmosqueFollowFavrote(false);
 
                                     Provider.of<Buttonclickp>(context,
                                             listen: false)
                                         .storereplacetoloc(true);
-                                    listmosque.removeWhere(
-                                        (element) => element.isFavrote = true);
+                                    
                                     Provider.of<FatchData>(context,
                                             listen: false)
                                         .cleandata();
-                                    Provider.of<FatchData>(context,
-                                            listen: false)
-                                        .fatchandsetallmosque();
-                                        _notificationHelper.cancelAll();
+                                    Provider.of<FatchData>(context, listen: false).fatchandsetallmosque();
+                                    _notificationHelper.cancelAll();
+                                          Provider.of<Buttonclickp>(context,listen: false).statesala( [false, false, false, false, false, false, false]);
+
                                   },
                                   icon: Icon(
                                     Icons.star,
@@ -132,6 +138,17 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                   )),
                             ),
                           ),
+                          Container(
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.symmetric(vertical: 10),
+                              decoration: BoxDecoration(
+                                //  borderRadius: BorderRadius.circular(30),
+                                border: Border.all(
+                                    color: const Color(0xffD1B000), width: 2),
+                              ),
+                              height: sizedphone.height * 0.6,
+                              width: sizedphone.width * 0.9,
+                              child: LoctionMosque()),
                         ],
                       )
                 : Provider.of<Buttonclickp>(context).replacetoevent
@@ -139,31 +156,37 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                     : Container(
                         margin: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40),
                           border: Border.all(
+
                               color: const Color(0xffD1B000), width: 3),
                           color: Theme.of(context).primaryColor,
                         ),
                         child: ListTile(
                           leading: Image.asset('assets/images/mosque.png'),
-                          title: Text(
+                          title: AutoSizeText(
+                             maxLines: 1,
                             mosquesforevent.name,
                             style: Theme.of(context)
                                 .textTheme
                                 .headline1
                                 ?.copyWith(fontSize: 16),
                           ),
-                          subtitle: Text(
+                          subtitle: AutoSizeText(
+                             maxLines: 1,
                             '${mosquesforevent.country} , ${mosquesforevent.street}',
                             style: Theme.of(context)
                                 .textTheme
                                 .headline1
                                 ?.copyWith(
-                                    fontSize: 8, fontWeight: FontWeight.normal),
+                                    fontSize: 14, fontWeight: FontWeight.normal),
                           ),
                           trailing: IconButton(
                               onPressed: () {
+                                Provider.of<FatchData>(context,
+                                            listen: false)
+                                        .setmosqueFollowFavrote(false);
                                 setState(() {
-                                  _notificationHelper.cancelAll();
                                   mosquesforevent.isFavrote =
                                       !mosquesforevent.isFavrote;
                                 });
@@ -175,19 +198,18 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                               },
                               icon: Icon(
                                 Icons.star,
-                                color: mosquesforevent.isFavrote
-                                    ? const Color(0xFFd4af37)
-                                    : Colors.grey,
+                                color: const Color(0xFFd4af37)
+                                   
                               )),
                         ),
-                      )
+                      ),
           ],
         ),
       ),
     );
   }
 
-  Column masqveiw(Size sizedphone, BuildContext con, List<mosques> listmosque,
+  Column masqveiw(Size sizedphone, BuildContext con, List<Mosques> listmosque,
       bool mymusque) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -205,7 +227,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
           ),
           child: TextField(
             onChanged: (value) {
-              Provider.of<FatchData>(con, listen: false).seachval(value);
+              Provider.of<FatchData>(con, listen: false).Searchval(value);
             },
             style: Theme.of(context)
                 .textTheme
@@ -251,6 +273,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                         trailing: IconButton(
                             onPressed: () async {
                               if (mymusque) {
+                                mosquefollow.clean();
                                 Provider.of<Buttonclickp>(con, listen: false)
                                     .storereplacetoloc(false);
                                 mosquefollow = listmosque.firstWhere(
@@ -259,18 +282,36 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
 
                                 await Provider.of<FatchData>(con, listen: false)
                                     .fatchandsetmosque(mosquefollow.mosqueid);
-                         await  Provider.of<FatchData>(context,listen: false).setisFavrote(true);
-                               Provider.of<Buttonclickp>(context,listen: false).statesala( [true, true, true, true, true, true, true]);
-
-                               
-
-                               calladan();
-
+                                await Provider.of<FatchData>(context,
+                                        listen: false)
+                                    .setmosqueFollowFavrote(true);
+                                Provider.of<Buttonclickp>(context,
+                                        listen: false)
+                                    .statesala([
+                                  true,
+                                  true,
+                                  true,
+                                  true,
+                                  true,
+                                  true,
+                                  true
+                                ]);
+                                Provider.of<Buttonclickp>(context,
+                                        listen: false)
+                                    .storesalaDay();
+                                calladan();
+                                listmosque.removeWhere(
+                                        (element) => element.mosqueid == mosquefollow.mosqueid);
 
                                 await Provider.of<FatchData>(con, listen: false)
                                     .readdata();
-
+                                     Provider.of<Buttonclickp>(context,
+                                        listen: false)
+                                    .indexNavigationBar(0);
                               } else {
+                                Provider.of<FatchData>(context,
+                                            listen: false)
+                                        .setmosqueFollowFavrote(true);
                                 Provider.of<Buttonclickp>(con, listen: false)
                                     .storereplacetoevent(false);
 
@@ -281,6 +322,8 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                 mosquesforevent = listmosque.firstWhere(
                                     (element) =>
                                         element.mosqueid == item.mosqueid);
+                                        listmosque.removeWhere(
+                                        (element) => element.mosqueid == mosquesforevent.mosqueid);
                                 SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 prefs.setString('mosquesforevent',
@@ -294,14 +337,16 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                               color: Colors.grey,
                             )),
                         leading: Image.asset('assets/images/mosque.png'),
-                        title: Text(
+                        title: AutoSizeText(
                           item.name,
+                          maxLines: 1,
                           style: Theme.of(context)
                               .textTheme
                               .headline1
                               ?.copyWith(fontSize: 16),
                         ),
-                        subtitle: Text(
+                        subtitle: AutoSizeText(
+                           maxLines: 1,
                           '${item.country} , ${item.street}',
                           style: Theme.of(context)
                               .textTheme
@@ -316,5 +361,23 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
         ),
       ],
     );
+  }
+
+  void subscribeTopic() async {
+    await FirebaseMessaging.instance
+        .subscribeToTopic('Trial_Version')
+        .then((value) => print('Hello'));
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      _notificationHelper.showNot(message, 50);
+    });
+  }
+
+  void unsubscribeTopic() async {
+    await FirebaseMessaging.instance
+        .unsubscribeFromTopic('Trial_Version')
+        .then((value) => print('Hello'));
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      _notificationHelper.showNot(message, 50);
+    });
   }
 }
