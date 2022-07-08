@@ -6,6 +6,7 @@ import 'package:facemosque/providers/buttonclick.dart';
 import 'package:facemosque/providers/fatchdata.dart';
 import 'package:facemosque/providers/mosque.dart';
 import 'package:facemosque/widget/notificationHelper.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,7 +14,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/services.dart';
 import 'package:auto_start_flutter/auto_start_flutter.dart';
-
 
 //method set adan for all sala
 void calladan() async {
@@ -25,19 +25,22 @@ void calladan() async {
   alarmadan('magrib');
   alarmadan('isha');
 }
+
 //firebase setting for notification
-Future<void> _firebasePushHandler(RemoteMessage message) async{
+Future<void> _firebasePushHandler(RemoteMessage message) async {
   print('massage fcom push ${message.data}');
-  _notificationHelper.showNot(message,70);
+  _notificationHelper.showNot(message, 70);
 }
+
 NotificationHelper _notificationHelper = NotificationHelper();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //set all alarm when app open
   _notificationHelper.initializeNotification();
-  //await Firebase.initializeApp( options:DefaultFirebaseOptions.currentPlatform  );
- // FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
+  await Firebase.initializeApp(options: 
+  FirebaseOptions(apiKey: 'AAAAVsDP8HM:APA91bFzAki2VdS-uqd7X_xRhpYvufymmRjUghFjz2e0CjZQtVNDWSgC8OP9sMdGoMpkZtFOaBlcfo3LonpI_pbFPaC0Yk8cdEP7lR6j-KQ94HzmzxhQffQB3uoG3HnrolzQfZ7d0LCB', appId: 'appId', messagingSenderId: 'messagingSenderId', projectId: 'projectId'));
+  FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
   alarmadan('fajer');
   alarmadan('dhuhr');
   alarmadan('asr');
@@ -152,7 +155,7 @@ void alarmadan(String adan) async {
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
-    static const int _bluePrimaryValue = 0xFF1ea345;
+  static const int _bluePrimaryValue = 0xFF1ea345;
 
   static const MaterialColor green = MaterialColor(
     _bluePrimaryValue,
@@ -175,8 +178,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
- 
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -195,10 +196,10 @@ class _MyAppState extends State<MyApp> {
             //set white color text with backgroud grean
             headline1: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
-           //set black color text with backgroud grean
+            //set black color text with backgroud grean
             headline2: TextStyle(
                 color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
-         ),
+          ),
         ),
         routes: {
           HomeScreen.routeName: (_) => const HomeScreen(),

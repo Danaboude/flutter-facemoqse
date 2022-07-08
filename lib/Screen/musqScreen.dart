@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:facemosque/widget/loctionmosque.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
+import 'dart:async';
 import 'package:facemosque/providers/buttonclick.dart';
 import 'package:facemosque/providers/fatchdata.dart';
 import 'package:facemosque/providers/mosques.dart';
@@ -370,6 +370,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                     .indexNavigationBar(0);
                                 //if user click other mosque and select mosque this code well run
                               } else {
+                                subscribeTopic();
                                 // delate all mousqe to show the one we followevent
                                 Provider.of<Buttonclickp>(con, listen: false)
                                     .storereplacetoevent(false);
@@ -386,6 +387,10 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                 listmosque.removeWhere((element) =>
                                     element.mosqueid ==
                                     mosquesforevent.mosqueid);
+                                SharedPreferences preferences =
+                                    await SharedPreferences.getInstance();
+                                  preferences.setString('mosquesforevent',json.encode(mosquesforevent.toMap()));
+                                
 
                                 //read All data form SharedPreferences
                                 await Provider.of<FatchData>(con, listen: false)
@@ -424,12 +429,16 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
   }
 
   void subscribeTopic() async {
+   
+    _notificationHelper.initializeNotification();
     await FirebaseMessaging.instance
         .subscribeToTopic('Trial_Version')
         .then((value) => print('Hello'));
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       _notificationHelper.showNot(message, 50);
     });
+      print("hi");
+   
   }
 
   void unsubscribeTopic() async {
