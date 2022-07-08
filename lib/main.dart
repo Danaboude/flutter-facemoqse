@@ -14,18 +14,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:auto_start_flutter/auto_start_flutter.dart';
 
-Future<void> initAutoStart() async {
-  isAutoStartAvailable;
 
-  try {
-    bool? test = await isAutoStartAvailable;
-    print(test);
-    if (!test!) await getAutoStartPermission();
-  } on PlatformException catch (e) {
-    print(e);
-  }
-}
-
+//method set adan for all sala
 void calladan() async {
   _notificationHelper.initializeNotification();
   // _notificationHelper.cancelAll();
@@ -35,7 +25,7 @@ void calladan() async {
   alarmadan('magrib');
   alarmadan('isha');
 }
-
+//firebase setting for notification
 Future<void> _firebasePushHandler(RemoteMessage message) async{
   print('massage fcom push ${message.data}');
   _notificationHelper.showNot(message,70);
@@ -44,6 +34,7 @@ NotificationHelper _notificationHelper = NotificationHelper();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //set all alarm when app open
   _notificationHelper.initializeNotification();
   //await Firebase.initializeApp( options:DefaultFirebaseOptions.currentPlatform  );
  // FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
@@ -59,9 +50,15 @@ void main() async {
 void alarmadan(String adan) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool lang = false;
+  // read key swatch language if true en else ar from SharedPreferences
   if (prefs.containsKey('language')) {
     lang = prefs.getBool('language')!;
   }
+  //if user has select mosuqe it well have
+  // time for adan else it well not set alarm
+  //adan pass as parmater 'fajer','dhar'...
+  //in setting Screen we have button for each adan
+  //it store value in SharedPreferences
   if (prefs.containsKey(adan)) {
     bool adanstate = prefs.getBool(adan)!;
     print(adanstate);
@@ -155,6 +152,8 @@ void alarmadan(String adan) async {
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+    static const int _bluePrimaryValue = 0xFF1ea345;
+
   static const MaterialColor green = MaterialColor(
     _bluePrimaryValue,
     <int, Color>{
@@ -170,7 +169,6 @@ class MyApp extends StatefulWidget {
       900: Color(0xFF0D47A1),
     },
   );
-  static const int _bluePrimaryValue = 0xFF1ea345;
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -191,10 +189,13 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           fontFamily: 'Al-Jazeera',
           primarySwatch: MyApp.green,
+          //set color app
           primaryColor: MyApp.green,
           textTheme: const TextTheme(
+            //set white color text with backgroud grean
             headline1: TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+           //set black color text with backgroud grean
             headline2: TextStyle(
                 color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
          ),
@@ -202,6 +203,7 @@ class _MyAppState extends State<MyApp> {
         routes: {
           HomeScreen.routeName: (_) => const HomeScreen(),
         },
+        //when app launch run SplachScreen
         home: const SplachScreen(),
       ),
     );

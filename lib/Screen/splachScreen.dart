@@ -16,41 +16,44 @@ class SplachScreen extends StatefulWidget {
 }
 
 class _SplachScreenState extends State<SplachScreen> {
+  //method change color state bar
   changeStatusColor(Color color) async {
-  try {
-    await FlutterStatusbarcolor.setStatusBarColor(color, animate: true);
-    if (useWhiteForeground(color)) {
-      FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
-      FlutterStatusbarcolor.setNavigationBarWhiteForeground(true);
-  
-    } else {
-      FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
-      FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
+    try {
+      await FlutterStatusbarcolor.setStatusBarColor(color, animate: true);
+      if (useWhiteForeground(color)) {
+        FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
+        FlutterStatusbarcolor.setNavigationBarWhiteForeground(true);
+      } else {
+        FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
+        FlutterStatusbarcolor.setNavigationBarWhiteForeground(false);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
     }
-  } catch (e) {
-    debugPrint(e.toString());
   }
-}
 
   @override
   void initState() {
     changeStatusColor(Color(0xFF1ea345));
-    
+    //reload all mosque from api
     Provider.of<FatchData>(context, listen: false).fatchandsetallmosque();
+    //read All data form SharedPreferences
     Provider.of<FatchData>(context, listen: false).readdata();
 
-
-    Provider.of<Buttonclickp>(context, listen: false).storereplacetoloc(null);
+    //read adan notifications button state from SharedPreferences
     Provider.of<Buttonclickp>(context, listen: false).readsalaDay();
+    // show all mosuqe or( mosuqefollow and map ) in tab My Mosuqe from SharedPreferences
     Provider.of<Buttonclickp>(context, listen: false).getreplacetoloc();
+    // show all mosuqe or mosuqefollowevent in tab My Mosuqe from SharedPreferences
     Provider.of<Buttonclickp>(context, listen: false).getreplacetoevent();
+    //read language from SharedPreferences
     Provider.of<Buttonclickp>(context, listen: false).readlanguage();
+    // Go to HomeScreen after 4 Sceand
     Future.delayed(const Duration(seconds: 4),
         () => Navigator.of(context).pushReplacementNamed(HomeScreen.routeName));
 
     super.initState();
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +66,6 @@ class _SplachScreenState extends State<SplachScreen> {
             clipper: CustomClipPath(),
             child: Container(
               decoration: BoxDecoration(
-                // borderRadius: BorderRadius.circular(1),
                 color: Theme.of(context).primaryColor.withOpacity(0.3),
               ),
               height: sizedphone.height * 0.3,
@@ -73,9 +75,7 @@ class _SplachScreenState extends State<SplachScreen> {
           ClipPath(
             clipper: CustomClipPath(),
             child: Container(
-            
-                color: Theme.of(context).primaryColor,
-              
+              color: Theme.of(context).primaryColor,
               height: sizedphone.height * 0.2,
               width: sizedphone.width,
             ),
@@ -93,7 +93,7 @@ class _SplachScreenState extends State<SplachScreen> {
                   return DecoratedBox(
                     decoration: BoxDecoration(
                       color: index.isEven
-                          ? const Color(0xFFEACE09)
+                          ? const Color(0xffD1B000)
                           : Theme.of(context).primaryColor,
                     ),
                   );

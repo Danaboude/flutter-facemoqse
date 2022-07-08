@@ -16,7 +16,6 @@ class CountdownTimer extends StatefulWidget {
 }
 
 class _CountdownTimerState extends State<CountdownTimer> {
-  // Step 2
   Timer? countdownTimer;
   Duration myDuration = Duration(minutes: 0);
   @override

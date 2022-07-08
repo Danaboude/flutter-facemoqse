@@ -6,11 +6,10 @@ import 'package:provider/provider.dart';
 
 import '../main.dart';
 import '../widget/notificationHelper.dart';
-
-class Mylangwch {
+//Model of Language
+class Language {
   String lang;
-
-  Mylangwch({
+  Language({
     required this.lang,
   });
 }
@@ -32,15 +31,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Map language = Provider.of<Buttonclickp>(context).languagepro;
     
 
-    List<Mylangwch> l = [
-      Mylangwch(lang: language['englich']),
-      Mylangwch(lang: language['arabic'])
+//Make list of Language to select one of them
+    List<Language> l = [
+      //show word in en or ar as lebal
+      Language(lang: language['englich']),
+      Language(lang: language['arabic'])
     ];
     return SafeArea(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           SizedBox(
+           //take 2% of height size phone
             height: sizedphone.height * 0.02,
           ),
           Container(
@@ -53,6 +55,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             margin: const EdgeInsets.all(10),
             child: Text(
               language['azannotification'],
+              //give text style of headline 1 (I set in main.dart) 
+              //but it well change the font size to 20
               style: Theme.of(context).textTheme.headline1,
             ),
           ),
@@ -63,26 +67,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               FilterChip(
-                
-                
                 checkmarkColor: Colors.black,
                 label: Text(
                   language['fajer'],
                   style: Theme.of(context)
                       .textTheme
-                      .headline2
+                      .headline2 
                       ?.copyWith(fontSize: 14),
                 ),
+                //user click fajer button
+                //if user not select mosque form My Mosque it well disable button
                 onSelected: mosquefollow.isFavrote?(bool i) async {
+                  //make fajer alarm on or off ever time you push button fajer
                   Provider.of<Buttonclickp>(context, listen: false)
                       .chackDayWeek(0);
+                  //store value of fajer in SharedPreferences
                   Provider.of<Buttonclickp>(context, listen: false)
                       .storesalaDay();
+                      //if button fajer was off
                   if (!i) {
+                    //cancel adan fajer
                     _notificationHelper.cancel(0);
                   } else {
                     await _notificationHelper.initializeNotification();
-
+                    //set adan fajer on
                     alarmadan('fajer');
                   }
                 }:null,
@@ -221,7 +229,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           SizedBox(
             height: sizedphone.height * 0.14,
             width: sizedphone.width * 0.3,
-            child: PopupMenuButton<Mylangwch>(
+            child: PopupMenuButton<Language>(
               color: Theme.of(context).primaryColor,
               child: Center(
                 child: Text(
@@ -229,16 +237,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   style: Theme.of(context).textTheme.headline2,
                 ),
               ),
-              onSelected: (Mylangwch select) {
+              onSelected: (Language select) {
+                //if language ar 
                 if (select.lang == 'عربي' || select.lang == 'Arabic') {
+                  //it well change to en
                   Provider.of<Buttonclickp>(context, listen: false)
                       .storelanguage(true);
+                      //if language en
                 } else if (select.lang == 'انكليزي' ||
                     select.lang == 'englich') {
+                      //it well change to ar
                   Provider.of<Buttonclickp>(context, listen: false)
                       .storelanguage(false);
                 }
-                {}
+               
               },
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
@@ -246,8 +258,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               itemBuilder: (context) {
+                // l have 2 object en and ar well show in list
                 return l
-                    .map((item) => PopupMenuItem<Mylangwch>(
+                    .map((item) => PopupMenuItem<Language>(
                           value: item,
                           child: Text(
                             item.lang,

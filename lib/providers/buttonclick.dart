@@ -185,7 +185,7 @@ class Buttonclickp with ChangeNotifier {
     notifyListeners();
   }
 
-  //Update value of list sala like when user make sala[0]= false (fajer) to not make alarm run
+  //Update value of list sala like when make sala[0]= false (fajer) to not make alarm run(id mean index)
   void chackDayWeek(int id) {
     sala[id] == false ? sala[id] = true : sala[id] = false;
     notifyListeners();

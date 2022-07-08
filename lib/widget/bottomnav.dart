@@ -13,45 +13,50 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   @override
   Widget build(BuildContext context) {
-
-    const items = <Widget> [
+    //list of Icon have 4 Icon
+     List<Icon> items = <Icon>[
       Icon(
+        //if you want to set color for icon 
+      //  color: Color(0xffC29B0C),
         Icons.home,
         size: 30,
       ),
       Icon(
+       //if you want to set color for icon 
+      //  color: Color(0xffC29B0C),
         Icons.star,
         size: 30,
       ),
       Icon(
-          Icons.notifications_active,
-          size: 30,
-        ),
-      
+      //if you want to set color for icon 
+      //  color: Color(0xffC29B0C),
+        Icons.notifications_active,
+        size: 30,
+      ),
       Icon(
+      //if you want to set color for icon 
+      //  color: Color(0xffC29B0C),
         Icons.settings,
         size: 30,
       ),
-
     ];
+    // indexnavigationbottmbar when user push Home icon index=0
+    //or star icon index=1 ...
     int inde = Provider.of<Buttonclickp>(context).indexnavigationbottmbar;
     return CurvedNavigationBar(
-
-        animationDuration:const Duration(milliseconds: 500),
+      
+        animationDuration: const Duration(milliseconds: 500),
         backgroundColor: Colors.white,
-       // buttonBackgroundColor:const Color(0xFFB7F8DB),
-        color:Theme.of(context).primaryColor,
-        
+        color: Theme.of(context).primaryColor,
+        //give inde to CurvedNavigationBar when user push any icon it well update screan
         index: inde,
         height: 60,
         items: items,
         onTap: (index) {
-          
-            // Navigator.of(context).pop();
-              inde = index;
-          
-              Provider.of<Buttonclickp>(context, listen: false).indexNavigationBar(inde);
-             
-            });
+          //when user push any icon it well update screan
+          inde = index;
+          Provider.of<Buttonclickp>(context, listen: false)
+              .indexNavigationBar(inde);
+        });
   }
 }
