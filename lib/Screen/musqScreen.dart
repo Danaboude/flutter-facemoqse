@@ -242,6 +242,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                     .storereplacetoevent(true);
                                 Provider.of<FatchData>(context, listen: false)
                                     .fatchandsetallmosque();
+                                    unsubscribeTopic();
                               },
                               icon: Icon(Icons.star,
                                   color: const Color(0xFFd4af37))),
@@ -435,7 +436,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
         .subscribeToTopic('Trial_Version')
         .then((value) => print('Hello'));
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      _notificationHelper.showNot(message, 50);
+      _notificationHelper.showNot(message);
     });
       print("hi");
    
@@ -446,7 +447,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
         .unsubscribeFromTopic('Trial_Version')
         .then((value) => print('Hello'));
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      _notificationHelper.showNot(message, 50);
+      _notificationHelper.showNot(message);
     });
   }
 }

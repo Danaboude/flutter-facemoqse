@@ -100,21 +100,23 @@ class FatchData with ChangeNotifier {
 
 // get LatLng from address using MapboxApi becuse FlutterMap Requires LatLng for Markars
   Future<void> loction() async {
-    if (mosqueFollow.street != '') {
-      MapboxApi mapbox = MapboxApi(
-        accessToken:
-            'pk.eyJ1IjoiZmFjZW1vc3F1ZSIsImEiOiJja2dwOTVkdzQwM21hMnZzMjQ1amJhaWxmIn0.fqW1E4WO3RSMu3tAPkz25g',
-      );
-      final GeocodingApiResponse response =
-          await mapbox.forwardGeocoding.request(
-        searchText: '${mosqueFollow.street}. ${mosqueFollow.houseno}',
-        fuzzyMatch: true,
-        language: 'en',
-      );
-      latlng1 = latlong.LatLng(
-          response.features![1].center![1], response.features![1].center![0]);
-      notifyListeners();
-    }
+    try {
+      if (mosqueFollow.street != '') {
+        MapboxApi mapbox = MapboxApi(
+          accessToken:
+              'pk.eyJ1IjoiZmFjZW1vc3F1ZSIsImEiOiJja2dwOTVkdzQwM21hMnZzMjQ1amJhaWxmIn0.fqW1E4WO3RSMu3tAPkz25g',
+        );
+        final GeocodingApiResponse response =
+            await mapbox.forwardGeocoding.request(
+          searchText: '${mosqueFollow.street}. ${mosqueFollow.houseno}',
+          fuzzyMatch: true,
+          language: 'en',
+        );
+        latlng1 = latlong.LatLng(
+            response.features![1].center![1], response.features![1].center![0]);
+        notifyListeners();
+      }
+    } catch (e) {}
   }
 
 // Search in mosquelist for mosque
@@ -255,6 +257,7 @@ class FatchData with ChangeNotifier {
       print(e);
     }
   }
+
 // to print long String like all mousqe
   void logLongString(String s) {
     if (s.isEmpty || s.length <= 0) return;

@@ -1,4 +1,6 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_messaging_platform_interface/src/remote_message.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -53,10 +55,10 @@ class NotificationHelper {
     return scheduleDate;
   }
 //Notification for firebase 
-  showNot(RemoteMessage message, int id) async {
+  showNot(RemoteMessage message) async {
     await flutterLocalNotificationsPlugin.show(
-      id,
-      message.notification?.title,
+     message.notification.hashCode,
+     message.notification?.title,
       message.notification?.body,
       NotificationDetails(
         android: AndroidNotificationDetails(

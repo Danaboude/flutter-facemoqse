@@ -28,8 +28,8 @@ void calladan() async {
 
 //firebase setting for notification
 Future<void> _firebasePushHandler(RemoteMessage message) async {
-  print('massage fcom push ${message.data}');
-  _notificationHelper.showNot(message, 70);
+  await Firebase.initializeApp();
+  _notificationHelper.showNot(message);
 }
 
 NotificationHelper _notificationHelper = NotificationHelper();
@@ -38,9 +38,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //set all alarm when app open
   _notificationHelper.initializeNotification();
-  await Firebase.initializeApp(options: 
-  FirebaseOptions(apiKey: 'AAAAVsDP8HM:APA91bFzAki2VdS-uqd7X_xRhpYvufymmRjUghFjz2e0CjZQtVNDWSgC8OP9sMdGoMpkZtFOaBlcfo3LonpI_pbFPaC0Yk8cdEP7lR6j-KQ94HzmzxhQffQB3uoG3HnrolzQfZ7d0LCB', appId: 'appId', messagingSenderId: 'messagingSenderId', projectId: 'projectId'));
+  await Firebase.initializeApp();
+//  await FirebaseMessaging.instance.getToken();
   FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
+  
   alarmadan('fajer');
   alarmadan('dhuhr');
   alarmadan('asr');
