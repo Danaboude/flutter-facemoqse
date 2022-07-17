@@ -1,9 +1,12 @@
 import 'dart:convert';
 //import 'firebase_options.dart';
 import 'package:facemosque/Screen/homescreen.dart';
+import 'package:facemosque/Screen/signinScreen.dart';
 import 'package:facemosque/Screen/splachScreen.dart';
 import 'package:facemosque/providers/buttonclick.dart';
 import 'package:facemosque/providers/fatchdata.dart';
+import 'package:facemosque/providers/messagefromtaipc.dart';
+import 'package:facemosque/providers/messagesetting.dart';
 import 'package:facemosque/providers/mosque.dart';
 import 'package:facemosque/widget/notificationHelper.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,8 +31,20 @@ void calladan() async {
 
 //firebase setting for notification
 Future<void> _firebasePushHandler(RemoteMessage message) async {
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  List<MessageFromTaipc> list = [];
+  if (preferences.containsKey('listmessage')) {
+    final List<dynamic> jsonData =
+        jsonDecode(preferences.getString('listmessage')!);
+    list = jsonData.map<MessageFromTaipc>((jsonList) {
+      return MessageFromTaipc.fromJson(jsonList);
+    }).toList();
+  }
+  MessageFromTaipc messagetaipc = MessageFromTaipc.fromJson(message.data);
+  list.add(messagetaipc);
+  preferences.setString('listmessage', MessageFromTaipc.encode(list));
   await Firebase.initializeApp();
-  _notificationHelper.showNot(message);
+  _notificationHelper.showNot(messagetaipc);
 }
 
 NotificationHelper _notificationHelper = NotificationHelper();
@@ -37,17 +52,9 @@ NotificationHelper _notificationHelper = NotificationHelper();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //set all alarm when app open
-  _notificationHelper.initializeNotification();
+  calladan();
   await Firebase.initializeApp();
-//  await FirebaseMessaging.instance.getToken();
   FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
-  
-  alarmadan('fajer');
-  alarmadan('dhuhr');
-  alarmadan('asr');
-  alarmadan('magrib');
-  alarmadan('isha');
-
   runApp(const MyApp());
 }
 
@@ -65,7 +72,6 @@ void alarmadan(String adan) async {
   //it store value in SharedPreferences
   if (prefs.containsKey(adan)) {
     bool adanstate = prefs.getBool(adan)!;
-    print(adanstate);
     if (adanstate) {
       if (prefs.containsKey('mosque')) {
         Mosque mosque =
@@ -82,14 +88,13 @@ void alarmadan(String adan) async {
               id: 0,
               sound: 'adan',
             );
-            print('fajer');
           }
         } else if (adan == 'dhuhr') {
           if (mosque.dhuhr != '') {
             //  _notificationHelper.cancel(1);
 
             var timehm = mosque.dhuhr.split(':');
-            print('dhuhr');
+
             await _notificationHelper.scheduledNotification(
               body: lang,
               title: lang ? 'الظهر' : adan,
@@ -105,7 +110,7 @@ void alarmadan(String adan) async {
             //_notificationHelper.cancel(2);
 
             var timehm = mosque.asr.split(':');
-            print('asr');
+
             await _notificationHelper.scheduledNotification(
               body: lang,
               title: lang ? 'العصر' : adan,
@@ -121,7 +126,7 @@ void alarmadan(String adan) async {
             // await _notificationHelper.cancel(3);
 
             var timehm = mosque.magrib.split(':');
-            print('magrib');
+
             _notificationHelper.scheduledNotification(
               body: lang,
               title: lang ? 'المغرب' : adan,
@@ -137,7 +142,7 @@ void alarmadan(String adan) async {
             //await _notificationHelper.cancel(4);
 
             var timehm = mosque.isha.split(':');
-            print('isha');
+
             _notificationHelper.scheduledNotification(
               body: lang,
               title: lang ? 'العشاء' : adan,
@@ -185,6 +190,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider.value(value: Buttonclickp()),
         ChangeNotifierProvider.value(value: FatchData()),
+        ChangeNotifierProvider.value(value: MessageSetting()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -204,6 +210,7 @@ class _MyAppState extends State<MyApp> {
         ),
         routes: {
           HomeScreen.routeName: (_) => const HomeScreen(),
+          SigninScreen.routeName:(_)=> SigninScreen(),
         },
         //when app launch run SplachScreen
         home: const SplachScreen(),

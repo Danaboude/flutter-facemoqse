@@ -1,3 +1,4 @@
+import 'package:facemosque/providers/messagefromtaipc.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_messaging_platform_interface/src/remote_message.dart';
 import 'package:flutter/foundation.dart';
@@ -51,15 +52,14 @@ class NotificationHelper {
     if (scheduleDate.isBefore(now)) {
       scheduleDate = scheduleDate.add(const Duration(days: 1));
     }
-    print(scheduleDate);
     return scheduleDate;
   }
 //Notification for firebase 
-  showNot(RemoteMessage message) async {
+  showNot(MessageFromTaipc message) async {
     await flutterLocalNotificationsPlugin.show(
-     message.notification.hashCode,
-     message.notification?.title,
-      message.notification?.body,
+     message.hashCode,
+     message.title,
+      message.message,
       NotificationDetails(
         android: AndroidNotificationDetails(
           'your channel id asdf',
@@ -67,10 +67,10 @@ class NotificationHelper {
           channelDescription: 'socool',
           importance: Importance.max,
           priority: Priority.high,
-          sound: RawResourceAndroidNotificationSound('adan'),
+          sound: UriAndroidNotificationSound('assets/mp3/notification.mp3'),
           playSound: true,
         ),
-        iOS: IOSNotificationDetails(sound: 'adan.mp3'),
+        iOS: IOSNotificationDetails(sound: 'notification.mp3'),
       ),
       payload: 'It could be anything you pass',
     );
@@ -85,7 +85,6 @@ class NotificationHelper {
     required int id,
     required String sound,
   }) async {
-    print(_convertTime(hour, minutes));
     await flutterLocalNotificationsPlugin.zonedSchedule(
       id,
       body == false ? 'It\'s time for adan' : 'حان موعد اذان ',

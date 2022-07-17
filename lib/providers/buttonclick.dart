@@ -39,7 +39,15 @@ class Buttonclickp with ChangeNotifier {
     'searchbar': 'Search for mosque...',
     'azannotification': 'Azen Notification',
     'adan': 'Adan',
-    'prayer': 'prayer'
+    'prayer': 'prayer',
+    'delete Worning':'Delete Worning',
+    'body delete worning':'Are you sure you want to Delete',
+    'sign Worning':'Sign Worning',
+    'body sign worning':'Are you sure you want to sign to Event',
+    'yes':'Yes',
+    'no':'No',
+    'Register':'Register',
+    'Cancel':'Cancel'
   };
   Map<String, String> ar = {
     'titlenamemasjed': 'مواقيات الصلاة والاقامة لجامع',
@@ -63,7 +71,15 @@ class Buttonclickp with ChangeNotifier {
     'searchbar': 'ابحث عن مسجد',
     'azannotification': 'تنبهات الاذان',
     'adan': 'الاذان',
-    'prayer': 'الاقامة'
+    'prayer': 'الاقامة',
+    'delete Worning':'تحذير حذف',
+    'body delete worning':'هل أنت متأكد أنك تريد حذف',
+    'sign Worning':'تحذير تسجيل',
+    'body sign worning':'هل أنت متأكد أنك تريد تسجيل في الحدث',
+    'yes':'نعم',
+    'no':'لا',
+    'Register':'تسجيل',
+    'Cancel':'الغاء'
   };
   // A map that stores Arabic and English words according to the value of the variable languageselected
   Map<String, String> get languagepro {

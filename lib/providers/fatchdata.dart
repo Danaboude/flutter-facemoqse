@@ -145,6 +145,7 @@ class FatchData with ChangeNotifier {
       );
       Iterable l = json.decode(
           "${response.body.split('\n').toString().substring(0, response.body.split('\n').toString().length - 3)}]");
+        
       mosquelist =
           List<Mosques>.from(l.map((model) => Mosques.fromJson(model)));
       notifyListeners();

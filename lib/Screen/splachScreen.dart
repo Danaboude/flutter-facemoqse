@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:facemosque/Screen/homescreen.dart';
 import 'package:facemosque/providers/buttonclick.dart';
 import 'package:facemosque/providers/fatchdata.dart';
+import 'package:facemosque/providers/messagesetting.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
@@ -34,6 +36,7 @@ class _SplachScreenState extends State<SplachScreen> {
 
   @override
   void initState() {
+    Provider.of<MessageSetting>(context,listen: false).getNotification();
     changeStatusColor(Color(0xFF1ea345));
     //reload all mosque from api
     Provider.of<FatchData>(context, listen: false).fatchandsetallmosque();
@@ -52,11 +55,14 @@ class _SplachScreenState extends State<SplachScreen> {
     Future.delayed(const Duration(seconds: 4),
         () => Navigator.of(context).pushReplacementNamed(HomeScreen.routeName));
 
+
     super.initState();
   }
+  
 
   @override
   Widget build(BuildContext context) {
+   
     var sizedphone = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(

@@ -366,9 +366,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                     .readdata();
                                 //back to home page to load map loction if you want see loction go back to Favrote Screen
                                 //if i not back to home page camera map well not move
-                                Provider.of<Buttonclickp>(context,
-                                        listen: false)
-                                    .indexNavigationBar(0);
+                                Provider.of<Buttonclickp>(context,listen: false).indexNavigationBar(0);
                                 //if user click other mosque and select mosque this code well run
                               } else {
                                 subscribeTopic();
@@ -435,9 +433,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
     await FirebaseMessaging.instance
         .subscribeToTopic('Trial_Version')
         .then((value) => print('Hello'));
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      _notificationHelper.showNot(message);
-    });
+    
       print("hi");
    
   }
@@ -446,8 +442,6 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
     await FirebaseMessaging.instance
         .unsubscribeFromTopic('Trial_Version')
         .then((value) => print('Hello'));
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      _notificationHelper.showNot(message);
-    });
+   
   }
 }
