@@ -212,10 +212,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: AutoSizeText(
                                     textAlign: TextAlign.center,
                                     // if language ar it well show haditha else it well show hadithe
+                                    mosque.horA==0?
                                     Provider.of<Buttonclickp>(context)
                                             .languageselected
                                         ? mosque.haditha.toString()
-                                        : mosque.hadithe.toString(),
+                                        : mosque.hadithe.toString():Provider.of<Buttonclickp>(context)
+                                            .languageselected
+                                        ? mosque.qurana.toString()
+                                        : mosque.qurane.toString(),
                                         //give text style of headline 1 (I set in main.dart) 
                                         //but it well change the font size to 20
                                     style: Theme.of(context)

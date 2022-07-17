@@ -60,6 +60,7 @@ dependencies:
   firebase_messaging: ^11.4.4
 
   mapbox_api: ^1.0.0
+  qr_flutter: ^4.0.0
  
   
  # android_autostart: ^0.0.3

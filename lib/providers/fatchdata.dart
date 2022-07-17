@@ -12,6 +12,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:latlong2/latlong.dart' as latlong;
 
+import 'messagefromtaipc.dart';
+
 class FatchData with ChangeNotifier {
   //make object of Model Mosque to store Mosques form api Mosque
   // dart has null safty so i most give initzial value
@@ -145,7 +147,7 @@ class FatchData with ChangeNotifier {
       );
       Iterable l = json.decode(
           "${response.body.split('\n').toString().substring(0, response.body.split('\n').toString().length - 3)}]");
-        
+
       mosquelist =
           List<Mosques>.from(l.map((model) => Mosques.fromJson(model)));
       notifyListeners();
@@ -206,6 +208,7 @@ class FatchData with ChangeNotifier {
           'Accept': 'application/json',
         },
       );
+      // print(response.body);
       Mosque mosqu = await Mosque.fromJson(jsonDecode(response.body));
       mosqueFollow = mosquelist.firstWhere(
           (element) => int.parse(element.mosqueid) == int.parse(mosqid));
@@ -270,6 +273,37 @@ class FatchData with ChangeNotifier {
       print(s.substring(startIndex, endIndex));
       startIndex += n;
       endIndex = startIndex + n;
+    }
+  }
+
+  Future<void> senddatauserforevent(String fname, String lname, String number,
+      MessageFromTaipc message) async {
+    try {
+      http.Response response = await http.get(
+        Uri.parse(
+          "https://facemosque.eu/api/api.php?client=app&cmd=user_reg&mosque_id=" +
+              message.mosqueid +
+              "&first_name=" +
+              fname +
+              "&last_name=" +
+              lname +
+              "&date=" +
+              message.date +
+              "&time=" +
+              message.time +
+              "&mobile_num=" +
+              number,
+        ),
+        headers: {
+          "Connection": "Keep-Alive",
+          'Content-type': 'application/json',
+          'Accept': 'application/json',
+        },
+      );
+      if(response.statusCode==200)
+      notifyListeners();
+    } catch (e) {
+      print(e);
     }
   }
 }
