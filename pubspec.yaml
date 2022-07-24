@@ -61,6 +61,7 @@ dependencies:
 
   mapbox_api: ^1.0.0
   qr_flutter: ^4.0.0
+  workmanager: ^0.5.0
  
   
  # android_autostart: ^0.0.3

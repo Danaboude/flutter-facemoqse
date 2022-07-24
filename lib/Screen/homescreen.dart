@@ -4,13 +4,13 @@ import 'package:facemosque/providers/fatchdata.dart';
 import 'package:facemosque/providers/mosque.dart';
 import 'package:facemosque/widget/countdowntimer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:facemosque/Screen/eventnotifications.dart';
 import 'package:facemosque/Screen/settingsscreen.dart';
 import 'package:facemosque/providers/buttonclick.dart';
 import 'package:facemosque/widget/bottomnav.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-
 class MySlider {
   String time;
   String timeend;
@@ -32,6 +32,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+   
   @override
   void dispose() {
     super.dispose();

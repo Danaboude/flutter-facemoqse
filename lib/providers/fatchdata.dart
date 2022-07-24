@@ -12,8 +12,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:latlong2/latlong.dart' as latlong;
 
-import 'messagefromtaipc.dart';
-
 class FatchData with ChangeNotifier {
   //make object of Model Mosque to store Mosques form api Mosque
   // dart has null safty so i most give initzial value
@@ -128,6 +126,9 @@ class FatchData with ChangeNotifier {
       final input = val.toLowerCase();
       return namemosq.contains(input);
     }).toList();
+    if(val=='')
+    fatchandsetallmosque();
+
     mosquelist = a;
     notifyListeners();
   }
@@ -159,7 +160,6 @@ class FatchData with ChangeNotifier {
 //read data form SharedPreferences I used when app lanched to make app run offline
   Future<void> readdata() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-
     try {
       if (preferences.containsKey('mosque')) {
         mosque = Mosque.fromJson(json.decode(preferences.getString('mosque')!));
@@ -196,7 +196,9 @@ class FatchData with ChangeNotifier {
 
 //// fatch mousqe from api where id
   Future<void> fatchandsetmosque(String mosqid) async {
+    
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('mosqid');
     try {
       http.Response response = await http.get(
         Uri.parse(
@@ -220,6 +222,7 @@ class FatchData with ChangeNotifier {
           .removeWhere((element) => element.mosqueid == mosqueFollow.mosqueid);
       mosquelist.removeWhere(
           (element) => element.mosqueid == mosqueFollowevent.mosqueid);
+      prefs.setString('mosqid', mosqid);
       notifyListeners();
       // logLongString(mosque.toString());
     } catch (e) {
@@ -273,37 +276,6 @@ class FatchData with ChangeNotifier {
       print(s.substring(startIndex, endIndex));
       startIndex += n;
       endIndex = startIndex + n;
-    }
-  }
-
-  Future<void> senddatauserforevent(String fname, String lname, String number,
-      MessageFromTaipc message) async {
-    try {
-      http.Response response = await http.get(
-        Uri.parse(
-          "https://facemosque.eu/api/api.php?client=app&cmd=user_reg&mosque_id=" +
-              message.mosqueid +
-              "&first_name=" +
-              fname +
-              "&last_name=" +
-              lname +
-              "&date=" +
-              message.date +
-              "&time=" +
-              message.time +
-              "&mobile_num=" +
-              number,
-        ),
-        headers: {
-          "Connection": "Keep-Alive",
-          'Content-type': 'application/json',
-          'Accept': 'application/json',
-        },
-      );
-      if(response.statusCode==200)
-      notifyListeners();
-    } catch (e) {
-      print(e);
     }
   }
 }

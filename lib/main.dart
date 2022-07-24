@@ -14,12 +14,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
-import 'package:flutter/services.dart';
-import 'package:auto_start_flutter/auto_start_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'package:workmanager/workmanager.dart';
 
 //method set adan for all sala
-void calladan() async {
+Future<void> calladan() async {
   _notificationHelper.initializeNotification();
   // _notificationHelper.cancelAll();
   alarmadan('fajer');
@@ -47,12 +46,48 @@ Future<void> _firebasePushHandler(RemoteMessage message) async {
   _notificationHelper.showNot(messagetaipc);
 }
 
+
 NotificationHelper _notificationHelper = NotificationHelper();
+Future<void> updateMosuqe()async{
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+     
+      if (preferences.containsKey('mosqid')) {
+       //  preferences.remove('mosque');
+        http.Response response = await http.get(
+          Uri.parse(
+            "https://facemosque.eu/api/api.php?client=app&cmd=get_database_method_time&mosque_id=${preferences.getString('mosqid')}",
+          ),
+          headers: {
+            "Connection": "Keep-Alive",
+            'Content-type': 'application/json',
+            'Accept': 'application/json',
+          },
+        ).timeout(const Duration(seconds: 300));
+        print(response.body);
+        Mosque mosqu = await Mosque.fromJson(jsonDecode(response.body));
+        // print(json.encode(mosqu.toMap()));
+        preferences.setString('mosque', json.encode(mosqu.toMap()));
+    }
+
+}
+void callbackDispatcher() {
+  Workmanager().executeTask((task, inputData) async {
+    await updateMosuqe();
+  
+    return Future.value(true);
+  });
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Workmanager().initialize(callbackDispatcher,isInDebugMode: false);
+ await Workmanager().registerPeriodicTask('recallmousqedata', 'recallmousqedata',
+       frequency: Duration(hours: 12),
+      initialDelay: Duration(seconds: 10),
+      constraints: Constraints(networkType: NetworkType.connected));
   //set all alarm when app open
-  calladan();
+     calladan();
+  
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
   runApp(const MyApp());
@@ -210,7 +245,7 @@ class _MyAppState extends State<MyApp> {
         ),
         routes: {
           HomeScreen.routeName: (_) => const HomeScreen(),
-          SigninScreen.routeName:(_)=> SigninScreen(),
+          SigninScreen.routeName: (_) => SigninScreen(),
         },
         //when app launch run SplachScreen
         home: const SplachScreen(),

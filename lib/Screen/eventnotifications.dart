@@ -10,6 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EventNotifications extends StatefulWidget {
@@ -70,120 +71,18 @@ class _EventNotificationsState extends State<EventNotifications> {
           child: ListView(
             shrinkWrap: true,
             children: listmessage.map((item) {
-              return GestureDetector(
-                onTap: item.isEvent == 'false'
-                    ? () {
-                        showDialog(
-                          context: context,
-                          builder: (ctx) => AlertDialog(
-                            title: Text(language['delete Worning']),
-                            content: Text(language['body delete worning']),
-                            actions: <Widget>[
-                              FlatButton(
-                                onPressed: () {
-                                  Provider.of<MessageSetting>(context,
-                                          listen: false)
-                                      .deleteNotification(item.eventId);
-                                  Navigator.of(ctx).pop();
-                                },
-                                child: Text(language['yes']),
-                              ),
-                              FlatButton(
-                                onPressed: () {
-                                  Navigator.of(ctx).pop();
-                                },
-                                child: Text(language['no']),
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-                    : null,
+              return Container(
+                margin: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  border: Border.all(color: const Color(0xffD1B000), width: 3),
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                ),
                 child: Container(
-                  margin: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    border:
-                        Border.all(color: const Color(0xffD1B000), width: 3),
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.white,
-                  ),
-                  child: Container(
-                    height: sizedphone.height * 0.1,
-                    width: sizedphone.width * 0.9,
-                    child: ListTile(
-                      trailing: item.isEvent == 'true'
-                          ? Container(
-                              height: sizedphone.height * 0.04,
-                              width: sizedphone.width * 0.3,
-                              child: Row(
-                                // mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  IconButton(
-                                      onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (ctx) => AlertDialog(
-                                            title:
-                                                Text(language['sign Worning']),
-                                            content: Text(
-                                                language['body sign worning']),
-                                            actions: <Widget>[
-                                              FlatButton(
-                                                onPressed: () {
-                                                  Navigator.of(ctx).pushNamed(
-                                                      SigninScreen.routeName);
-                                                },
-                                                child: Text(language['yes']),
-                                              ),
-                                              FlatButton(
-                                                onPressed: () {
-                                                  Navigator.of(ctx).pop();
-                                                },
-                                                child: Text(language['no']),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                      icon: Icon(
-                                        Icons.qr_code_2,
-                                      )),
-                                  IconButton(
-                                      onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (ctx) => AlertDialog(
-                                            title: Text(
-                                                language['delete Worning']),
-                                            content: Text(language[
-                                                'body delete worning']),
-                                            actions: <Widget>[
-                                              FlatButton(
-                                                onPressed: () {
-                                                  Provider.of<MessageSetting>(
-                                                          context,
-                                                          listen: false)
-                                                      .deleteNotification(
-                                                          item.eventId);
-                                                  Navigator.of(ctx).pop();
-                                                },
-                                                child: Text(language['yes']),
-                                              ),
-                                              FlatButton(
-                                                onPressed: () {
-                                                  Navigator.of(ctx).pop();
-                                                },
-                                                child: Text(language['no']),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                      icon: Icon(Icons.delete_rounded)),
-                                ],
-                              ),
-                            )
-                          : null,
+                  width: sizedphone.width * 0.9,
+                  child: Column(children: [
+                    ListTile(
+                      enableFeedback: true,
                       leading: Image.asset('assets/images/mosque.png'),
                       title: AutoSizeText(
                         item.title + ' ' + item.date,
@@ -194,13 +93,142 @@ class _EventNotificationsState extends State<EventNotifications> {
                             ?.copyWith(fontSize: 16),
                       ),
                       subtitle: AutoSizeText(
-                        maxLines: 1,
+                        minFontSize:14,
+                        maxLines: 25,
                         item.message,
                         style: Theme.of(context).textTheme.headline2!.copyWith(
                             fontSize: 14, fontWeight: FontWeight.normal),
                       ),
                     ),
-                  ),
+                    Container(
+                      //width: sizedphone.width * 0.9,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          TextButton.icon(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (ctx) => AlertDialog(
+                                     shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(40),
+                                          ),
+                                    title: Text(language['delete Worning']),
+                                    content:
+                                        Text(language['body delete worning']),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Provider.of<MessageSetting>(context,
+                                                  listen: false)
+                                              .deleteNotification(item.eventId);
+                                          Navigator.of(ctx).pop();
+                                        },
+                                        child: Text(language['yes']),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(ctx).pop();
+                                        },
+                                        child: Text(language['no'],style: TextStyle(color: Colors.red),),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              icon: Icon(Icons.delete),
+                              label: Text('Delete')),
+                          item.isEvent == 'true'
+                              ? TextButton.icon(
+                                  onPressed: () async {
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    if (!prefs.containsKey('${item.eventId}')) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (ctx) => AlertDialog(
+                                           shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(40),
+                                          ),
+                                          title: Text(language['sign Worning']),
+                                          content: Text(
+                                              language['body sign worning']),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(ctx)
+                                                    .pushReplacementNamed(
+                                                        SigninScreen.routeName,
+                                                        arguments: item);
+                                              },
+                                              child: Text(language['yes']),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.of(ctx).pop();
+                                              },
+                                              child: Text(language['no'],style: TextStyle(color: Colors.red),),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    } else {
+                                      showDialog(
+                                        context: context,
+                                        builder: (ctx) => AlertDialog(
+                                           shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(40),
+                                          ),
+                                          title: Text('Qr Code'),
+                                          content: Container(
+                                            padding: EdgeInsets.only(left: 10),
+                                            alignment: Alignment.center,
+                                            height: sizedphone.height * 0.3,
+                                            width: sizedphone.width * 0.7,
+                                            child: QrImage(
+
+                                              data:prefs.getString('${item.eventId}')!,
+                                              version: QrVersions.auto,
+                                              size: 300.0,
+                                            ),
+                                          ),
+                                          actions: <Widget>[
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: TextButton.icon(
+                                                icon: Icon(Icons.arrow_forward_ios_sharp),
+                                                
+                                                onPressed: () async {
+                                                  SharedPreferences preferences =
+                                                      await SharedPreferences
+                                                          .getInstance();
+                                                  preferences.remove('userinfo');
+
+                                                  Navigator.of(ctx).pop();
+                                                },
+                                                label:  Text('Back'),
+                                              
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  icon: Icon(Icons.qr_code),
+                                  label: Text('Qr'))
+                              : Container(),
+                          TextButton.icon(
+                              onPressed: () {},
+                              icon: Icon(Icons.share),
+                              label: Text('Share')),
+                        ],
+                      ),
+                    )
+                  ]),
                 ),
               );
             }).toList(),

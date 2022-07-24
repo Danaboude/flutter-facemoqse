@@ -125,6 +125,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                     ?.copyWith(fontSize: 16),
                               ),
                               subtitle: AutoSizeText(
+                                
                                 maxLines: 1,
                                 //show country and street mosuqe we select
                                 '${mosquefollow.country} , ${mosquefollow.street}',
@@ -272,6 +273,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
             border: Border.all(color: const Color(0xffD1B000), width: 3),
           ),
           child: TextField(
+            
             onChanged: (value) {
               //search bar to shearch for mosque
               Provider.of<FatchData>(con, listen: false).Searchval(value);
@@ -283,9 +285,9 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
             decoration: InputDecoration(
               filled: false,
 
-              fillColor: Colors.black,
+              fillColor: Colors.white,
               // iconColor: Colors.black,
-              focusColor: Colors.grey,
+              focusColor: Colors.white,
               hoverColor: Colors.white,
 
               focusedBorder: const UnderlineInputBorder(
