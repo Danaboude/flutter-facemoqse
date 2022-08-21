@@ -36,8 +36,8 @@ class MessageFromTaipc {
 
   static Map<String, dynamic> toMap(MessageFromTaipc messagefromtaipc) {
     return {
-      'title': messagefromtaipc.title,
-      'message': messagefromtaipc.message,
+      'Title': messagefromtaipc.title,
+      'Message': messagefromtaipc.message,
       'date': messagefromtaipc.date,
       'time': messagefromtaipc.time,
       'maxPerson': messagefromtaipc.maxPerson,
@@ -48,7 +48,6 @@ class MessageFromTaipc {
   }
 
   factory MessageFromTaipc.fromJson(dynamic data) {
-    if(data['mosqueId']!=null){
     return MessageFromTaipc(
       date: data['date'] ?? '',
       maxPerson: data['maxPerson'] ?? '',
@@ -58,19 +57,8 @@ class MessageFromTaipc {
       mosqueid: data['mosqueId'] ?? '',
       time: data['time'] ?? '',
       isEvent: data['isEvent'] ?? '',
-    ); }else{
-      return MessageFromTaipc(
-      date: data['date'] ?? '',
-      maxPerson: data['maxPerson'] ?? '',
-      eventId: data['eventId'] ?? '',
-      message: data['message'] ?? '',
-      title: data['title'] ?? '',
-      mosqueid: data['mosqueid'] ?? '',
-      time: data['time'] ?? '',
-      isEvent: data['isEvent'] ?? '',
-    );
-
-    }
+    ); 
+    
   }
 
 

@@ -6,16 +6,14 @@ import 'package:qr_flutter/qr_flutter.dart';
 import '../providers/buttonclick.dart';
 import '../providers/messagefromtaipc.dart';
 
-class SigninScreen extends StatefulWidget {
-  static const routeName = '/signin';
+class SigninScreenforEvent extends StatefulWidget {
+  static const routeName = '/signinforEvent';
 
   @override
-  State<SigninScreen> createState() => _SigninScreenState();
+  State<SigninScreenforEvent> createState() => _SigninScreenforEventtate();
 }
 
-class _SigninScreenState extends State<SigninScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey();
-
+class _SigninScreenforEventtate extends State<SigninScreenforEvent> {
   final _nomberController = TextEditingController();
   final _lastnameController = TextEditingController();
   final _firestnameController = TextEditingController();
@@ -108,8 +106,8 @@ class _SigninScreenState extends State<SigninScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          title: Text('Success'),
-                          content: Text('You\'r Register Success'),
+                          title: Text(language['Success']),
+                          content: Text(language['You\'r Register Success']),
                         ),
                       );
                       Future.delayed(const Duration(seconds: 1), () {
@@ -120,11 +118,10 @@ class _SigninScreenState extends State<SigninScreen> {
                       showDialog(
                         context: context,
                         builder: (ctx) => AlertDialog(
-                           shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(40),
-                                          ),
-                          title: Text('Erorr'),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          title: Text(language['Erorr']),
                           content: Text(e.toString()),
                           actions: <Widget>[
                             TextButton(

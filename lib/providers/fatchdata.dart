@@ -210,7 +210,7 @@ class FatchData with ChangeNotifier {
           'Accept': 'application/json',
         },
       );
-      // print(response.body);
+       print(jsonDecode(response.body));
       Mosque mosqu = await Mosque.fromJson(jsonDecode(response.body));
       mosqueFollow = mosquelist.firstWhere(
           (element) => int.parse(element.mosqueid) == int.parse(mosqid));

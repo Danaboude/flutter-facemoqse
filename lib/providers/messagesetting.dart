@@ -6,13 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MessageSetting with ChangeNotifier {
   List<MessageFromTaipc> messageFromTaipc = [];
-
-
   Future<void> getNotification() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.reload();
     messageFromTaipc = [];
-
     if (prefs.containsKey('listmessage')) {
       // final List<MessageFromTaipc> list = MessageFromTaipc.decode(prefs.getString('listmessage')!);
       final List<dynamic> jsonData =
@@ -30,14 +27,11 @@ class MessageSetting with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     messageFromTaipc.removeWhere((element) => element.eventId == eventId);
     prefs.setString('listmessage', MessageFromTaipc.encode(messageFromTaipc));
-
     notifyListeners();
   }
 
-  Future<void> senddatauserforevent(String fname, String lname, String number,
-      MessageFromTaipc message) async {
+  Future<void> senddatauserforevent(String fname, String lname, String number,   MessageFromTaipc message) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
     try {
       http.Response response = await http.get(
         Uri.parse(
@@ -61,8 +55,14 @@ class MessageSetting with ChangeNotifier {
         },
       );
       if (response.statusCode == 200) {
-        var s="First Name: ${fname}  Last Name: ${lname} Mobile Number: ${number} Mosque Id: ${message.mosqueid } Date Event: ${message.date}";
-        prefs.setString('${message.eventId}', s);
+        Map s = {
+          'First Name': fname,
+          'Last Name': lname,
+          'Mobile Number': number,
+          'Mosque Id': message.mosqueid,
+          'Date Event': message.date
+        };
+        prefs.setString('${message.eventId}', json.encode(s));
       }
       notifyListeners();
     } catch (e) {

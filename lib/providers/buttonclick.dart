@@ -16,6 +16,11 @@ class Buttonclickp with ChangeNotifier {
   bool replacetoevent = true;
   // Language select key if true well make app arabic
   bool languageselected = false;
+  bool resetselected = false;
+  bool themeselected = false;
+  bool screenselected=false;
+  bool languageformosqueselected=false;
+  int counteraddparyer=1;
   //Two maps with the same keys with different values containing words in the language en,ar
   Map<String, String> en = {
     'titlenamemasjed': 'Prayer and Iqamah times of mosque',
@@ -40,14 +45,99 @@ class Buttonclickp with ChangeNotifier {
     'azannotification': 'Azen Notification',
     'adan': 'Adan',
     'prayer': 'prayer',
-    'delete Worning':'Delete Worning',
-    'body delete worning':'Are you sure you want to Delete',
-    'sign Worning':'Sign Worning',
-    'body sign worning':'Are you sure you want to sign to Event',
-    'yes':'Yes',
-    'no':'No',
-    'Register':'Register',
-    'Cancel':'Cancel'
+    'delete Worning': 'Delete Worning',
+    'body delete worning': 'Are you sure you want to Delete',
+    'sign Worning': 'Sign Worning',
+    'body sign worning': 'Are you sure you want to sign to Event',
+    'yes': 'Yes',
+    'no': 'No',
+    'Register': 'Register',
+    'Cancel': 'Cancel',
+    'username': 'User Name',
+    'enterusername': 'Enter User Name',
+    'firstname': 'First name',
+    'setyouname': 'set You\'r name',
+    'lastname': 'Last name',
+    'setyoulastname': 'set You\'r Last Name',
+    'Password': 'Password',
+    'passowrdisshort': 'Password is too short!',
+    'Confirm Password': 'Confirm Password',
+    'Password do not match!': 'Password do not match!',
+    'Date of Brith YYYY-MM-DD': 'Date of Brith YYYY-MM-DD',
+    'set You\'r Date': 'set You\'r Date',
+    'E-mail': 'E-mail',
+    'Invalid Email': 'Invalid Email',
+    'set You\'r MAC': 'set You\'r MAC',
+    'LOGIN': 'LOGIN',
+    'SIGNUP': 'SIGNUP',
+    'Event Noititcations': 'Event Noititcations',
+    'information': 'information',
+    'Admin': 'Admin',
+    'Title': 'Title',
+    'fill TextFild': 'fill TextFild',
+    'Event': 'Event',
+    'SEND': 'SEND',
+    'Success': 'Success',
+    'You\'r Register Success': 'You\'r Register Success',
+    'Erorr': 'Erorr',
+    'Maximum number Persons': 'Maximum number Persons',
+    'set Number': 'set Number',
+    'Date of time': 'Date of time',
+    'set a Time': 'set a Time',
+    'Mosque Name': 'Mosque Name',
+    'Mosque ID': 'Mosque ID',
+    'Prauer_Method': 'Prauer_Method',
+    'StatUs': 'StatUs',
+    'Date Of Start': 'Date Of Start',
+    'Actibation Code': 'Actibation Code',
+    'Address': 'Address',
+    'Theme': 'Theme',
+    'azan active': 'Azan Active',
+    'azan': 'Azan',
+    'Hijri': 'Hijri',
+    'Adding Days': 'Adding Days',
+    'Reboot': 'Reboot',
+    'Black': 'Black',
+    'White': 'White',
+    'Reset': 'Reset',
+    'Default': 'Default',
+    'Reset Mode': 'Reset Mode',
+     'Change Theme': 'Change Theme',
+     'Select':'Select',
+     'Always On':'Always On',
+     'Change Screen Mode':'Change Screen Mode',
+     'Screen':'Screen',
+     'Scan QR Code':'Scan QR Code',
+     'Change Volume':'Change Volume',
+     'Mute':'Mute',
+     'volume':'volume',
+     'Write Message':'Write Message',
+     'Send Message':'Send Message',
+     'Delete Message':'Delete Message',
+     'Message':'Message',
+     'Prayer Time':'Prayer Time',
+     'Prayer Settings':'Prayer Settings',
+     'Iqamah Settings':'Iqamah Settings',
+     'Chooses Time':'Chooses Time',
+     'Chooses Prayer':'Chooses Prayer',
+     'Chooses':'Chooses ',
+     'Send Times':'Send Time',
+     'logout':'Logout',
+     'Connect':'Connect',
+     'Sync':'Sync',
+     'Scan':'Scan',
+     'not registered':'Not Registered',
+     'Back':'Back',
+     'Delete':'Delete',
+     'Share':'Share',
+     'An Error Occurred':'An Error Occurred',
+     'OK':'OK',
+     'Fill the TextFild':'Fill the TextFild',
+     'Wecome to Facemosque':'Wecome to Facemosque',
+     'Change Language':'Change Language',
+     'time of prayer has been updated':'time of prayer has been updated',
+     'please select Setting and prayer':'please select Setting and prayer',
+     'The restart command has been sent':'The restart command has been sent'
   };
   Map<String, String> ar = {
     'titlenamemasjed': 'مواقيات الصلاة والاقامة لجامع',
@@ -72,14 +162,99 @@ class Buttonclickp with ChangeNotifier {
     'azannotification': 'تنبهات الاذان',
     'adan': 'الاذان',
     'prayer': 'الاقامة',
-    'delete Worning':'تحذير حذف',
-    'body delete worning':'هل أنت متأكد أنك تريد حذف',
-    'sign Worning':'تحذير تسجيل',
-    'body sign worning':'هل أنت متأكد أنك تريد تسجيل في الحدث',
-    'yes':'نعم',
-    'no':'لا',
-    'Register':'تسجيل',
-    'Cancel':'الغاء'
+    'delete Worning': 'تحذير حذف',
+    'body delete worning': 'هل أنت متأكد أنك تريد حذف',
+    'sign Worning': 'تحذير تسجيل',
+    'body sign worning': 'هل أنت متأكد أنك تريد تسجيل في الحدث',
+    'yes': 'نعم',
+    'no': 'لا',
+    'Register': 'تسجيل',
+    'Cancel': 'الغاء',
+    'username': 'اسم االمستخدم',
+    'enterusername': 'ادخل اسم المستخدم',
+    'firstname': 'الاسم الاول',
+    'setyouname': 'ضع اسمك',
+    'lastname': 'اللقب',
+    'setyoulastname': 'ضع اسمك الأخير',
+    'Password': 'كلمة المرور',
+    'passowrdisshort': 'كلمة المرور قصيرة جدا!',
+    'Confirm Password': 'تأكيد كلمة المرور',
+    'Password do not match!': 'كلمة السر غير مطابقة!',
+    'Date of Brith YYYY-MM-DD': 'تاريخ الميلاد YYYY-MM-DD',
+    'set You\'r Date': 'حدد التاريخ',
+    'E-mail': 'البريد الإلكتروني',
+    'Invalid Email': 'بريد إلكتروني خاطئ',
+    'set You\'r MAC': 'ضع MAC',
+    'LOGIN': 'تسجيل الدخول',
+    'SIGNUP': '  التسجيل حساب',
+    'Event Noititcations': 'إشعارات الحدث',
+    'information': 'معلومات',
+    'Admin': 'مشرف',
+    'Title': 'عنوان',
+    'fill TextFild': 'ملء حقل النص',
+    'Event': 'حدث',
+    'SEND': 'إرسال',
+    'Success': 'نجاح',
+    'You\'r Register Success': 'قمت بتسجيل النجاح',
+    'Erorr': 'خطأ',
+    'Maximum number Persons': 'الحد الأقصى لعدد الأشخاص',
+    'set Number': 'تعيين عدد',
+    'Date of time': 'تاريخ الوقت',
+    'set a Time': 'ضبط الوقت',
+    'Mosque Name': 'اسم المسجد',
+    'Mosque ID': 'رقم المسجد',
+    'Prauer_Method': 'طريقة الصلاة',
+    'StatUs': 'الحالة',
+    'Date Of Start': 'تاريخ البدء',
+    'Actibation Code': 'رمز التفعيل',
+    'Address': 'عنوان',
+    'Theme': 'مظهر',
+    'azan active': 'نشط أذان',
+    'azan': 'أذان',
+    'Hijri': 'هجري',
+    'Adding Days': 'إضافة أيام',
+    'Reboot': 'اعادة التشغيل',
+    'Black': 'أسود',
+    'White': 'أبيض',
+    'Default': 'إفتراضي',
+    'Reset':'إعادة ضبط',
+    'Reset Mode':'وضع إعادة التعيين',
+    'Change Theme':'غير الخلفية',
+    'Select':'اختيار',
+    'Always On':'دائما قيد التشغيل',
+    'Change Screen Mode':'تغيير وضع الشاشة',
+    'Screen':'شاشة',
+    'Scan QR Code':' QR مسح',
+    'Change Volume':'تغيير حجم الصوت',
+    'Mute':'صامت',
+    'volume':'الصوت',
+    'Write Message':'اكتب رسالة',
+    'Send Message':'أرسل رسالة',
+    'Delete Message':'حذف رسالة',
+    'Message':'رسالة',
+    'Prayer Time':'وقت الصلاة',
+    'Prayer Settings':'إعدادات الصلاة',
+    'Iqamah Settings':'إعدادات الإقامة',
+    'Chooses Time':'اختار الوقت',
+    'Chooses Prayer':'اختار الصلاة',
+    'Chooses':'اختار',
+    'Send Times':'إرسال الوقت',
+    'logout':'تسجيل خروج',
+    'Connect':'الاتصال',
+    'Sync':'مزامنة',
+    'Scan':'مسح',
+    'not registered':'لم يسجل',
+    'Back':'عودة',
+    'Delete':'حذف',
+    'Share':'شارك',
+    'An Error Occurred':'حدث خطأ',
+    'OK':'نعم',
+    'Fill the TextFild':'املأ حقل النص',
+    'Wecome to Facemosque':'Facemosque مرحبا بكم في ',
+    'Change Language':'تغيير اللغة',
+    'time of prayer has been updated':'تم تحديث وقت الصلاة',
+    'please select Setting and prayer':'يرجى تحديد الإعداد والصلاة',
+    'The restart command has been sent':'تم ارسال امر إعادة التشغيل'
   };
   // A map that stores Arabic and English words according to the value of the variable languageselected
   Map<String, String> get languagepro {
@@ -96,6 +271,7 @@ class Buttonclickp with ChangeNotifier {
   // application will display when the application is closed and launched
   void readlanguage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     if (prefs.containsKey('language'))
       languageselected = prefs.getBool('language')!;
 //  make app listen to update values on Screen
@@ -107,6 +283,28 @@ class Buttonclickp with ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     languageselected = select;
     prefs.setBool('language', languageselected);
+    notifyListeners();
+  }
+
+  void storetheme(bool select) async {
+    themeselected = select;
+    notifyListeners();
+  }
+  void setcunteraddparyer(int num) async {
+    counteraddparyer = num;
+    notifyListeners();
+  }
+   void storelanguageformosque(bool select) async {
+    languageformosqueselected = select;
+    notifyListeners();
+  }
+
+  void storereset(bool select) async {
+    resetselected = select;
+    notifyListeners();
+  }
+  void storeScreen(bool select) async {
+    screenselected = select;
     notifyListeners();
   }
 

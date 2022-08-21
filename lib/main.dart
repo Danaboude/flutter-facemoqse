@@ -1,13 +1,29 @@
 import 'dart:convert';
 //import 'firebase_options.dart';
+import 'package:facemosque/Screen/LanguageScreen.dart';
+import 'package:facemosque/Screen/adminControlScreen.dart';
+import 'package:facemosque/Screen/authscreen.dart';
+import 'package:facemosque/Screen/azanScreen.dart';
+import 'package:facemosque/Screen/createnotificationsScreen.dart';
+import 'package:facemosque/Screen/hijriScreen.dart';
 import 'package:facemosque/Screen/homescreen.dart';
-import 'package:facemosque/Screen/signinScreen.dart';
+import 'package:facemosque/Screen/information.dart';
+import 'package:facemosque/Screen/messageScreen.dart';
+import 'package:facemosque/Screen/prayerTimeScreen.dart';
+import 'package:facemosque/Screen/resetScreen.dart';
+import 'package:facemosque/Screen/screenScreen.dart';
+import 'package:facemosque/Screen/signinScreenforevent.dart';
 import 'package:facemosque/Screen/splachScreen.dart';
+import 'package:facemosque/Screen/splachScreen2.dart';
+import 'package:facemosque/Screen/themeScreen.dart';
+import 'package:facemosque/Screen/volumeScreen.dart';
+import 'package:facemosque/providers/auth.dart';
 import 'package:facemosque/providers/buttonclick.dart';
 import 'package:facemosque/providers/fatchdata.dart';
 import 'package:facemosque/providers/messagefromtaipc.dart';
 import 'package:facemosque/providers/messagesetting.dart';
 import 'package:facemosque/providers/mosque.dart';
+import 'package:facemosque/providers/respray.dart';
 import 'package:facemosque/widget/notificationHelper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +46,7 @@ Future<void> calladan() async {
 
 //firebase setting for notification
 Future<void> _firebasePushHandler(RemoteMessage message) async {
+  print(message.data);
   SharedPreferences preferences = await SharedPreferences.getInstance();
   List<MessageFromTaipc> list = [];
   if (preferences.containsKey('listmessage')) {
@@ -46,48 +63,47 @@ Future<void> _firebasePushHandler(RemoteMessage message) async {
   _notificationHelper.showNot(messagetaipc);
 }
 
-
 NotificationHelper _notificationHelper = NotificationHelper();
-Future<void> updateMosuqe()async{
+Future<void> updateMosuqe() async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
-     
-      if (preferences.containsKey('mosqid')) {
-       //  preferences.remove('mosque');
-        http.Response response = await http.get(
-          Uri.parse(
-            "https://facemosque.eu/api/api.php?client=app&cmd=get_database_method_time&mosque_id=${preferences.getString('mosqid')}",
-          ),
-          headers: {
-            "Connection": "Keep-Alive",
-            'Content-type': 'application/json',
-            'Accept': 'application/json',
-          },
-        ).timeout(const Duration(seconds: 300));
-        print(response.body);
-        Mosque mosqu = await Mosque.fromJson(jsonDecode(response.body));
-        // print(json.encode(mosqu.toMap()));
-        preferences.setString('mosque', json.encode(mosqu.toMap()));
-    }
 
+  if (preferences.containsKey('mosqid')) {
+    http.Response response = await http.get(
+      Uri.parse(
+        "https://facemosque.eu/api/api.php?client=app&cmd=get_database_method_time&mosque_id=${preferences.getString('mosqid')}",
+      ),
+      headers: {
+        "Connection": "Keep-Alive",
+        'Content-type': 'application/json',
+        'Accept': 'application/json',
+      },
+    ).timeout(const Duration(seconds: 300));
+    print(response.body);
+    Mosque mosqu = await Mosque.fromJson(jsonDecode(response.body));
+    preferences.setString('mosque', json.encode(mosqu.toMap()));
+  }
 }
+
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
     await updateMosuqe();
-  
+
     return Future.value(true);
   });
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Workmanager().initialize(callbackDispatcher,isInDebugMode: false);
- await Workmanager().registerPeriodicTask('recallmousqedata', 'recallmousqedata',
-       frequency: Duration(hours: 12),
+
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
+  await Workmanager().registerPeriodicTask(
+      'recallmousqedata', 'recallmousqedata',
+      frequency: Duration(hours: 12),
       initialDelay: Duration(seconds: 10),
       constraints: Constraints(networkType: NetworkType.connected));
   //set all alarm when app open
-     calladan();
-  
+  calladan();
+
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
   runApp(const MyApp());
@@ -226,6 +242,8 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider.value(value: Buttonclickp()),
         ChangeNotifierProvider.value(value: FatchData()),
         ChangeNotifierProvider.value(value: MessageSetting()),
+        ChangeNotifierProvider.value(value: Auth()),
+        ChangeNotifierProvider.value(value: Respray())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -245,10 +263,24 @@ class _MyAppState extends State<MyApp> {
         ),
         routes: {
           HomeScreen.routeName: (_) => const HomeScreen(),
-          SigninScreen.routeName: (_) => SigninScreen(),
+          SigninScreenforEvent.routeName: (_) => SigninScreenforEvent(),
+          AdminControlScreen.routeName: (_) => AdminControlScreen(),
+          CreatenotificationsScreen.routeName: (_) =>
+              CreatenotificationsScreen(),
+          AuthScreen.routeName: (_) => AuthScreen(),
+          Information.routeName: (_) => Information(),
+          LanguageScreen.routeName: (_) => LanguageScreen(),
+          ThemeScreen.routeName: (_) => ThemeScreen(),
+          AzanScreen.routeName: (_) => AzanScreen(),
+          HigiriScreen.routeName: (_) => HigiriScreen(),
+          ResetScreen.routeName: (_) => ResetScreen(),
+          ScreenScreen.routeName: (_) => ScreenScreen(),
+          VolumeScreen.routeName: (_) => VolumeScreen(),
+          MessageScscreen.routeName: (_) => MessageScscreen(),
+          PrayerTimeSreen.routeName: (_) => PrayerTimeSreen(),
         },
         //when app launch run SplachScreen
-        home: const SplachScreen(),
+        home: SplachScreen2(),
       ),
     );
   }

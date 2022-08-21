@@ -32,7 +32,8 @@ mapController = MapController();
     latlong.LatLng l = Provider.of<FatchData>(context).latlng1;
     return new FlutterMap(
       mapController: mapController,
-      options: new MapOptions(
+      options: new MapOptions(debugMultiFingerGestureWinner: true,
+        allowPanningOnScrollingParent: true,
         //set camera map from l
         center: l,
         zoom: 20.0,

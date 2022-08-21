@@ -84,8 +84,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
       } else if (DateFormat("hh:mm").parse(
           mosque.isha.split(':')[0] + ':' + mosque.isha.split(':')[1]).isAfter(now)) {
         timehm = mosque.isha.split(':');
-      } else if (DateFormat("hh:mm").parse(
-          mosque.isha.split(':')[0] + ':' + mosque.isha.split(':')[1]).isBefore(now)){
+      } else{
          countdownTimer?.cancel();
       }
 

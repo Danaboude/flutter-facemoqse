@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:facemosque/Screen/signinScreen.dart';
+import 'package:facemosque/Screen/signinScreenforevent.dart';
 import 'package:facemosque/providers/buttonclick.dart';
 import 'package:facemosque/providers/messagefromtaipc.dart';
 import 'package:facemosque/providers/messagesetting.dart';
@@ -42,6 +42,7 @@ class _EventNotificationsState extends State<EventNotifications> {
   @override
   Widget build(BuildContext context) {
     listmessage = Provider.of<MessageSetting>(context).messageFromTaipc;
+    print(listmessage);
 
     //call Map(languagepro) from provider (Buttonclickp) return en language as default
     Map language = Provider.of<Buttonclickp>(context).languagepro;
@@ -83,7 +84,7 @@ class _EventNotificationsState extends State<EventNotifications> {
                   child: Column(children: [
                     ListTile(
                       enableFeedback: true,
-                      leading: Image.asset('assets/images/mosque.png'),
+                      leading:item.isEvent=='false'? Image.asset('assets/images/announcement_0.png'):Image.asset('assets/images/event-1.png'),
                       title: AutoSizeText(
                         item.title + ' ' + item.date,
                         maxLines: 2,
@@ -138,7 +139,7 @@ class _EventNotificationsState extends State<EventNotifications> {
                                 );
                               },
                               icon: Icon(Icons.delete),
-                              label: Text('Delete')),
+                              label: Text(language['Delete'])),
                           item.isEvent == 'true'
                               ? TextButton.icon(
                                   onPressed: () async {
@@ -160,7 +161,7 @@ class _EventNotificationsState extends State<EventNotifications> {
                                               onPressed: () {
                                                 Navigator.of(ctx)
                                                     .pushReplacementNamed(
-                                                        SigninScreen.routeName,
+                                                        SigninScreenforEvent.routeName,
                                                         arguments: item);
                                               },
                                               child: Text(language['yes']),
@@ -209,7 +210,7 @@ class _EventNotificationsState extends State<EventNotifications> {
 
                                                   Navigator.of(ctx).pop();
                                                 },
-                                                label:  Text('Back'),
+                                                label:  Text(language['Back']),
                                               
                                               ),
                                             ),
@@ -224,7 +225,7 @@ class _EventNotificationsState extends State<EventNotifications> {
                           TextButton.icon(
                               onPressed: () {},
                               icon: Icon(Icons.share),
-                              label: Text('Share')),
+                              label: Text(language['Share'])),
                         ],
                       ),
                     )
