@@ -506,6 +506,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  onboarding_intro_screen:
+    dependency: "direct main"
+    description:
+      name: onboarding_intro_screen
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.8"
   path:
     dependency: transitive
     description:

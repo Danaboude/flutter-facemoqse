@@ -125,7 +125,6 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                     ?.copyWith(fontSize: 16),
                               ),
                               subtitle: AutoSizeText(
-                                
                                 maxLines: 1,
                                 //show country and street mosuqe we select
                                 '${mosquefollow.country} , ${mosquefollow.street}',
@@ -243,7 +242,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                     .storereplacetoevent(true);
                                 Provider.of<FatchData>(context, listen: false)
                                     .fatchandsetallmosque();
-                                    unsubscribeTopic();
+                                unsubscribeTopic();
                               },
                               icon: Icon(Icons.star,
                                   color: const Color(0xFFd4af37))),
@@ -273,7 +272,6 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
             border: Border.all(color: const Color(0xffD1B000), width: 3),
           ),
           child: TextField(
-            
             onChanged: (value) {
               //search bar to shearch for mosque
               Provider.of<FatchData>(con, listen: false).Searchval(value);
@@ -308,140 +306,125 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
               borderRadius: BorderRadius.circular(30)),
           height: sizedphone.height * 0.63,
           width: sizedphone.width * 0.96,
-          child: AnimationLimiter(
-            child: ListView(
-                 physics:
-              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-              //show all mosque
-              children: listmosque
-                  .map((item) => AnimationConfiguration.staggeredList(
-                     position:int.parse(item.mosqueid),
-              delay: Duration(milliseconds: 100),
-                    child: SlideAnimation(
-                        duration: Duration(milliseconds: 2500),
-                curve: Curves.fastLinearToSlowEaseIn,
-                horizontalOffset: 30,
-                verticalOffset: 300.0,
-                      child:  FlipAnimation(
-                  duration: Duration(milliseconds: 3000),
-                  curve: Curves.fastLinearToSlowEaseIn,
-                  flipAxis: FlipAxis.y,
-                        child: Container(
-                              margin: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: const Color(0xffD1B000), width: 3),
-                                borderRadius: BorderRadius.circular(40),
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              child: ListTile(
-                                trailing: IconButton(
-                                    onPressed: () async {
-                                      //if user click my mosque and select mosque this code well run
-                                      if (mymusque) {
-                                        //clean all data form mosquefollow to set new
-                                        mosquefollow.clean();
-                                        // delate all mousqe to show the one we follow
-                                        Provider.of<Buttonclickp>(con, listen: false)
-                                            .storereplacetoloc(false);
-                                        // fatch data for the mosque we follow form listmosque
-                                        //where id  the same as the mosque we select
-                                        mosquefollow = listmosque.firstWhere(
-                                            (element) =>
-                                                element.mosqueid == item.mosqueid);
-                                        //fatch mosque data form api using mosque id
-                                        await Provider.of<FatchData>(con, listen: false)
-                                            .fatchandsetmosque(mosquefollow.mosqueid);
-                                        // store mosquefollow.isFavrote=true in SharedPreferences
-                                        // to set all alarm on
-                                        await Provider.of<FatchData>(context,
-                                                listen: false)
-                                            .setmosqueFollowFavrote(true);
-                                        //make all button adan Notification true
-                                        Provider.of<Buttonclickp>(context,
-                                                listen: false)
-                                            .statesala([
-                                          true,
-                                          true,
-                                          true,
-                                          true,
-                                          true,
-                                          true,
-                                          true
-                                        ]);
-                                        //stoe list sala in SharedPreferences
-                                        Provider.of<Buttonclickp>(context,
-                                                listen: false)
-                                            .storesalaDay();
-                                        //set alarm for all adan
-                                        calladan();
-                                        //remove mosquefollow from listmosque
-                                        listmosque.removeWhere((element) =>
-                                            element.mosqueid == mosquefollow.mosqueid);
-                                        //read All data form SharedPreferences
-                                        await Provider.of<FatchData>(con, listen: false)
-                                            .readdata();
-                                        //back to home page to load map loction if you want see loction go back to Favrote Screen
-                                        //if i not back to home page camera map well not move
-                                        Provider.of<Buttonclickp>(context,listen: false).indexNavigationBar(0);
-                                        //if user click other mosque and select mosque this code well run
-                                      } else {
-                                        subscribeTopic();
-                                        // delate all mousqe to show the one we followevent
-                                        Provider.of<Buttonclickp>(con, listen: false)
-                                            .storereplacetoevent(false);
-                                
-                                        setState(() {
-                                          item.isFavrote = !item.isFavrote;
-                                        });
-                                        // fatch data for the mosque we followevent form listmosque
-                                        //where id  the same as the mosque we select
-                                        mosquesforevent = listmosque.firstWhere(
-                                            (element) =>
-                                                element.mosqueid == item.mosqueid);
-                                        //remove mosquefollowevent from listmosque
-                                        listmosque.removeWhere((element) =>
-                                            element.mosqueid ==
-                                            mosquesforevent.mosqueid);
-                                        SharedPreferences preferences =
-                                            await SharedPreferences.getInstance();
-                                          preferences.setString('mosquesforevent',json.encode(mosquesforevent.toMap()));
-                                        
-                                
-                                        //read All data form SharedPreferences
-                                        await Provider.of<FatchData>(con, listen: false)
-                                            .readdata();
-                                      }
-                                    },
-                                    icon: Icon(
-                                      Icons.star,
-                                      color: Colors.grey,
-                                    )),
-                                leading: Image.asset('assets/images/mosque.png'),
-                                title: AutoSizeText(
-                                  item.name,
-                                  maxLines: 1,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline1
-                                      ?.copyWith(fontSize: 16),
-                                ),
-                                subtitle: AutoSizeText(
-                                  maxLines: 1,
-                                  '${item.country} , ${item.street}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline1
-                                      ?.copyWith(
-                                          fontSize: 14, fontWeight: FontWeight.normal),
-                                ),
-                              ),
-                            ),
+          child: ListView(
+            physics:
+                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            //show all mosque
+            children: listmosque
+                .map((item) => Container(
+                      margin: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: const Color(0xffD1B000), width: 3),
+                        borderRadius: BorderRadius.circular(40),
+                        color: Theme.of(context).primaryColor,
                       ),
-                    ),
-                  ))
-                  .toList(),
-            ),
+                      child: ListTile(
+                        trailing: IconButton(
+                            onPressed: () async {
+                              //if user click my mosque and select mosque this code well run
+                              if (mymusque) {
+                                //clean all data form mosquefollow to set new
+                                mosquefollow.clean();
+                                // delate all mousqe to show the one we follow
+                                Provider.of<Buttonclickp>(con, listen: false)
+                                    .storereplacetoloc(false);
+                                // fatch data for the mosque we follow form listmosque
+                                //where id  the same as the mosque we select
+                                mosquefollow = listmosque.firstWhere(
+                                    (element) =>
+                                        element.mosqueid == item.mosqueid);
+                                //fatch mosque data form api using mosque id
+                                await Provider.of<FatchData>(con, listen: false)
+                                    .fatchandsetmosque(mosquefollow.mosqueid);
+                                // store mosquefollow.isFavrote=true in SharedPreferences
+                                // to set all alarm on
+                                await Provider.of<FatchData>(context,
+                                        listen: false)
+                                    .setmosqueFollowFavrote(true);
+                                //make all button adan Notification true
+                                Provider.of<Buttonclickp>(context,
+                                        listen: false)
+                                    .statesala([
+                                  true,
+                                  true,
+                                  true,
+                                  true,
+                                  true,
+                                  true,
+                                  true
+                                ]);
+                                //stoe list sala in SharedPreferences
+                                Provider.of<Buttonclickp>(context,
+                                        listen: false)
+                                    .storesalaDay();
+                                //set alarm for all adan
+                                calladan();
+                                //remove mosquefollow from listmosque
+                                listmosque.removeWhere((element) =>
+                                    element.mosqueid == mosquefollow.mosqueid);
+                                //read All data form SharedPreferences
+                                await Provider.of<FatchData>(con, listen: false)
+                                    .readdata();
+                                //back to home page to load map loction if you want see loction go back to Favrote Screen
+                                //if i not back to home page camera map well not move
+                                Provider.of<Buttonclickp>(context,
+                                        listen: false)
+                                    .indexNavigationBar(0);
+                                //if user click other mosque and select mosque this code well run
+                              } else {
+                                subscribeTopic();
+                                // delate all mousqe to show the one we followevent
+                                Provider.of<Buttonclickp>(con, listen: false)
+                                    .storereplacetoevent(false);
+
+                                setState(() {
+                                  item.isFavrote = !item.isFavrote;
+                                });
+                                // fatch data for the mosque we followevent form listmosque
+                                //where id  the same as the mosque we select
+                                mosquesforevent = listmosque.firstWhere(
+                                    (element) =>
+                                        element.mosqueid == item.mosqueid);
+                                //remove mosquefollowevent from listmosque
+                                listmosque.removeWhere((element) =>
+                                    element.mosqueid ==
+                                    mosquesforevent.mosqueid);
+                                SharedPreferences preferences =
+                                    await SharedPreferences.getInstance();
+                                preferences.setString('mosquesforevent',
+                                    json.encode(mosquesforevent.toMap()));
+
+                                //read All data form SharedPreferences
+                                await Provider.of<FatchData>(con, listen: false)
+                                    .readdata();
+                              }
+                            },
+                            icon: Icon(
+                              Icons.star,
+                              color: Colors.grey,
+                            )),
+                        leading: Image.asset('assets/images/mosque.png'),
+                        title: AutoSizeText(
+                          item.name,
+                          maxLines: 1,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline1
+                              ?.copyWith(fontSize: 16),
+                        ),
+                        subtitle: AutoSizeText(
+                          maxLines: 1,
+                          '${item.country} , ${item.street}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline1
+                              ?.copyWith(
+                                  fontSize: 14, fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                    ))
+                .toList(),
           ),
         ),
       ],
@@ -449,20 +432,17 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
   }
 
   void subscribeTopic() async {
-   
     _notificationHelper.initializeNotification();
     await FirebaseMessaging.instance
         .subscribeToTopic('Trial_Version')
         .then((value) => print('Trial_Version'));
-    
-      print("hi");
-   
+
+    print("hi");
   }
 
   void unsubscribeTopic() async {
     await FirebaseMessaging.instance
         .unsubscribeFromTopic('Trial_Version')
         .then((value) => print('Hello'));
-   
   }
 }

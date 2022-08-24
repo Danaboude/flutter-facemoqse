@@ -5,6 +5,7 @@ import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:facemosque/Screen/LanguageScreen.dart';
 import 'package:facemosque/Screen/authscreen.dart';
 import 'package:facemosque/Screen/azanScreen.dart';
+import 'package:facemosque/Screen/connectScreen.dart';
 import 'package:facemosque/Screen/createnotificationsScreen.dart';
 import 'package:facemosque/Screen/hijriScreen.dart';
 import 'package:facemosque/Screen/information.dart';
@@ -133,7 +134,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                         style: Theme.of(context).textTheme.headline1,
                       ),
                       Text(
-                        'IP ',
+                        'IP ${Provider.of<Respray>(context).ipaddress}',
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ],
@@ -250,21 +251,26 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                         Provider.of<Respray>(context,
                                                 listen: false)
                                             .sendudp('reboot');
-                                            Timer(Duration(seconds: 2), (){
-                                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                          language['The restart command has been sent'],
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1!
-                              .copyWith(fontWeight: FontWeight.normal),
-                        ),
-                        duration: const Duration(seconds: 1),
-                        backgroundColor: Theme.of(context).primaryColor,
-                      ));
-                                            });
-                                            
+                                        Timer(Duration(seconds: 2), () {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content: Text(
+                                              language[
+                                                  'The restart command has been sent'],
+                                              textAlign: TextAlign.center,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline1!
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.normal),
+                                            ),
+                                            duration:
+                                                const Duration(seconds: 1),
+                                            backgroundColor:
+                                                Theme.of(context).primaryColor,
+                                          ));
+                                        });
                                       }
                                     },
                                     child: GridTile(
@@ -330,11 +336,19 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                 RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
                         )))),
-                ElevatedButton(
+                Provider.of<Respray>(context).isdoneserarching==false? ElevatedButton(
                     child: Text(language['Connect']),
                     onPressed: () async {
+                            Provider.of<Respray>(context, listen: false)
+                          .setisdoneserarching(true);
                       await Provider.of<Respray>(context, listen: false)
-                          .sendudp('ss');
+                          .getIprespery();
+                      
+                     Timer(Duration(seconds: 4),(() {
+                        Navigator.of(context).pushReplacementNamed(ConnectScreen.routeName);
+                     }));
+                          Provider.of<Respray>(context, listen: false)
+                          .setisdoneserarching(false);
                     },
                     style: ButtonStyle(
                         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
@@ -343,7 +357,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
-                        )))),
+                        )))):Text(language['wait for IP to find'],style: Theme.of(context).textTheme.headline2,),
                 ElevatedButton(
                     child: Text(language['Sync']),
                     onPressed: () {
@@ -362,6 +376,28 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
             )
           ],
         ));
+  }
+
+  showLoaderDialog(BuildContext context) {
+    Map language = Provider.of<Buttonclickp>(context,listen: false).languagepro;
+
+    AlertDialog alert = AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(),
+          Container(
+              margin: EdgeInsets.only(left: 7),
+              child: Text(language['wait for IP to find'])),
+        ],
+      ),
+    );
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   Future<void> _scan() async {

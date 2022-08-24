@@ -2,15 +2,19 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:animations/animations.dart';
 import 'package:facemosque/Screen/homescreen.dart';
+import 'package:facemosque/Screen/onbordingScreen2.dart';
+import 'package:facemosque/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 
 import '../providers/auth.dart';
 import '../providers/buttonclick.dart';
 import '../providers/fatchdata.dart';
 import '../providers/messagesetting.dart';
+import '../providers/respray.dart';
 
 
 
@@ -38,7 +42,7 @@ class _SplachScreen2State extends State<SplachScreen2> {
   @override
   void initState() {
     super.initState();
-    
+     
 
     Timer(Duration(milliseconds: 400), () {
       setState(() {
@@ -80,16 +84,21 @@ class _SplachScreen2State extends State<SplachScreen2> {
     Provider.of<Buttonclickp>(context, listen: false).getreplacetoevent();
     //read language from SharedPreferences
     Provider.of<Buttonclickp>(context, listen: false).readlanguage();
+   
+ //   int? initScreen ;
     Timer(Duration(milliseconds: 3850), () {
+      
       setState(() {
         Navigator.of(context).pushReplacement(
           ThisIsFadeRoute(
-            route: HomeScreen(), page: Container(),
+            route:  initScreen == 0 || initScreen == null ? OnbordingScreen2() : HomeScreen(), page: Container(),
           ),
         );
       });
     });
+   
   }
+
 
   bool _a = false;
   bool _b = false;

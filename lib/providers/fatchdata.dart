@@ -126,8 +126,7 @@ class FatchData with ChangeNotifier {
       final input = val.toLowerCase();
       return namemosq.contains(input);
     }).toList();
-    if(val=='')
-    fatchandsetallmosque();
+    if (val == '') fatchandsetallmosque();
 
     mosquelist = a;
     notifyListeners();
@@ -196,7 +195,6 @@ class FatchData with ChangeNotifier {
 
 //// fatch mousqe from api where id
   Future<void> fatchandsetmosque(String mosqid) async {
-    
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('mosqid');
     try {
@@ -210,7 +208,7 @@ class FatchData with ChangeNotifier {
           'Accept': 'application/json',
         },
       );
-       print(jsonDecode(response.body));
+      print(jsonDecode(response.body));
       Mosque mosqu = await Mosque.fromJson(jsonDecode(response.body));
       mosqueFollow = mosquelist.firstWhere(
           (element) => int.parse(element.mosqueid) == int.parse(mosqid));
@@ -259,6 +257,8 @@ class FatchData with ChangeNotifier {
           ayanum: '',
           dataid: '');
       prefs.remove('mosque');
+      prefs.remove('mosqueFollow');
+      mosqueFollow.clean();
       notifyListeners();
     } catch (e) {
       print(e);

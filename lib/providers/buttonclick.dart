@@ -137,7 +137,10 @@ class Buttonclickp with ChangeNotifier {
      'Change Language':'Change Language',
      'time of prayer has been updated':'time of prayer has been updated',
      'please select Setting and prayer':'please select Setting and prayer',
-     'The restart command has been sent':'The restart command has been sent'
+     'The restart command has been sent':'The restart command has been sent',
+     'Serach for Respray IP':'Serach for Respray IP',
+     'Choose ip':'Choose ip',
+     'wait for IP to find':'Wait to find IP'
   };
   Map<String, String> ar = {
     'titlenamemasjed': 'مواقيات الصلاة والاقامة لجامع',
@@ -254,7 +257,10 @@ class Buttonclickp with ChangeNotifier {
     'Change Language':'تغيير اللغة',
     'time of prayer has been updated':'تم تحديث وقت الصلاة',
     'please select Setting and prayer':'يرجى تحديد الإعداد والصلاة',
-    'The restart command has been sent':'تم ارسال امر إعادة التشغيل'
+    'The restart command has been sent':'تم ارسال امر إعادة التشغيل',
+    'Serach for Respray IP':'ابحث عن Respray IP',
+    'Choose ip':'اختر IP',
+    'wait for IP to find':'IP انتظر حتى يتم العثور على'
   };
   // A map that stores Arabic and English words according to the value of the variable languageselected
   Map<String, String> get languagepro {
