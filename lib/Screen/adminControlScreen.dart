@@ -20,11 +20,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:facemosque/Screen/homescreen.dart';
 import 'package:flutter/services.dart';
+import 'package:network_info_plus/network_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../providers/buttonclick.dart';
 import '../providers/respray.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class AdminControlScreen extends StatefulWidget {
   static const routeName = '/admincontrol';
@@ -53,6 +55,50 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
   var _selectedCamera = -1;
   var _useAutoFocus = true;
   var _autoEnableFlash = false;
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+   Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print('Couldn\'t check connectivity status $e');
+      return;
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) {
+      return Future.value(null);
+    }
+
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+    });
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
 
   static final _possibleFormats = BarcodeFormat.values.toList()
     ..removeWhere((e) => e == BarcodeFormat.unknown);
@@ -336,28 +382,39 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                 RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
                         )))),
-                Provider.of<Respray>(context).isdoneserarching==false? ElevatedButton(
-                    child: Text(language['Connect']),
-                    onPressed: () async {
-                            Provider.of<Respray>(context, listen: false)
-                          .setisdoneserarching(true);
-                      await Provider.of<Respray>(context, listen: false)
-                          .getIprespery();
-                      
-                     Timer(Duration(seconds: 4),(() {
-                        Navigator.of(context).pushReplacementNamed(ConnectScreen.routeName);
-                     }));
+                        _connectionStatus.name!='wifi'?Text(language['Connect to wifi'],
+                            style: Theme.of(context).textTheme.headline2,
+                          ):
+                Provider.of<Respray>(context).isdoneserarching == false
+                    ? ElevatedButton(
+                        child: Text(language['Connect']),
+                        onPressed: () async {
+                          
                           Provider.of<Respray>(context, listen: false)
-                          .setisdoneserarching(false);
-                    },
-                    style: ButtonStyle(
-                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                            EdgeInsets.all(13)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                        )))):Text(language['wait for IP to find'],style: Theme.of(context).textTheme.headline2,),
+                              .setisdoneserarching(true);
+                          await Provider.of<Respray>(context, listen: false)
+                              .getIprespery();
+
+                          Timer(Duration(seconds: 4), (() {
+                            Navigator.of(context)
+                                .pushReplacementNamed(ConnectScreen.routeName);
+                          }));
+                          Provider.of<Respray>(context, listen: false)
+                              .setisdoneserarching(false);
+                        },
+                        style: ButtonStyle(
+                            padding:
+                                MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                    EdgeInsets.all(13)),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ))))
+                    :  Text(
+                            language['wait for IP to find'],
+                            style: Theme.of(context).textTheme.headline2,
+                          )
+                        ,
                 ElevatedButton(
                     child: Text(language['Sync']),
                     onPressed: () {
@@ -379,7 +436,8 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
   }
 
   showLoaderDialog(BuildContext context) {
-    Map language = Provider.of<Buttonclickp>(context,listen: false).languagepro;
+    Map language =
+        Provider.of<Buttonclickp>(context, listen: false).languagepro;
 
     AlertDialog alert = AlertDialog(
       content: new Row(

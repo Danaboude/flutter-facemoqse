@@ -68,6 +68,7 @@ dependencies:
   network_info_plus: ^2.1.4+1
   udp: ^5.0.3
   onboarding_intro_screen: ^0.0.5
+  connectivity_plus: ^2.3.6+1
     
 
  

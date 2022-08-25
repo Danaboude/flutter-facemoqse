@@ -35,7 +35,7 @@ class Respray with ChangeNotifier {
           Datagram? dg = udpSocket.receive();
           if (dg != null) {
             ipaddress = dg.address.address;
-            print("received ${dg.address.host}");
+            print("received ${dg.address}");
           }
         });
         List<int> data1 = utf8.encode(data);
@@ -58,7 +58,7 @@ class Respray with ChangeNotifier {
   Future<void> getIprespery() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> Ip = [];
-
+     
     /// Initialize Ip Address
     final info = NetworkInfo();
     var hostAddress = await info.getWifiIP();

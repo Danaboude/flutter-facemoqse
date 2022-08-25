@@ -140,7 +140,8 @@ class Buttonclickp with ChangeNotifier {
      'The restart command has been sent':'The restart command has been sent',
      'Serach for Respray IP':'Serach for Respray IP',
      'Choose ip':'Choose ip',
-     'wait for IP to find':'Wait to find IP'
+     'wait for IP to find':'Wait to find IP',
+     'Connect to wifi':'Connect to wifi'
   };
   Map<String, String> ar = {
     'titlenamemasjed': 'مواقيات الصلاة والاقامة لجامع',
@@ -260,7 +261,8 @@ class Buttonclickp with ChangeNotifier {
     'The restart command has been sent':'تم ارسال امر إعادة التشغيل',
     'Serach for Respray IP':'ابحث عن Respray IP',
     'Choose ip':'اختر IP',
-    'wait for IP to find':'IP انتظر حتى يتم العثور على'
+    'wait for IP to find':'IP انتظر حتى يتم العثور على',
+    'Connect to wifi':'wifi اتصل بشبكة'
   };
   // A map that stores Arabic and English words according to the value of the variable languageselected
   Map<String, String> get languagepro {
