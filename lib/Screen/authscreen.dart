@@ -1,14 +1,10 @@
-import 'dart:math';
-
 import 'package:facemosque/Screen/adminControlScreen.dart';
 import 'package:facemosque/Screen/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
 import '../providers/auth.dart';
 import '../providers/buttonclick.dart';
-
 class AuthScreen extends StatelessWidget {
   static const routeName = '/auth';
   @override

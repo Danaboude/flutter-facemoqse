@@ -45,6 +45,7 @@ Future<void> calladan() async {
   alarmadan('isha');
 }
 
+
 //firebase setting for notification
 Future<void> _firebasePushHandler(RemoteMessage message) async {
   print(message.data);

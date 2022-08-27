@@ -3,10 +3,8 @@ import 'dart:io';
 
 import 'package:network_tools/network_tools.dart';
 import 'package:network_info_plus/network_info_plus.dart';
-import 'package:udp/udp.dart';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Respray with ChangeNotifier {
   List<String> Ips = [];
@@ -56,7 +54,6 @@ class Respray with ChangeNotifier {
   }
 
   Future<void> getIprespery() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> Ip = [];
      
     /// Initialize Ip Address
