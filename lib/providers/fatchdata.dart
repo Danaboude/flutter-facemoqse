@@ -209,18 +209,26 @@ class FatchData with ChangeNotifier {
         },
       );
       print(jsonDecode(response.body));
-      Mosque mosqu = await Mosque.fromJson(jsonDecode(response.body));
-      mosqueFollow = mosquelist.firstWhere(
-          (element) => int.parse(element.mosqueid) == int.parse(mosqid));
-      prefs.setString('mosqueFollow', json.encode(mosqueFollow.toMap()));
-      prefs.remove('mosque');
-      // print(json.encode(mosqu.toMap()));
-      prefs.setString('mosque', json.encode(mosqu.toMap()));
-      mosquelist
-          .removeWhere((element) => element.mosqueid == mosqueFollow.mosqueid);
-      mosquelist.removeWhere(
-          (element) => element.mosqueid == mosqueFollowevent.mosqueid);
-      prefs.setString('mosqid', mosqid);
+      if (response.body == 'Mosque not exist') {
+        mosqueFollow = mosquelist.firstWhere(
+            (element) => int.parse(element.mosqueid) == int.parse(mosqid));
+        prefs.setString('mosqueFollow', json.encode(mosqueFollow.toMap()));
+          prefs.setString('mosqid', mosqid);
+      
+      } else {
+        Mosque mosqu = await Mosque.fromJson(jsonDecode(response.body));
+        mosqueFollow = mosquelist.firstWhere(
+            (element) => int.parse(element.mosqueid) == int.parse(mosqid));
+        prefs.setString('mosqueFollow', json.encode(mosqueFollow.toMap()));
+        prefs.remove('mosque');
+        // print(json.encode(mosqu.toMap()));
+        prefs.setString('mosque', json.encode(mosqu.toMap()));
+        mosquelist.removeWhere(
+            (element) => element.mosqueid == mosqueFollow.mosqueid);
+        mosquelist.removeWhere(
+            (element) => element.mosqueid == mosqueFollowevent.mosqueid);
+        prefs.setString('mosqid', mosqid);
+      }
       notifyListeners();
       // logLongString(mosque.toString());
     } catch (e) {

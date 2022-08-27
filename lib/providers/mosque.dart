@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 //Model Mosque
 class Mosque {
   String fajer;
@@ -51,57 +52,57 @@ class Mosque {
   });
   factory Mosque.fromJson(Map<String, dynamic> json) {
     //print(json['Quran_A'].toString());
-    if(json['Quran_A']!=null)
-    {return Mosque(
-        fajer: json['fajer']??'',
-        fajeri: json['fajer_i']??'',
-        sharouq: json['sharouq']??'',
-        dhuhr: json['dhuhr']??'',
-        dhuhri: json['dhuhr_i']??'',
-        asr: json['asr']??'',
-        asri: json['asr_i']??'',
-        magrib: json['magrib']??'',
-        magribi: json['magrib_i']??'',
-        isha: json['isha']??'',
-        ishai: json['isha_i']??'',
-        friday_1: json['friday_1']??'',
-        friday_2: json['friday_2']??'',
-        horA: json['H_or_A']??0,
-        qurane: json['Quran_E']??'',
-        qurana: json['Quran_A']??'',
-        haditha: json['Hadith_A']??'',
-        hadithe: json['Hadith_E']??'',
-        islamicevent: json['Islamic_event']??'',
-       historicalevent:json['Historical_event']??'',
-        surhnum: json['Surh_num']??'',
-        ayanum: json['Aya_num']??'',
-        dataid: json['date_id']??'');}
-        else{
-          return Mosque(
-        fajer: json['fajer']??'',
-        fajeri: json['fajeri']??'',
-        sharouq: json['sharouq']??'',
-        dhuhr: json['dhuhr']??'',
-        dhuhri: json['dhuhri']??'',
-        asr: json['asr']??'',
-        asri: json['asri']??'',
-        magrib: json['magrib']??'',
-        magribi: json['magribi']??'',
-        isha: json['isha']??'',
-        ishai: json['ishai']??'',
-        friday_1: json['friday_1']??'',
-        friday_2: json['friday_2']??'',
-        horA: json['horA']??0,
-        qurane: json['qurane']??'',
-        qurana: json['qurana']??'',
-        haditha: json['haditha']??'',
-        hadithe: json['hadithe']??'',
-        islamicevent: json['islamicevent']??'',
-       historicalevent:json['historicalevent']??'',
-        surhnum: json['surhnum']??'',
-        ayanum: json['ayanum']??'',
-        dataid: json['dataid']??'');
-        }
+    if (json['Quran_A'] != null) {
+      return Mosque(
+          fajer: json['fajer'] ?? '',
+          fajeri: json['fajer_i'] ?? '',
+          sharouq: json['sharouq'] ?? '',
+          dhuhr: json['dhuhr'] ?? '',
+          dhuhri: json['dhuhr_i'] ?? '',
+          asr: json['asr'] ?? '',
+          asri: json['asr_i'] ?? '',
+          magrib: json['magrib'] ?? '',
+          magribi: json['magrib_i'] ?? '',
+          isha: json['isha'] ?? '',
+          ishai: json['isha_i'] ?? '',
+          friday_1: json['friday_1'] ?? '',
+          friday_2: json['friday_2'] ?? '',
+          horA: json['H_or_A'] ?? 0,
+          qurane: json['Quran_E'] ?? '',
+          qurana: json['Quran_A'] ?? '',
+          haditha: json['Hadith_A'] ?? '',
+          hadithe: json['Hadith_E'] ?? '',
+          islamicevent: json['Islamic_event'] ?? '',
+          historicalevent: json['Historical_event'] ?? '',
+          surhnum: json['Surh_num'] ?? '',
+          ayanum: json['Aya_num'] ?? '',
+          dataid: json['date_id'] ?? '');
+    } else {
+      return Mosque(
+          fajer: json['fajer'] ?? '',
+          fajeri: json['fajeri'] ?? '',
+          sharouq: json['sharouq'] ?? '',
+          dhuhr: json['dhuhr'] ?? '',
+          dhuhri: json['dhuhri'] ?? '',
+          asr: json['asr'] ?? '',
+          asri: json['asri'] ?? '',
+          magrib: json['magrib'] ?? '',
+          magribi: json['magribi'] ?? '',
+          isha: json['isha'] ?? '',
+          ishai: json['ishai'] ?? '',
+          friday_1: json['friday_1'] ?? '',
+          friday_2: json['friday_2'] ?? '',
+          horA: json['horA'] ?? 0,
+          qurane: json['qurane'] ?? '',
+          qurana: json['qurana'] ?? '',
+          haditha: json['haditha'] ?? '',
+          hadithe: json['hadithe'] ?? '',
+          islamicevent: json['islamicevent'] ?? '',
+          historicalevent: json['historicalevent'] ?? '',
+          surhnum: json['surhnum'] ?? '',
+          ayanum: json['ayanum'] ?? '',
+          dataid: json['dataid'] ?? '');
+    }
   }
 
   @override
@@ -166,5 +167,4 @@ class Mosque {
   }
 
   String toJson() => json.encode(toMap());
-
 }

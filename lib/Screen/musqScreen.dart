@@ -242,7 +242,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                     .storereplacetoevent(true);
                                 Provider.of<FatchData>(context, listen: false)
                                     .fatchandsetallmosque();
-                                unsubscribeTopic();
+                                unsubscribeTopic(mosquesforevent.name);
                               },
                               icon: Icon(Icons.star,
                                   color: const Color(0xFFd4af37))),
@@ -374,7 +374,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                     .indexNavigationBar(0);
                                 //if user click other mosque and select mosque this code well run
                               } else {
-                                subscribeTopic();
+                               
                                 // delate all mousqe to show the one we followevent
                                 Provider.of<Buttonclickp>(con, listen: false)
                                     .storereplacetoevent(false);
@@ -387,6 +387,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                 mosquesforevent = listmosque.firstWhere(
                                     (element) =>
                                         element.mosqueid == item.mosqueid);
+                                         subscribeTopic(mosquesforevent.name);
                                 //remove mosquefollowevent from listmosque
                                 listmosque.removeWhere((element) =>
                                     element.mosqueid ==
@@ -432,18 +433,16 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
     );
   }
 
-  void subscribeTopic() async {
+  void subscribeTopic(String name) async {
     _notificationHelper.initializeNotification();
     await FirebaseMessaging.instance
-        .subscribeToTopic('Trial_Version')
-        .then((value) => print('Trial_Version'));
-
-    print("hi");
+        .subscribeToTopic(name)
+        .then((value) => print(name));
   }
 
-  void unsubscribeTopic() async {
+  void unsubscribeTopic(String name) async {
     await FirebaseMessaging.instance
-        .unsubscribeFromTopic('Trial_Version')
-        .then((value) => print('Hello'));
+        .unsubscribeFromTopic(name)
+        .then((value) => print(name));
   }
 }
