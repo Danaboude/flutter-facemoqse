@@ -86,6 +86,10 @@ class _CountdownTimerState extends State<CountdownTimer> {
       myDuration = Duration(
         seconds: tempDate.difference(now).inSeconds,
       );
+      if(myDuration.inHours.remainder(24)<0){
+        myDuration=Duration.zero;
+      }
+
     }
   }
 
@@ -111,6 +115,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
     final hours = strDigits(myDuration.inHours.remainder(24));
     final minutes = strDigits(myDuration.inMinutes.remainder(60));
     final seconds = strDigits(myDuration.inSeconds.remainder(60));
+      print( '$hours:$minutes:$seconds');
     return
 
         // Step 8

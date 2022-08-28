@@ -141,7 +141,8 @@ class Buttonclickp with ChangeNotifier {
      'Serach for Respray IP':'Serach for Respray IP',
      'Choose ip':'Choose ip',
      'wait for IP to find':'Wait to find IP',
-     'Connect to wifi':'Connect to wifi'
+     'Connect to wifi':'Connect to wifi',
+     'No More paryer for today':'No More paryer for today'
   };
   Map<String, String> ar = {
     'titlenamemasjed': 'مواقيات الصلاة والاقامة لجامع',
@@ -262,7 +263,8 @@ class Buttonclickp with ChangeNotifier {
     'Serach for Respray IP':'ابحث عن Respray IP',
     'Choose ip':'اختر IP',
     'wait for IP to find':'IP انتظر حتى يتم العثور على',
-    'Connect to wifi':'wifi اتصل بشبكة'
+    'Connect to wifi':'wifi اتصل بشبكة',
+    'No More paryer for today':'لا مزيد من الصلاة لهذا اليوم'
   };
   // A map that stores Arabic and English words according to the value of the variable languageselected
   Map<String, String> get languagepro {

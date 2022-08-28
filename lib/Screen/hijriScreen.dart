@@ -54,9 +54,9 @@ class _HigiriScreenState extends State<HigiriScreen> {
           Padding(
             padding: const EdgeInsets.all(64),
             child: Text(
-              count.toString(),
+              '$count Days',
               style: TextStyle(
-                fontSize: 100,
+                fontSize: 60,
                 color: isFull ? Colors.red : Colors.black,
               ),
             ),

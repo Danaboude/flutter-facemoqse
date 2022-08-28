@@ -1,3 +1,4 @@
+import 'package:facemosque/Screen/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:onboarding_intro_screen/onboarding_screen.dart';
 
@@ -14,7 +15,7 @@ class _OnbordingScreen2State extends State<OnbordingScreen2> {
     var sizedphone = MediaQuery.of(context).size;
     return OnBoardingScreen2(
       onSkip: () {
-        debugPrint("On Skip Called....");
+       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
       },
       showPrevNextButton: true,
       showIndicator: true,
