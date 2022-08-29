@@ -161,8 +161,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             CarouselSlider(
                                 options: CarouselOptions(
-                                  //take 20% of height size phone for this widget (cart)
-                                  height: sizedphone.height * 0.20,
+                                  //take 28% of height size phone for this widget (cart)
+                                  height: sizedphone.height * 0.18,
                                   scrollDirection: Axis.horizontal,
                                   //to keep scroll forever
                                   enableInfiniteScroll: true,

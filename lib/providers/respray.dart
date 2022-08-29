@@ -42,7 +42,7 @@ class Respray with ChangeNotifier {
     }
   }
 
-  void setisdoneserarching(bool iss) {
+  Future<void> setisdoneserarching(bool iss)async {
     isdoneserarching = iss;
     notifyListeners();
   }
@@ -66,7 +66,7 @@ class Respray with ChangeNotifier {
       // or You can also get address using network_info_plus package
       final String subnet = ip.substring(0, ip.lastIndexOf('.'));
       final stream = HostScanner.getAllPingableDevices(subnet,
-          firstSubnet: 1, lastSubnet: 255, progressCallback: (progress) {
+          firstSubnet: 1, lastSubnet: 100, progressCallback: (progress) {
         print('Progress for host discovery : $progress');
       });
 

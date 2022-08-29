@@ -388,7 +388,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                         child: Text(language['Connect']),
                         onPressed: () async {
                           
-                          Provider.of<Respray>(context, listen: false)
+                         await Provider.of<Respray>(context, listen: false)
                               .setisdoneserarching(true);
                           await Provider.of<Respray>(context, listen: false)
                               .getIprespery();
