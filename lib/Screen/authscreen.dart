@@ -1,14 +1,10 @@
-import 'dart:math';
-
 import 'package:facemosque/Screen/adminControlScreen.dart';
 import 'package:facemosque/Screen/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
 import '../providers/auth.dart';
 import '../providers/buttonclick.dart';
-
 class AuthScreen extends StatelessWidget {
   static const routeName = '/auth';
   @override
@@ -46,7 +42,7 @@ class AuthScreen extends StatelessWidget {
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 5, vertical: 30),
+            margin: EdgeInsets.symmetric(horizontal: 5, vertical:55),
             alignment: Alignment.topLeft,
             child: IconButton(
               icon: const Icon(Icons.arrow_back_ios_new),
@@ -406,23 +402,24 @@ class _AuthCardState extends State<AuthCard>
                 height: 20,
               ),
               if (_isLoading) CircularProgressIndicator(),
-              RaisedButton(
+              ElevatedButton(
                 child: Text(_authMode == AuthMode.Login ?language ['LOGIN'] : language['SIGNUP']),
                 onPressed: _authMode == AuthMode.Login ? submit : register,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)),
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-                color: Theme.of(context).primaryColor,
-                textColor: Colors.white,
+                  style: ElevatedButton.styleFrom( shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),shadowColor: Theme.of(context).primaryColor,textStyle: TextStyle(color: Colors.white,)),
+                 
+                
               ),
-              FlatButton(
+              TextButton(
                 onPressed: _switchAuthMode,
                 child: Text(
                   _authMode == AuthMode.Login ? language['SIGNUP']:language ['LOGIN'] ,
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 4),
-                //color: Theme.of(context).primaryColor,
-                textColor: Theme.of(context).primaryColor,
+                   style: ElevatedButton.styleFrom( shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),textStyle: TextStyle(color: Theme.of(context).primaryColor,)),
+              
               ),
             ],
           ),
@@ -440,7 +437,7 @@ class _AuthCardState extends State<AuthCard>
               title:  Center(child: Text(language['An Error Occurred'])),
               content: Text(errorMessage.toString()),
               actions: [
-                FlatButton(
+                TextButton(
                   onPressed: () => Navigator.of(ctx).pop(),
                   child:  Text(language['OK']),
                 )

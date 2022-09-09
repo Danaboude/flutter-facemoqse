@@ -41,7 +41,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          
+                Container(
+        
+            alignment: Alignment.topLeft,
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new),
+              color: Colors.black,
+              onPressed: () =>
+                  Navigator.of(context).pop(),
+            ),
+          ),
           SizedBox(
+            
            //take 2% of height size phone
             height: sizedphone.height * 0.02,
           ),

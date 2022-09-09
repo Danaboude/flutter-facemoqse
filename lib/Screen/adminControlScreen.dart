@@ -5,6 +5,7 @@ import 'package:barcode_scan2/barcode_scan2.dart';
 import 'package:facemosque/Screen/LanguageScreen.dart';
 import 'package:facemosque/Screen/authscreen.dart';
 import 'package:facemosque/Screen/azanScreen.dart';
+import 'package:facemosque/Screen/connectScreen.dart';
 import 'package:facemosque/Screen/createnotificationsScreen.dart';
 import 'package:facemosque/Screen/hijriScreen.dart';
 import 'package:facemosque/Screen/information.dart';
@@ -20,10 +21,10 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:facemosque/Screen/homescreen.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../providers/buttonclick.dart';
 import '../providers/respray.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class AdminControlScreen extends StatefulWidget {
   static const routeName = '/admincontrol';
@@ -52,6 +53,50 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
   var _selectedCamera = -1;
   var _useAutoFocus = true;
   var _autoEnableFlash = false;
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+   Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print('Couldn\'t check connectivity status $e');
+      return;
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) {
+      return Future.value(null);
+    }
+
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+    });
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
 
   static final _possibleFormats = BarcodeFormat.values.toList()
     ..removeWhere((e) => e == BarcodeFormat.unknown);
@@ -133,7 +178,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                         style: Theme.of(context).textTheme.headline1,
                       ),
                       Text(
-                        'IP ',
+                        'IP ${Provider.of<Respray>(context).ipaddress}',
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ],
@@ -250,21 +295,26 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                         Provider.of<Respray>(context,
                                                 listen: false)
                                             .sendudp('reboot');
-                                            Timer(Duration(seconds: 2), (){
-                                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                          language['The restart command has been sent'],
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1!
-                              .copyWith(fontWeight: FontWeight.normal),
-                        ),
-                        duration: const Duration(seconds: 1),
-                        backgroundColor: Theme.of(context).primaryColor,
-                      ));
-                                            });
-                                            
+                                        Timer(Duration(seconds: 2), () {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                            content: Text(
+                                              language[
+                                                  'The restart command has been sent'],
+                                              textAlign: TextAlign.center,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline1!
+                                                  .copyWith(
+                                                      fontWeight:
+                                                          FontWeight.normal),
+                                            ),
+                                            duration:
+                                                const Duration(seconds: 1),
+                                            backgroundColor:
+                                                Theme.of(context).primaryColor,
+                                          ));
+                                        });
                                       }
                                     },
                                     child: GridTile(
@@ -330,20 +380,39 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                 RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
                         )))),
-                ElevatedButton(
-                    child: Text(language['Connect']),
-                    onPressed: () async {
-                      await Provider.of<Respray>(context, listen: false)
-                          .sendudp('ss');
-                    },
-                    style: ButtonStyle(
-                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                            EdgeInsets.all(13)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                        )))),
+                        _connectionStatus.name!='wifi'?Text(language['Connect to wifi'],
+                            style: Theme.of(context).textTheme.headline2,
+                          ):
+                Provider.of<Respray>(context).isdoneserarching == false
+                    ? ElevatedButton(
+                        child: Text(language['Connect']),
+                        onPressed: () async {
+                          
+                         await Provider.of<Respray>(context, listen: false)
+                              .setisdoneserarching(true);
+                          await Provider.of<Respray>(context, listen: false)
+                              .getIprespery();
+
+                          Timer(Duration(seconds: 4), (() {
+                            Navigator.of(context)
+                                .pushReplacementNamed(ConnectScreen.routeName);
+                          }));
+                          Provider.of<Respray>(context, listen: false)
+                              .setisdoneserarching(false);
+                        },
+                        style: ButtonStyle(
+                            padding:
+                                MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                    EdgeInsets.all(13)),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                            ))))
+                    :  Text(
+                            language['wait for IP to find'],
+                            style: Theme.of(context).textTheme.headline2,
+                          )
+                        ,
                 ElevatedButton(
                     child: Text(language['Sync']),
                     onPressed: () {
@@ -362,6 +431,29 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
             )
           ],
         ));
+  }
+
+  showLoaderDialog(BuildContext context) {
+    Map language =
+        Provider.of<Buttonclickp>(context, listen: false).languagepro;
+
+    AlertDialog alert = AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(),
+          Container(
+              margin: EdgeInsets.only(left: 7),
+              child: Text(language['wait for IP to find'])),
+        ],
+      ),
+    );
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   Future<void> _scan() async {

@@ -31,8 +31,18 @@ class ThemeScreen extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
+                  Container(
+            margin: EdgeInsets.symmetric(horizontal: 5),
+            alignment: Alignment.topLeft,
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new),
+              color: Colors.black,
+              onPressed: () =>
+                  Navigator.of(context).pop(),
+            ),
+          ),
                 SizedBox(
-                  height: sizedphone.height * 0.2,
+                  height: sizedphone.height * 0.1,
                 ),
                 Image.asset('assets/images/theme.png'),
                 SizedBox(

@@ -40,16 +40,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
         Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
   }
 
-  // Step 4
-  void stopTimer() {
-    setState(() => countdownTimer!.cancel());
-  }
 
-  // Step 5
-  void resetTimer() {
-    stopTimer();
-    setState(() => myDuration = Duration(days: 5));
-  }
 
   void settimerformadan() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -85,6 +76,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
           mosque.isha.split(':')[0] + ':' + mosque.isha.split(':')[1]).isAfter(now)) {
         timehm = mosque.isha.split(':');
       } else{
+        timehm = ['0', '0'];
          countdownTimer?.cancel();
       }
 
@@ -94,6 +86,10 @@ class _CountdownTimerState extends State<CountdownTimer> {
       myDuration = Duration(
         seconds: tempDate.difference(now).inSeconds,
       );
+      if(myDuration.inHours.remainder(24)<0){
+        myDuration=Duration.zero;
+      }
+
     }
   }
 

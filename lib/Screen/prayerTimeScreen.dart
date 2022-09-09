@@ -35,134 +35,147 @@ class _PrayerTimeSreenState extends State<PrayerTimeSreen> {
 
     return Scaffold(
       key: _scaffoldKey,
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                height: sizedphone.height * 0.1,
-              ),
-              Text(language['Chooses Time']),
-              SizedBox(
-                height: sizedphone.height * 0.03,
-              ),
-              NumberPicker(
-                itemCount: 3,
-                infiniteLoop: true,
-                value: _currentIntValue,
-                minValue: -60,
-                maxValue: 60,
-                step: 1,
-                haptics: false,
-                onChanged: (value) {
-                  Provider.of<Buttonclickp>(context, listen: false)
-                      .setcunteraddparyer(value);
-                },
-              ),
-              SizedBox(
-                height: sizedphone.height * 0.03,
-              ),
-              SizedBox(
-                height: sizedphone.height * 0.05,
-              ),
-              Text(language['Chooses']),
-              SizedBox(
-                height: sizedphone.height * 0.03,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: GroupButton(
-                  controller: settingController,
-                  options: GroupButtonOptions(
-                      borderRadius: BorderRadius.circular(25)),
-                  onSelected: (index, isSelected, t) {
-                    settings = index.toString();
-                    print('$index button is selected');
-                  },
-                  buttons: [
-                    language["Prayer Settings"],
-                    language["Iqamah Settings"]
-                  ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                
+                Container(
+        
+            alignment: Alignment.topLeft,
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new),
+              color: Colors.black,
+              onPressed: () =>
+                  Navigator.of(context).pop(),
+            ),
+          ),
+                SizedBox(
+                  height: sizedphone.height * 0.03,
                 ),
-              ),
-              SizedBox(
-                height: sizedphone.height * 0.05,
-              ),
-              Text(language['Chooses Prayer']),
-              SizedBox(
-                height: sizedphone.height * 0.03,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: GroupButton(
-                  controller: payerController,
-                  options: GroupButtonOptions(
-                      borderRadius: BorderRadius.circular(25)),
-                  onSelected: (index, isSelected, t) {
-                    prayer = index.toString();
-                    print('$index button is selected');
-                  },
-                  buttons: [
-                    language['fajer'],
-                    language['dhuhr'],
-                    language['asr'],
-                    language['magrib'],
-                    language['isha'],
-                  ],
+                Text(language['Chooses Time']),
+                SizedBox(
+                  height: sizedphone.height * 0.03,
                 ),
-              ),
-              SizedBox(
-                height: sizedphone.height * 0.05,
-              ),
-              ElevatedButton(
-                  child: Text(language['Send Times']),
-                  onPressed: () {
-                    select(
-                        settings, prayer, _currentIntValue, language['fajer']);
-                    select(
-                        settings, prayer, _currentIntValue, language['dhuhr']);
-                    select(settings, prayer, _currentIntValue, language['asr']);
-                    select(
-                        settings, prayer, _currentIntValue, language['magrib']);
-                    select(
-                        settings, prayer, _currentIntValue, language['isha']);
-                    if (command == '') {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                          language['please select Setting and prayer'],
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1!
-                              .copyWith(fontWeight: FontWeight.normal),
-                        ),
-                        duration: const Duration(seconds: 1),
-                        backgroundColor: Theme.of(context).primaryColor,
-                      ));
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                          language['time of prayer has been updated'],
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1!
-                              .copyWith(fontWeight: FontWeight.normal),
-                        ),
-                        duration: const Duration(seconds: 1),
-                        backgroundColor: Theme.of(context).primaryColor,
-                      ));
-                      Navigator.of(context).pop();
-                    }
+                NumberPicker(
+                  itemCount: 3,
+                  infiniteLoop: true,
+                  value: _currentIntValue,
+                  minValue: -60,
+                  maxValue: 60,
+                  step: 1,
+                  haptics: false,
+                  onChanged: (value) {
+                    Provider.of<Buttonclickp>(context, listen: false)
+                        .setcunteraddparyer(value);
                   },
-                  style: ButtonStyle(
-                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          EdgeInsets.all(13)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                      )))),
-            ],
+                ),
+                SizedBox(
+                  height: sizedphone.height * 0.03,
+                ),
+                SizedBox(
+                  height: sizedphone.height * 0.05,
+                ),
+                Text(language['Chooses']),
+                SizedBox(
+                  height: sizedphone.height * 0.03,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: GroupButton(
+                    controller: settingController,
+                    options: GroupButtonOptions(
+                        borderRadius: BorderRadius.circular(25)),
+                    onSelected: (index, isSelected, t) {
+                      settings = index.toString();
+                      print('$index button is selected');
+                    },
+                    buttons: [
+                      language["Prayer Settings"],
+                      language["Iqamah Settings"]
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: sizedphone.height * 0.05,
+                ),
+                Text(language['Chooses Prayer']),
+                SizedBox(
+                  height: sizedphone.height * 0.03,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: GroupButton(
+                    controller: payerController,
+                    options: GroupButtonOptions(
+                        borderRadius: BorderRadius.circular(25)),
+                    onSelected: (index, isSelected, t) {
+                      prayer = index.toString();
+                      print('$index button is selected');
+                    },
+                    buttons: [
+                      language['fajer'],
+                      language['dhuhr'],
+                      language['asr'],
+                      language['magrib'],
+                      language['isha'],
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: sizedphone.height * 0.05,
+                ),
+                ElevatedButton(
+                    child: Text(language['Send Times']),
+                    onPressed: () {
+                      select(
+                          settings, prayer, _currentIntValue, language['fajer']);
+                      select(
+                          settings, prayer, _currentIntValue, language['dhuhr']);
+                      select(settings, prayer, _currentIntValue, language['asr']);
+                      select(
+                          settings, prayer, _currentIntValue, language['magrib']);
+                      select(
+                          settings, prayer, _currentIntValue, language['isha']);
+                      if (command == '') {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                            language['please select Setting and prayer'],
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1!
+                                .copyWith(fontWeight: FontWeight.normal),
+                          ),
+                          duration: const Duration(seconds: 1),
+                          backgroundColor: Theme.of(context).primaryColor,
+                        ));
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                            language['time of prayer has been updated'],
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline1!
+                                .copyWith(fontWeight: FontWeight.normal),
+                          ),
+                          duration: const Duration(seconds: 1),
+                          backgroundColor: Theme.of(context).primaryColor,
+                        ));
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    style: ButtonStyle(
+                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                            EdgeInsets.all(13)),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        )))),
+              ],
+            ),
           ),
         ),
       ),

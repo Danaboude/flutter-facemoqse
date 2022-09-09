@@ -30,7 +30,18 @@ class ResetScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Center(
             child: Column(children: [
-              SizedBox(height: sizedphone.height*0.2,),
+              
+                Container(
+        
+            alignment: Alignment.topLeft,
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new),
+              color: Colors.black,
+              onPressed: () =>
+                  Navigator.of(context).pop(),
+            ),
+          ),
+              SizedBox(height: sizedphone.height*0.06,),
               Container(height: sizedphone.height*0.2,width: sizedphone.width*0.3,child: Image.asset('assets/images/reset.png')),
               SizedBox(height: sizedphone.height*0.1,),
                SizedBox(

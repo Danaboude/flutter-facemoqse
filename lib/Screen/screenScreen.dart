@@ -31,6 +31,17 @@ class ScreenScreen extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
+                
+                Container(
+        
+            alignment: Alignment.topLeft,
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new),
+              color: Colors.black,
+              onPressed: () =>
+                  Navigator.of(context).pop(),
+            ),
+          ),
                 SizedBox(
                   height: sizedphone.height * 0.2,
                 ),

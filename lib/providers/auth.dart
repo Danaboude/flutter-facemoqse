@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:facemosque/providers/http_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:facemosque/providers/mosques.dart';

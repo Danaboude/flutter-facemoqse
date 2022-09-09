@@ -17,58 +17,70 @@ class AzanScreen extends StatelessWidget {
     var sizedphone = MediaQuery.of(context).size;
     Map language = Provider.of<Buttonclickp>(context).languagepro;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                height: sizedphone.height * 0.2,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                  Container(
+              margin: EdgeInsets.symmetric(horizontal: 5),
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new),
+                color: Colors.black,
+                onPressed: () =>
+                    Navigator.of(context).pop(),
               ),
-              SizedBox(
-                  height: sizedphone.height * 0.3,
-                  width: sizedphone.width * 0.7,
-                  child: Image.asset('assets/images/azan.png')),
-              SizedBox(
-                height: sizedphone.height * 0.1,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: GroupButton(
-                  controller: _controller,
-                  isRadio: false,
-                  options: GroupButtonOptions(
-                      borderRadius: BorderRadius.circular(25)),
-                  onSelected: (index, isSelected, t) {
-                    if (adan[isSelected] == true)
-                      adan[isSelected] = false;
-                    else
-                      adan[isSelected] = true;
-
-                    print('$index button is selected');
-                  },
-                  buttons: [
-                    language['fajer'],
-                    language['dhuhr'],
-                    language['asr'],
-                    language['magrib'],
-                    language['isha'],
-                  ],
+            ),
+                SizedBox(
+                  height: sizedphone.height * 0.06,
                 ),
-              ),
-              ElevatedButton(
-                  child: Text(language['azan active']),
-                  onPressed: () {
-                    Provider.of<Respray>(context, listen: false)
-                        .sendudp('$adan');
-                  },
-                  style: ButtonStyle(
-                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          EdgeInsets.all(13)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                      )))),
-            ],
+                SizedBox(
+                    height: sizedphone.height * 0.3,
+                    width: sizedphone.width * 0.7,
+                    child: Image.asset('assets/images/azan.png')),
+                SizedBox(
+                  height: sizedphone.height * 0.1,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: GroupButton(
+                    controller: _controller,
+                    isRadio: false,
+                    options: GroupButtonOptions(
+                        borderRadius: BorderRadius.circular(25)),
+                    onSelected: (index, isSelected, t) {
+                      if (adan[isSelected] == true)
+                        adan[isSelected] = false;
+                      else
+                        adan[isSelected] = true;
+      
+                      print('$index button is selected');
+                    },
+                    buttons: [
+                      language['fajer'],
+                      language['dhuhr'],
+                      language['asr'],
+                      language['magrib'],
+                      language['isha'],
+                    ],
+                  ),
+                ),
+                ElevatedButton(
+                    child: Text(language['azan active']),
+                    onPressed: () {
+                      Provider.of<Respray>(context, listen: false)
+                          .sendudp('$adan');
+                    },
+                    style: ButtonStyle(
+                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                            EdgeInsets.all(13)),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        )))),
+              ],
+            ),
           ),
         ),
       ),

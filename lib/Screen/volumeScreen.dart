@@ -24,72 +24,85 @@ class _VolumeScreenState extends State<VolumeScreen> {
     Map language = Provider.of<Buttonclickp>(context).languagepro;
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: sizedphone.height * 0.2,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              
+                Container(
+        
+            alignment: Alignment.topLeft,
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new),
+              color: Colors.black,
+              onPressed: () =>
+                  Navigator.of(context).pop(),
             ),
-            Container(
+          ),
+              SizedBox(
                 height: sizedphone.height * 0.2,
-                width: sizedphone.width * 0.3,
-                child: Image.asset('assets/images/volume.png')),
-            SizedBox(
-              height: sizedphone.height * 0.1,
-            ),
-            SfSlider(
-              onChanged: (value) {
-                setState(() {
-                  _valslider = value;
-                });
-              },
-              value: _valslider,
-              max: 100,
-              min: 0,
-              interval: 25,
-              showTicks: true,
-              showLabels: true,
-              enableTooltip: true,
-              minorTicksPerInterval: 1,
-              stepSize: 1,
-            ),
-            SizedBox(
-              height: sizedphone.height * 0.1,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                    child: Text(language['Change Volume']),
-                    onPressed: () async{
+              ),
+              Container(
+                  height: sizedphone.height * 0.2,
+                  width: sizedphone.width * 0.3,
+                  child: Image.asset('assets/images/volume.png')),
+              SizedBox(
+                height: sizedphone.height * 0.1,
+              ),
+              SfSlider(
+                onChanged: (value) {
+                  setState(() {
+                    _valslider = value;
+                  });
+                },
+                value: _valslider,
+                max: 100,
+                min: 0,
+                interval: 25,
+                showTicks: true,
+                showLabels: true,
+                enableTooltip: true,
+                minorTicksPerInterval: 1,
+                stepSize: 1,
+              ),
+              SizedBox(
+                height: sizedphone.height * 0.1,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                      child: Text(language['Change Volume']),
+                      onPressed: () async{
+                          await Provider.of<Respray>(context, listen: false)
+                            .sendudp('volume ${_valslider.toInt()}');
+                      },
+                      style: ButtonStyle(
+                          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                              EdgeInsets.all(13)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          )))),
+                  ElevatedButton(
+                      child: Text(language['Mute']),
+                      onPressed: () async {
                         await Provider.of<Respray>(context, listen: false)
-                          .sendudp('volume ${_valslider.toInt()}');
-                    },
-                    style: ButtonStyle(
-                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                            EdgeInsets.all(13)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                        )))),
-                ElevatedButton(
-                    child: Text(language['Mute']),
-                    onPressed: () async {
-                      await Provider.of<Respray>(context, listen: false)
-                          .sendudp('muted');
-                    },
-                    style: ButtonStyle(
-                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                            EdgeInsets.all(13)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                        )))),
-              ],
-            )
-          ],
+                            .sendudp('muted');
+                      },
+                      style: ButtonStyle(
+                          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                              EdgeInsets.all(13)),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                          )))),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

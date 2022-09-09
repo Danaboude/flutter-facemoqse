@@ -57,7 +57,16 @@ class _CreatenotificationsScreen extends State<CreatenotificationsScreen> {
           key: _formKey,
           child: ListView(
             children: [
-              SizedBox(height: sizedphone.height * 0.02),
+                Container(
+           
+            alignment: Alignment.topLeft,
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new),
+              color: Colors.black,
+              onPressed: () =>
+                  Navigator.of(context).pop(),
+            ),
+          ),
               Align(
                 alignment: Alignment.topCenter,
                 child: Text(language['Event Noititcations'],

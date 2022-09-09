@@ -4,16 +4,17 @@ import 'package:facemosque/Screen/LanguageScreen.dart';
 import 'package:facemosque/Screen/adminControlScreen.dart';
 import 'package:facemosque/Screen/authscreen.dart';
 import 'package:facemosque/Screen/azanScreen.dart';
+import 'package:facemosque/Screen/connectScreen.dart';
 import 'package:facemosque/Screen/createnotificationsScreen.dart';
 import 'package:facemosque/Screen/hijriScreen.dart';
 import 'package:facemosque/Screen/homescreen.dart';
 import 'package:facemosque/Screen/information.dart';
 import 'package:facemosque/Screen/messageScreen.dart';
+import 'package:facemosque/Screen/onbordingScreen2.dart';
 import 'package:facemosque/Screen/prayerTimeScreen.dart';
 import 'package:facemosque/Screen/resetScreen.dart';
 import 'package:facemosque/Screen/screenScreen.dart';
 import 'package:facemosque/Screen/signinScreenforevent.dart';
-import 'package:facemosque/Screen/splachScreen.dart';
 import 'package:facemosque/Screen/splachScreen2.dart';
 import 'package:facemosque/Screen/themeScreen.dart';
 import 'package:facemosque/Screen/volumeScreen.dart';
@@ -43,6 +44,7 @@ Future<void> calladan() async {
   alarmadan('magrib');
   alarmadan('isha');
 }
+
 
 //firebase setting for notification
 Future<void> _firebasePushHandler(RemoteMessage message) async {
@@ -80,7 +82,7 @@ Future<void> updateMosuqe() async {
     ).timeout(const Duration(seconds: 300));
     print(response.body);
     Mosque mosqu = await Mosque.fromJson(jsonDecode(response.body));
-    preferences.setString('mosque', json.encode(mosqu.toMap()));
+    preferences.setString( 'mosque', json.encode(mosqu.toMap()));
   }
 }
 
@@ -91,22 +93,28 @@ void callbackDispatcher() {
     return Future.value(true);
   });
 }
+int? initScreen;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
-  await Workmanager().registerPeriodicTask(
-      'recallmousqedata', 'recallmousqedata',
-      frequency: Duration(hours: 12),
-      initialDelay: Duration(seconds: 10),
-      constraints: Constraints(networkType: NetworkType.connected));
-  //set all alarm when app open
+
+  // Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
+  // await Workmanager().registerOneOffTask(
+  //     'task-identifier', 'task-identifier',
+      
+  //     initialDelay: Duration(seconds: 10),
+  //     constraints: Constraints(networkType: NetworkType.connected));
+  // set all alarm when app open
   calladan();
 
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+  initScreen = await prefs.getInt("initScreen");
+  await prefs.setInt("initScreen", 1);
   runApp(const MyApp());
+
 }
 
 void alarmadan(String adan) async {
@@ -222,7 +230,7 @@ class MyApp extends StatefulWidget {
       200: Color(0xFF90CAF9),
       300: Color(0xFF64B5F6),
       400: Color(0xFF42A5F5),
-      500: Color(_bluePrimaryValue),
+      500: Color(0xFF1ea345),
       600: Color(0xFF1E88E5),
       700: Color(0xFF1976D2),
       800: Color(0xFF1565C0),
@@ -236,8 +244,14 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
+  void initState() {
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
+    
     return MultiProvider(
+      
       providers: [
         ChangeNotifierProvider.value(value: Buttonclickp()),
         ChangeNotifierProvider.value(value: FatchData()),
@@ -246,6 +260,7 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider.value(value: Respray())
       ],
       child: MaterialApp(
+      
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Al-Jazeera',
@@ -278,6 +293,8 @@ class _MyAppState extends State<MyApp> {
           VolumeScreen.routeName: (_) => VolumeScreen(),
           MessageScscreen.routeName: (_) => MessageScscreen(),
           PrayerTimeSreen.routeName: (_) => PrayerTimeSreen(),
+          ConnectScreen.routeName: (_) => ConnectScreen(),
+          OnbordingScreen2.routeName:(_)=> OnbordingScreen2()
         },
         //when app launch run SplachScreen
         home: SplachScreen2(),

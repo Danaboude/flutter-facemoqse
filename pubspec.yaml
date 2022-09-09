@@ -34,7 +34,6 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  flutter_spinkit: ^5.1.0
   provider: ^6.0.3
   curved_navigation_bar: ^1.0.3
   carousel_slider: ^4.1.1
@@ -45,8 +44,6 @@ dependencies:
   intl: ^0.17.0
   flutter_native_timezone: ^1.0.8
   flutter_statusbarcolor_ns: ^0.4.0
-  auto_start_flutter: ^0.1.0
-  flutter_kronos: ^0.0.2+2
   location: ^4.4.0
   flutter_map: ^1.1.1
   auto_size_text: ^3.0.0
@@ -63,10 +60,12 @@ dependencies:
   flutter_staggered_animations: ^1.0.0
   animated_text_kit: ^4.2.2
   animations: ^2.0.3
-  glass_kit: ^2.0.1
   network_tools: ^3.0.0+2
   network_info_plus: ^2.1.4+1
   udp: ^5.0.3
+  onboarding_intro_screen: ^0.0.5
+  connectivity_plus: ^2.3.6+1
+    
 
  
   

@@ -162,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             CarouselSlider(
                                 options: CarouselOptions(
                                   //take 28% of height size phone for this widget (cart)
-                                  height: sizedphone.height * 0.28,
+                                  height: sizedphone.height * 0.18,
                                   scrollDirection: Axis.horizontal,
                                   //to keep scroll forever
                                   enableInfiniteScroll: true,
@@ -176,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     .map(
                                       (item) => Container(
                                           //take 28% of height size phone for this widget
-                                          height: sizedphone.height * 0.28,
+                                          height: sizedphone.height * 0.15,
                                           //take 90% of height size phone for this widget
                                           width: sizedphone.width * 0.9,
                                           //leave space 8 form left and right  of widget
@@ -247,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     )
                                     .toList()),
                             Container(
-                              height: sizedphone.height * 0.5,
+                              height: sizedphone.height * 0.58,
                               width: sizedphone.width * 0.9,
                               decoration: BoxDecoration(
                                 border: Border.all(
