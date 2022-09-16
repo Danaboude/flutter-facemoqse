@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:network_tools/network_tools.dart';
 import 'package:network_info_plus/network_info_plus.dart';
+import 'package:dart_ping_ios/dart_ping_ios.dart';
+
 
 import 'package:flutter/material.dart';
 
@@ -23,7 +25,10 @@ class Respray with ChangeNotifier {
     // var sender = await UDP.bind(Endpoint.any());
 
     //   await sender.send(data.codeUnits, multicastEndpoint);
+    /// Register DartPingIOS
+      DartPingIOS.register(); 
     if (ipaddress != '') {
+
       var DESTINATION_ADDRESS = InternetAddress(ipaddress);
 
       RawDatagramSocket.bind(InternetAddress.anyIPv4, 44092)

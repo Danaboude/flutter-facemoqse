@@ -98,7 +98,6 @@ int? initScreen;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-
   // Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
   // await Workmanager().registerOneOffTask(
   //     'task-identifier', 'task-identifier',

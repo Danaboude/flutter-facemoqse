@@ -162,6 +162,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.0.1"
+  dart_ping_ios:
+    dependency: "direct main"
+    description:
+      name: dart_ping_ios
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   dbus:
     dependency: transitive
     description:
@@ -251,6 +258,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.0"
+  flutter_icmp_ping:
+    dependency: transitive
+    description:
+      name: flutter_icmp_ping
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.1"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
