@@ -1,5 +1,6 @@
 import 'dart:convert';
 //import 'firebase_options.dart';
+import 'package:background_fetch/background_fetch.dart';
 import 'package:facemosque/Screen/LanguageScreen.dart';
 import 'package:facemosque/Screen/adminControlScreen.dart';
 import 'package:facemosque/Screen/authscreen.dart';
@@ -32,7 +33,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
-import 'package:workmanager/workmanager.dart';
 
 //method set adan for all sala
 Future<void> calladan() async {
@@ -87,28 +87,40 @@ Future<void> updateMosuqe() async {
 }
 
 void callbackDispatcher() {
-  Workmanager().executeTask((task, inputData) async {
-    await updateMosuqe();
+  // Workmanager().executeTask((task, inputData) async {
+  //   
 
-    return Future.value(true);
-  });
+  //   return Future.value(true);
+  // });
 }
 int? initScreen;
-
+void backgroundFetchHeadlessTask(HeadlessTask task) async {
+  String taskId = task.taskId;
+  bool isTimeout = task.timeout;
+  if (isTimeout) {
+    await updateMosuqe();
+    print("[BackgroundFetch] Headless task timed-out: $taskId");
+    BackgroundFetch.finish(taskId);
+    return;
+  }  
+  print('[BackgroundFetch] Headless event received.');
+  // Do your work here...
+  BackgroundFetch.finish(taskId);
+}
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
 
-  // Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
-  // await Workmanager().registerOneOffTask(
-  //     'task-identifier', 'task-identifier',
-      
-  //     initialDelay: Duration(seconds: 10),
-  //     constraints: Constraints(networkType: NetworkType.connected));
-  // set all alarm when app open
+  BackgroundFetch.scheduleTask(TaskConfig(
+  taskId: "com.transistorsoft.customtask",
+  delay: 45000000  // <-- milliseconds
+));
+//   // set all alarm when app open
   calladan();
 
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
+
      SharedPreferences prefs = await SharedPreferences.getInstance();
   initScreen = await prefs.getInt("initScreen");
   await prefs.setInt("initScreen", 1);

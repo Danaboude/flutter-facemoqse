@@ -51,7 +51,7 @@ dependencies:
   firebase_messaging: ^12.0.2
   mapbox_api: ^1.0.0
   qr_flutter: ^4.0.0
-  workmanager: ^0.5.0
+  background_fetch: ^1.0.3
   swipe: ^0.0.1
   syncfusion_flutter_sliders: ^20.2.43
   group_button: ^5.0.1
