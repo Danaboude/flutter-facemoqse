@@ -266,6 +266,7 @@ class Buttonclickp with ChangeNotifier {
     'Connect to wifi':'wifi اتصل بشبكة',
     'No More paryer for today':'لا مزيد من الصلاة لهذا اليوم'
   };
+
   // A map that stores Arabic and English words according to the value of the variable languageselected
   Map<String, String> get languagepro {
     return languageselected ? ar : en;
