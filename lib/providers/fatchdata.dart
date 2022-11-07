@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:async';
+import 'dart:ffi';
 import 'package:facemosque/providers/mosque.dart';
 import 'package:facemosque/providers/mosques.dart';
 import 'package:flutter/foundation.dart';
@@ -86,6 +87,7 @@ class FatchData with ChangeNotifier {
     preferences.setBool('favortemosqe', val);
     notifyListeners();
   }
+ 
 
 // ask for location Permisson
   void locationPermission() async {

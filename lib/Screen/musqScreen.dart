@@ -9,9 +9,10 @@ import 'package:facemosque/providers/mosques.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../main.dart';
 import '../widget/notificationHelper.dart';
+import 'package:map_launcher/map_launcher.dart';
+import 'package:latlong2/latlong.dart' as latlong;
 
 class MusqScreen extends StatefulWidget {
   const MusqScreen({Key? key}) : super(key: key);
@@ -40,6 +41,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
     var sizedphone = MediaQuery.of(context).size;
     //listmosque show all mosque for user
     var listmosque = Provider.of<FatchData>(context).mosquelist;
+    latlong.LatLng l = Provider.of<FatchData>(context).latlng1;
 
     return SafeArea(
       //make Screan enble to Scroll
@@ -181,6 +183,24 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                   )),
                             ),
                           ),
+                          ElevatedButton(
+                            style: ButtonStyle(
+  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+    RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20.0),
+    )
+  )
+),
+                            onPressed: () {
+                              MapLauncher.showMarker(
+                                mapType: MapType.google,
+                                coords: Coords(l.latitude, l.longitude),
+                                title: 'Hi',
+                                zoom: 20,
+                              );
+                            },
+                            child:  Text(language['Take me to Google Map']),
+                          ),
                           Container(
                               alignment: Alignment.center,
                               margin: EdgeInsets.symmetric(vertical: 10),
@@ -189,7 +209,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                 border: Border.all(
                                     color: const Color(0xffD1B000), width: 2),
                               ),
-                              height: sizedphone.height * 0.6,
+                              height: sizedphone.height * 0.62,
                               width: sizedphone.width * 0.9,
                               //class show Map and Laction mosuqe
                               child: LoctionMosque()),
@@ -320,7 +340,6 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                         color: Theme.of(context).primaryColor,
                       ),
                       child: ListTile(
-                        
                         trailing: IconButton(
                             onPressed: () async {
                               //if user click my mosque and select mosque this code well run
@@ -374,7 +393,6 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                     .indexNavigationBar(0);
                                 //if user click other mosque and select mosque this code well run
                               } else {
-                               
                                 // delate all mousqe to show the one we followevent
                                 Provider.of<Buttonclickp>(con, listen: false)
                                     .storereplacetoevent(false);
@@ -387,7 +405,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                 mosquesforevent = listmosque.firstWhere(
                                     (element) =>
                                         element.mosqueid == item.mosqueid);
-                                         subscribeTopic(mosquesforevent.name);
+                                subscribeTopic(mosquesforevent.name);
                                 //remove mosquefollowevent from listmosque
                                 listmosque.removeWhere((element) =>
                                     element.mosqueid ==

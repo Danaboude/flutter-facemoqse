@@ -48,13 +48,13 @@ class ResetScreen extends StatelessWidget {
                     //if language ar
                     if (select.reset == language['Reset']) {
                       //it well change to en
-                      Provider.of<Buttonclickp>(context, listen: false)
-                          .storereset(true);
+                      // Provider.of<Buttonclickp>(context, listen: false)
+                      //     .storereset(true);
                       //if language en
                     } else if (select.reset == language['Default']) {
                       //it well change to ar
-                      Provider.of<Buttonclickp>(context, listen: false)
-                          .storereset(false);
+                      // Provider.of<Buttonclickp>(context, listen: false)
+                      //     .storereset(false);
                     }
                   },
                   shape: const RoundedRectangleBorder(

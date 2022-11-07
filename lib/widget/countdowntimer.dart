@@ -73,7 +73,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
           mosque.magrib.split(':')[0] + ':' + mosque.magrib.split(':')[1]).isAfter(now)) {
         timehm = mosque.magrib.split(':');
       } else if (DateFormat("hh:mm").parse(
-          mosque.isha.split(':')[0] + ':' + mosque.isha.split(':')[1]).isAfter(now)) {
+          mosque.isha.split(':')[0] + ':' + mosque.isha.split(':')[1]).isBefore(now)) {
         timehm = mosque.isha.split(':');
       } else{
         timehm = ['0', '0'];

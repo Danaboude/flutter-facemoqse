@@ -56,7 +56,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
-   Future<void> initConnectivity() async {
+  Future<void> initConnectivity() async {
     late ConnectivityResult result;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
@@ -82,7 +82,6 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
     });
   }
 
-
   @override
   void initState() {
     super.initState();
@@ -104,6 +103,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
   List<BarcodeFormat> selectedFormats = [..._possibleFormats];
   @override
   Widget build(BuildContext context) {
+    String lan = '';
     Map language = Provider.of<Buttonclickp>(context).languagepro;
     List<GridItem> list = [
       GridItem(
@@ -131,7 +131,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
           icon: 'assets/images/calendar.png',
           lebel: language['Hijri']),
       GridItem(
-          url: 'null',
+          url: 'reboot',
           icon: 'assets/images/reboot.png',
           lebel: language['Reboot']),
       GridItem(
@@ -222,7 +222,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                   child: GestureDetector(
                                     onTap: () async {
                                       //
-                                      if (list[i].url != 'null') {
+                                      if (list[i].url != 'reboot') {
                                         if (list[i].url == 'qr') {
                                           await _scan();
                                           if (scanResult!.rawContent != '') {
@@ -287,6 +287,78 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                               ),
                                             );
                                           }
+                                        } else if (list[i].url ==
+                                            LanguageScreen.routeName) {
+                                          await Provider.of<Buttonclickp>(
+                                                  context,
+                                                  listen: false)
+                                              .storelanguageformosque();
+                                          lan = await clickbuttongrid(
+                                              context,
+                                              lan,
+                                              language,
+                                              Provider.of<Buttonclickp>(context,
+                                                      listen: false)
+                                                  .languageformosqueselected,
+                                              'Arabic',
+                                              'arabic',
+                                              'English',
+                                              'englich',
+                                              'Change Language');
+                                        } else if (list[i].url ==
+                                            ThemeScreen.routeName) {
+                                               Provider.of<Buttonclickp>(context,
+                                                  listen: false)
+                                              .storetheme();
+                                          lan = await clickbuttongrid(
+                                              context,
+                                              lan,
+                                              language,
+                                              Provider.of<Buttonclickp>(context,
+                                                      listen: false)
+                                                  .themeselected,
+                                              'White',
+                                              'White',
+                                              'Black',
+                                              'Black',
+                                              'Change Theme');
+                                         
+                                        } else if (list[i].url ==
+                                            ResetScreen.routeName) {
+                                             await  Provider.of<Buttonclickp>(context,
+                                                  listen: false)
+                                              .storereset();
+                                          lan = await clickbuttongrid(
+                                              context,
+                                              lan,
+                                              language,
+                                              Provider.of<Buttonclickp>(context,
+                                                      listen: false)
+                                                  .resetselected,
+                                              'reset',
+                                              'Reset',
+                                              'default',
+                                              'Default',
+                                              'Reset Mode');
+                                         
+                                        } else if (list[i].url ==
+                                            ScreenScreen.routeName) {
+                                               Provider.of<Buttonclickp>(context,
+                                                  listen: false)
+                                              .storeScreen();
+                                          lan = await clickbuttongrid(
+                                              context,
+                                              lan,
+                                              language,
+                                              Provider.of<Buttonclickp>(context,
+                                                      listen: false)
+                                                  .screenselected,
+                                              'sleep_def',
+                                              'Always On',
+                                              'sleep_no',
+                                              'Default',
+                                              'Change Screen Mode');
+                                         
                                         } else {
                                           Navigator.of(context)
                                               .pushNamed(list[i].url);
@@ -380,39 +452,39 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                 RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
                         )))),
-                        _connectionStatus.name!='wifi'?Text(language['Connect to wifi'],
-                            style: Theme.of(context).textTheme.headline2,
-                          ):
-                Provider.of<Respray>(context).isdoneserarching == false
-                    ? ElevatedButton(
-                        child: Text(language['Connect']),
-                        onPressed: () async {
-                          
-                         await Provider.of<Respray>(context, listen: false)
-                              .setisdoneserarching(true);
-                          await Provider.of<Respray>(context, listen: false)
-                              .getIprespery();
+                _connectionStatus.name != 'wifi'
+                    ? Text(
+                        language['Connect to wifi'],
+                        style: Theme.of(context).textTheme.headline2,
+                      )
+                    : Provider.of<Respray>(context).isdoneserarching == false
+                        ? ElevatedButton(
+                            child: Text(language['Connect']),
+                            onPressed: () async {
+                              await Provider.of<Respray>(context, listen: false)
+                                  .setisdoneserarching(true);
+                              await Provider.of<Respray>(context, listen: false)
+                                  .getIprespery();
 
-                          Timer(Duration(seconds: 4), (() {
-                            Navigator.of(context)
-                                .pushReplacementNamed(ConnectScreen.routeName);
-                          }));
-                          Provider.of<Respray>(context, listen: false)
-                              .setisdoneserarching(false);
-                        },
-                        style: ButtonStyle(
-                            padding:
-                                MaterialStateProperty.all<EdgeInsetsGeometry>(
-                                    EdgeInsets.all(13)),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                            ))))
-                    :  Text(
+                              Timer(Duration(seconds: 4), (() {
+                                Navigator.of(context).pushReplacementNamed(
+                                    ConnectScreen.routeName);
+                              }));
+                              Provider.of<Respray>(context, listen: false)
+                                  .setisdoneserarching(false);
+                            },
+                            style: ButtonStyle(
+                                padding: MaterialStateProperty.all<
+                                    EdgeInsetsGeometry>(EdgeInsets.all(13)),
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ))))
+                        : Text(
                             language['wait for IP to find'],
                             style: Theme.of(context).textTheme.headline2,
-                          )
-                        ,
+                          ),
                 ElevatedButton(
                     child: Text(language['Sync']),
                     onPressed: () {
@@ -431,6 +503,40 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
             )
           ],
         ));
+  }
+
+  Future<String> clickbuttongrid(
+      BuildContext context,
+      String lan,
+      Map<dynamic, dynamic> language,
+      bool state,
+      String str1,
+      String str2,
+      String str3,
+      String str4,
+      String str5) async {
+    if (state) {
+      Provider.of<Respray>(context, listen: false).sendudp(str1);
+      lan = language[str2];
+    } else {
+      Provider.of<Respray>(context, listen: false).sendudp(str3);
+      lan = language[str4];
+    }
+    Timer(Duration(seconds: 1), () {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          language[str5] + ' ' + lan,
+          textAlign: TextAlign.center,
+          style: Theme.of(context)
+              .textTheme
+              .headline1!
+              .copyWith(fontWeight: FontWeight.normal),
+        ),
+        duration: const Duration(seconds: 1),
+        backgroundColor: Theme.of(context).primaryColor,
+      ));
+    });
+    return lan;
   }
 
   showLoaderDialog(BuildContext context) {

@@ -67,10 +67,9 @@ class NotificationHelper {
           channelDescription: 'socool',
           importance: Importance.max,
           priority: Priority.high,
-          sound: UriAndroidNotificationSound('assets/mp3/notification.mp3'),
           playSound: true,
         ),
-        iOS: IOSNotificationDetails(sound: 'notification.mp3'),
+        iOS: IOSNotificationDetails(sound: 'assets/mp3/notification.mp3'),
       ),
       payload: 'It could be anything you pass',
     );
@@ -92,7 +91,7 @@ class NotificationHelper {
       _convertTime(hour, minutes),
       NotificationDetails(
         android: AndroidNotificationDetails(
-          'your channel id $sound',
+          'your channel id 2',
           'your channel name',
           channelDescription: 'your channel description',
           importance: Importance.max,

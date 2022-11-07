@@ -53,13 +53,13 @@ class ThemeScreen extends StatelessWidget {
                       //if language ar
                       if (select.theme == language['White']) {
                         //it well change to en
-                        Provider.of<Buttonclickp>(context, listen: false)
-                            .storetheme(true);
+                        // Provider.of<Buttonclickp>(context, listen: false)
+                        //     .storetheme(true);
                         //if language en
                       } else if (select.theme == language['Black']) {
                         //it well change to ar
-                        Provider.of<Buttonclickp>(context, listen: false)
-                            .storetheme(false);
+                        // Provider.of<Buttonclickp>(context, listen: false)
+                        //     .storetheme(false);
                       }
                     },
                     shape: const RoundedRectangleBorder(

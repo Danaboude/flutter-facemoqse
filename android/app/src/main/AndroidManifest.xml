@@ -77,6 +77,10 @@
             android:name="flutterEmbedding"
             android:value="2" />
         
+      
+            <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="your channel id 2" />
             
             
     </application>

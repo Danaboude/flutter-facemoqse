@@ -39,7 +39,7 @@ class Buttonclickp with ChangeNotifier {
     'eventnotifications': 'Event Notifications',
     'language': 'Language',
     'selectlanguage': 'Select Language',
-    'englich': 'englich',
+    'englich': 'Englich',
     'arabic': 'Arabic',
     'searchbar': 'Search for mosque...',
     'azannotification': 'Azen Notification',
@@ -142,7 +142,10 @@ class Buttonclickp with ChangeNotifier {
      'Choose ip':'Choose ip',
      'wait for IP to find':'Wait to find IP',
      'Connect to wifi':'Connect to wifi',
-     'No More paryer for today':'No More paryer for today'
+     'No More paryer for today':'No More paryer for today',
+     'Today\'s prayers are over':'Today\'s prayers are over',
+     'Take me to Google Map':'Take me to the mosque',
+     'Select the mosque to see the last prayer':'Select the mosque to see the last prayer'
   };
   Map<String, String> ar = {
     'titlenamemasjed': 'مواقيات الصلاة والاقامة لجامع',
@@ -224,7 +227,7 @@ class Buttonclickp with ChangeNotifier {
     'Default': 'إفتراضي',
     'Reset':'إعادة ضبط',
     'Reset Mode':'وضع إعادة التعيين',
-    'Change Theme':'غير الخلفية',
+    'Change Theme':'تغير الخلفية الى اللون',
     'Select':'اختيار',
     'Always On':'دائما قيد التشغيل',
     'Change Screen Mode':'تغيير وضع الشاشة',
@@ -256,7 +259,7 @@ class Buttonclickp with ChangeNotifier {
     'OK':'نعم',
     'Fill the TextFild':'املأ حقل النص',
     'Wecome to Facemosque':'Facemosque مرحبا بكم في ',
-    'Change Language':'تغيير اللغة',
+    'Change Language':'تغيير لللغة',
     'time of prayer has been updated':'تم تحديث وقت الصلاة',
     'please select Setting and prayer':'يرجى تحديد الإعداد والصلاة',
     'The restart command has been sent':'تم ارسال امر إعادة التشغيل',
@@ -264,9 +267,15 @@ class Buttonclickp with ChangeNotifier {
     'Choose ip':'اختر IP',
     'wait for IP to find':'IP انتظر حتى يتم العثور على',
     'Connect to wifi':'wifi اتصل بشبكة',
-    'No More paryer for today':'لا مزيد من الصلاة لهذا اليوم'
+    'No More paryer for today':'لا مزيد من الصلاة لهذا اليوم',
+    'Today\'s prayers are over':'انتهت الصلوات لليوم',
+    'Take me to Google Map':'ارشدي إلى المسجد',
+
+    'Select the mosque to see the last prayer':'حدد الجامع لترى اخر صلاه'
   };
 
+String parerEdit='';
+String settingEdit='';
   // A map that stores Arabic and English words according to the value of the variable languageselected
   Map<String, String> get languagepro {
     return languageselected ? ar : en;
@@ -297,25 +306,33 @@ class Buttonclickp with ChangeNotifier {
     notifyListeners();
   }
 
-  void storetheme(bool select) async {
-    themeselected = select;
+  void storetheme() async {
+    themeselected = !themeselected;
     notifyListeners();
   }
   void setcunteraddparyer(int num) async {
     counteraddparyer = num;
     notifyListeners();
   }
-   void storelanguageformosque(bool select) async {
-    languageformosqueselected = select;
+    void setParerEdit(String str) async {
+    parerEdit = str;
+    notifyListeners();
+  }
+    void SetSettingEdit(String str) async {
+    settingEdit = str;
+    notifyListeners();
+  }
+   Future<void> storelanguageformosque() async {
+    languageformosqueselected = !languageformosqueselected;
     notifyListeners();
   }
 
-  void storereset(bool select) async {
-    resetselected = select;
+  Future<void> storereset() async {
+    resetselected = !resetselected;
     notifyListeners();
   }
-  void storeScreen(bool select) async {
-    screenselected = select;
+  void storeScreen() async {
+    screenselected = !screenselected;
     notifyListeners();
   }
 

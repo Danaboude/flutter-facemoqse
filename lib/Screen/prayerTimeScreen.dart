@@ -30,8 +30,8 @@ class _PrayerTimeSreenState extends State<PrayerTimeSreen> {
     int _currentIntValue =
         Provider.of<Buttonclickp>(context, listen: false).counteraddparyer;
     Map language = Provider.of<Buttonclickp>(context).languagepro;
-    String settings = '';
-    String prayer = '';
+    String settings = Provider.of<Buttonclickp>(context).settingEdit;
+    String prayer = Provider.of<Buttonclickp>(context).parerEdit;
 
     return Scaffold(
       key: _scaffoldKey,
@@ -40,57 +40,11 @@ class _PrayerTimeSreenState extends State<PrayerTimeSreen> {
           child: Column(
             children: [
               SizedBox(
-                height: sizedphone.height * 0.1,
-              ),
-              Text(language['Chooses Time']),
-              SizedBox(
                 height: sizedphone.height * 0.03,
               ),
-              NumberPicker(
-                itemCount: 3,
-                infiniteLoop: true,
-                value: _currentIntValue,
-                minValue: -60,
-                maxValue: 60,
-                step: 1,
-                haptics: false,
-                onChanged: (value) {
-                  Provider.of<Buttonclickp>(context, listen: false)
-                      .setcunteraddparyer(value);
-                },
-              ),
+              titlel(language['Chooses Prayer'], 1, sizedphone),
               SizedBox(
-                height: sizedphone.height * 0.03,
-              ),
-              SizedBox(
-                height: sizedphone.height * 0.05,
-              ),
-              Text(language['Chooses']),
-              SizedBox(
-                height: sizedphone.height * 0.03,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: GroupButton(
-                  controller: settingController,
-                  options: GroupButtonOptions(
-                      borderRadius: BorderRadius.circular(25)),
-                  onSelected: (index, isSelected, t) {
-                    settings = index.toString();
-                    print('$index button is selected');
-                  },
-                  buttons: [
-                    language["Prayer Settings"],
-                    language["Iqamah Settings"]
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: sizedphone.height * 0.05,
-              ),
-              Text(language['Chooses Prayer']),
-              SizedBox(
-                height: sizedphone.height * 0.03,
+                height: sizedphone.height * 0.01,
               ),
               Padding(
                 padding: const EdgeInsets.all(15.0),
@@ -99,7 +53,8 @@ class _PrayerTimeSreenState extends State<PrayerTimeSreen> {
                   options: GroupButtonOptions(
                       borderRadius: BorderRadius.circular(25)),
                   onSelected: (index, isSelected, t) {
-                    prayer = index.toString();
+                    Provider.of<Buttonclickp>(context, listen: false)
+                        .setParerEdit(index.toString());
                     print('$index button is selected');
                   },
                   buttons: [
@@ -112,7 +67,51 @@ class _PrayerTimeSreenState extends State<PrayerTimeSreen> {
                 ),
               ),
               SizedBox(
-                height: sizedphone.height * 0.05,
+                height: sizedphone.height * 0.01,
+              ),
+              
+              titlel(language['Chooses'],2,sizedphone),
+              SizedBox(
+                height: sizedphone.height * 0.01,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: GroupButton(
+                  controller: settingController,
+                  options: GroupButtonOptions(
+                      borderRadius: BorderRadius.circular(25)),
+                  onSelected: (index, isSelected, t) {
+                    Provider.of<Buttonclickp>(context, listen: false)
+                        .SetSettingEdit(index.toString());
+                    print('$index button is selected');
+                  },
+                  buttons: [
+                    language["Prayer Settings"],
+                    language["Iqamah Settings"]
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: sizedphone.height * 0.01,
+              ),
+              titlel(language['Chooses Time'],3,sizedphone),
+              SizedBox(
+                height: sizedphone.height * 0.01,
+              ),
+              NumberPicker(
+                itemCount: 3,
+                infiniteLoop: true,
+                value: _currentIntValue,
+                minValue: -60,
+                maxValue: 60,
+                step: 1,
+                onChanged: (value) {
+                  Provider.of<Buttonclickp>(context, listen: false)
+                      .setcunteraddparyer(value);
+                },
+              ),
+              SizedBox(
+                height: sizedphone.height * 0.02,
               ),
               ElevatedButton(
                   child: Text(language['Send Times']),
@@ -237,5 +236,41 @@ class _PrayerTimeSreenState extends State<PrayerTimeSreen> {
     String twoDigits(int n) => n.toString().padLeft(2, "0");
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
     return "${twoDigits(duration.inHours)}:$twoDigitMinutes";
+  }
+
+  Container titlel(String titlel, int i, Size s) {
+    return Container(
+      margin: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        color: Theme.of(context).primaryColor,
+      ),
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          SizedBox(),
+          Text(titlel, style: Theme.of(context).textTheme.headline1),
+          Container(
+            
+              height: s.height * 0.06,
+              width: s.width * 0.1,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(width: 2, color: Colors.white)),
+              child: Container(
+                alignment: Alignment.center,
+                child: Text(
+                  '$i',
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1!
+                      .copyWith(fontSize: 25),
+                ),
+              ))
+        ],
+      ),
+    );
   }
 }

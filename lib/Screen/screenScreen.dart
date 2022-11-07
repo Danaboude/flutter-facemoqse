@@ -56,13 +56,13 @@ class ScreenScreen extends StatelessWidget {
                       //if language ar
                       if (select.screen == language['Always On']) {
                         //it well change to en
-                        Provider.of<Buttonclickp>(context, listen: false)
-                            .storeScreen(true);
+                        // Provider.of<Buttonclickp>(context, listen: false)
+                        //     .storeScreen(true);
                         //if language en
                       } else if (select.screen == language['Default']) {
                         //it well change to ar
-                        Provider.of<Buttonclickp>(context, listen: false)
-                            .storeScreen(false);
+                        // Provider.of<Buttonclickp>(context, listen: false)
+                        //     .storeScreen(false);
                       }
                     },
                     shape: const RoundedRectangleBorder(

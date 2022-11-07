@@ -45,7 +45,6 @@ Future<void> calladan() async {
   alarmadan('isha');
 }
 
-
 //firebase setting for notification
 Future<void> _firebasePushHandler(RemoteMessage message) async {
   print(message.data);
@@ -88,11 +87,15 @@ Future<void> updateMosuqe() async {
 
 void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
-    await updateMosuqe();
+    TimeOfDay now = TimeOfDay.now();
+    if (now.hour == 23) {
+      await updateMosuqe();
+    }
 
     return Future.value(true);
   });
 }
+
 int? initScreen;
 
 void main() async {
@@ -101,7 +104,7 @@ void main() async {
   Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
   await Workmanager().registerPeriodicTask(
       'recallmousqedata', 'recallmousqedata',
-      frequency: Duration(hours: 12),
+      frequency: Duration(hours: 1),
       initialDelay: Duration(seconds: 10),
       constraints: Constraints(networkType: NetworkType.connected));
   //set all alarm when app open
@@ -109,11 +112,10 @@ void main() async {
 
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
-     SharedPreferences prefs = await SharedPreferences.getInstance();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   initScreen = await prefs.getInt("initScreen");
   await prefs.setInt("initScreen", 1);
   runApp(const MyApp());
-
 }
 
 void alarmadan(String adan) async {
@@ -246,11 +248,10 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    
     return MultiProvider(
-      
       providers: [
         ChangeNotifierProvider.value(value: Buttonclickp()),
         ChangeNotifierProvider.value(value: FatchData()),
@@ -259,7 +260,6 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider.value(value: Respray())
       ],
       child: MaterialApp(
-      
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Al-Jazeera',
@@ -293,7 +293,7 @@ class _MyAppState extends State<MyApp> {
           MessageScscreen.routeName: (_) => MessageScscreen(),
           PrayerTimeSreen.routeName: (_) => PrayerTimeSreen(),
           ConnectScreen.routeName: (_) => ConnectScreen(),
-          OnbordingScreen2.routeName:(_)=> OnbordingScreen2()
+          OnbordingScreen2.routeName: (_) => OnbordingScreen2()
         },
         //when app launch run SplachScreen
         home: SplachScreen2(),

@@ -58,14 +58,14 @@ class LanguageScreen extends StatelessWidget {
                   //if language ar
                   if (select.lang == 'عربي' || select.lang == 'Arabic') {
                     //it well change to en
-                    Provider.of<Buttonclickp>(context, listen: false)
-                        .storelanguageformosque(true);
+                    // Provider.of<Buttonclickp>(context, listen: false)
+                    //     .storelanguageformosque(true);
                     //if language en
                   } else if (select.lang == 'انكليزي' ||
                       select.lang == 'englich') {
                     //it well change to ar
-                    Provider.of<Buttonclickp>(context, listen: false)
-                        .storelanguageformosque(false);
+                    // Provider.of<Buttonclickp>(context, listen: false)
+                    //     .storelanguageformosque(false);
                   }
                 },
                 shape: const RoundedRectangleBorder(

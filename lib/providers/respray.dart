@@ -23,6 +23,7 @@ class Respray with ChangeNotifier {
     // var sender = await UDP.bind(Endpoint.any());
 
     //   await sender.send(data.codeUnits, multicastEndpoint);
+    print(data);
     if (ipaddress != '') {
       var DESTINATION_ADDRESS = InternetAddress(ipaddress);
 

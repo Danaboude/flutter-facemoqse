@@ -12,6 +12,7 @@ import 'package:facemosque/widget/countdowntimer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:facemosque/Screen/eventnotifications.dart';
 import 'package:facemosque/Screen/settingsscreen.dart';
@@ -62,22 +63,22 @@ class _HomeScreenState extends State<HomeScreen> {
     FirebaseMessaging.instance.getToken();
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-  SharedPreferences preferences = await SharedPreferences.getInstance();
-  List<MessageFromTaipc> list = [];
-  if (preferences.containsKey('listmessage')) {
-    final List<dynamic> jsonData =
-        jsonDecode(preferences.getString('listmessage')!);
-    list = jsonData.map<MessageFromTaipc>((jsonList) {
-      return MessageFromTaipc.fromJson(jsonList);
-    }).toList();
-  }
-  MessageFromTaipc messagetaipc = MessageFromTaipc.fromJson(message.data);
-  print(messagetaipc.toString());
-  list.add(messagetaipc);
-  preferences.setString('listmessage', MessageFromTaipc.encode(list));
-  await Firebase.initializeApp();
-  _notificationHelper.showNot(messagetaipc);
-  });
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      List<MessageFromTaipc> list = [];
+      if (preferences.containsKey('listmessage')) {
+        final List<dynamic> jsonData =
+            jsonDecode(preferences.getString('listmessage')!);
+        list = jsonData.map<MessageFromTaipc>((jsonList) {
+          return MessageFromTaipc.fromJson(jsonList);
+        }).toList();
+      }
+      MessageFromTaipc messagetaipc = MessageFromTaipc.fromJson(message.data);
+      print(messagetaipc.toString());
+      list.add(messagetaipc);
+      preferences.setString('listmessage', MessageFromTaipc.encode(list));
+      await Firebase.initializeApp();
+      _notificationHelper.showNot(messagetaipc);
+    });
   }
 
   @override
@@ -137,6 +138,11 @@ class _HomeScreenState extends State<HomeScreen> {
               // background color(white) of app
               color: Colors.white,
               child: ListView(
+                physics: Provider.of<Buttonclickp>(context)
+                            .indexnavigationbottmbar ==
+                        1
+                    ? NeverScrollableScrollPhysics()
+                    : AlwaysScrollableScrollPhysics(),
                 shrinkWrap: true,
                 children: [
                   //if user select Home icon in app index(0) it's well show HomeScrean
@@ -162,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             CarouselSlider(
                                 options: CarouselOptions(
                                   //take 28% of height size phone for this widget (cart)
-                                  height: sizedphone.height * 0.18,
+                                  height: sizedphone.height * 0.23,
                                   scrollDirection: Axis.horizontal,
                                   //to keep scroll forever
                                   enableInfiniteScroll: true,
@@ -261,7 +267,30 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   // I cearte method for next parer and today aya with seam shape and color and pass text
                                   titlel(language['nextparer']),
-                                  CountdownTimer(),
+                                  mosque.isha != ''
+                                      ? DateFormat("hh:mm")
+                                              .parse(mosque.isha.split(':')[0] +
+                                                  ':' +
+                                                  mosque.isha.split(':')[1])
+                                              .isAfter(DateFormat("hh:mm")
+                                                  .parse(DateTime.now()
+                                                          .hour
+                                                          .toString() +
+                                                      ':' +
+                                                      DateTime.now()
+                                                          .minute
+                                                          .toString()))
+                                          ? CountdownTimer()
+                                          : Text(language['Today\'s prayers are over'],
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline1)
+                                      : Text(
+                                          language[
+                                              'Select the mosque to see the last prayer'],
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline1!.copyWith(fontSize: 15)),
                                   titlel(language['todayaya']),
                                   Expanded(
                                       child: Container(
