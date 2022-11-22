@@ -69,8 +69,7 @@ class _PrayerTimeSreenState extends State<PrayerTimeSreen> {
               SizedBox(
                 height: sizedphone.height * 0.01,
               ),
-              
-              titlel(language['Chooses'],2,sizedphone),
+              titlel(language['Chooses'], 2, sizedphone),
               SizedBox(
                 height: sizedphone.height * 0.01,
               ),
@@ -94,7 +93,7 @@ class _PrayerTimeSreenState extends State<PrayerTimeSreen> {
               SizedBox(
                 height: sizedphone.height * 0.01,
               ),
-              titlel(language['Chooses Time'],3,sizedphone),
+              titlel(language['Chooses Time'], 3, sizedphone),
               SizedBox(
                 height: sizedphone.height * 0.01,
               ),
@@ -187,9 +186,9 @@ class _PrayerTimeSreenState extends State<PrayerTimeSreen> {
                             ? mosque.isha
                             : '';
         var s = DateFormat("hh:mm").parse(time);
-        Duration duration = Duration(hours: s.hour, minutes: s.minute + minute);
-        command =
-            "PrayerTime ${language['fajer'] == prayer1 ? _printDuration(duration) : mosque.fajer} ${language['dhuhr'] == prayer1 ? _printDuration(duration) : mosque.dhuhr} ${language['asr'] == prayer1 ? _printDuration(duration) : mosque.asr} ${language['magrib'] == prayer1 ? _printDuration(duration) : mosque.magrib} ${language['isha'] == prayer1 ? _printDuration(duration) : mosque.isha}  ${mosque.fajeri}  ${mosque.dhuhri}   ${mosque.asri}  ${mosque.magribi}  ${mosque.ishai}";
+        Duration duration = Duration(minutes: minute);
+        command = "PrayerTime prayer ${prayer} ${_printDuration(duration)}";
+        //command = "PrayerTime ${language['fajer'] == prayer1 ? _printDuration(duration) : mosque.fajer} ${language['dhuhr'] == prayer1 ? _printDuration(duration) : mosque.dhuhr} ${language['asr'] == prayer1 ? _printDuration(duration) : mosque.asr} ${language['magrib'] == prayer1 ? _printDuration(duration) : mosque.magrib} ${language['isha'] == prayer1 ? _printDuration(duration) : mosque.isha}  ${mosque.fajeri}  ${mosque.dhuhri}   ${mosque.asri}  ${mosque.magribi}  ${mosque.ishai}";
         print(mosque.fajer);
         print(command);
         Provider.of<Respray>(context, listen: false).sendudp(command);
@@ -208,9 +207,10 @@ class _PrayerTimeSreenState extends State<PrayerTimeSreen> {
                             ? mosque.ishai
                             : '';
         var s = DateFormat("hh:mm").parse(time);
-        Duration duration = Duration(hours: s.hour, minutes: s.minute + minute);
-        command =
-            "PrayerTime  ${mosque.fajer} ${mosque.dhuhr} ${mosque.asr} ${mosque.magrib} ${mosque.isha}  ${language['fajer'] == prayer1 ? _printDuration(duration) : mosque.fajeri}  ${language['dhuhr'] == prayer1 ? _printDuration(duration) : mosque.dhuhri}   ${language['asr'] == prayer1 ? _printDuration(duration) : mosque.asri}  ${language['magrib'] == prayer1 ? _printDuration(duration) : mosque.magribi}  ${language['isha'] == prayer1 ? _printDuration(duration) : mosque.ishai}";
+        // Duration duration = Duration(hours: s.hour, minutes: s.minute + minute);
+        Duration duration = Duration(minutes: minute);
+        command = "PrayerTime iqamah ${prayer} ${_printDuration(duration)}";
+        //command ="PrayerTime  ${mosque.fajer} ${mosque.dhuhr} ${mosque.asr} ${mosque.magrib} ${mosque.isha}  ${language['fajer'] == prayer1 ? _printDuration(duration) : mosque.fajeri}  ${language['dhuhr'] == prayer1 ? _printDuration(duration) : mosque.dhuhri}   ${language['asr'] == prayer1 ? _printDuration(duration) : mosque.asri}  ${language['magrib'] == prayer1 ? _printDuration(duration) : mosque.magribi}  ${language['isha'] == prayer1 ? _printDuration(duration) : mosque.ishai}";
 
         print(mosque.fajeri);
         print(command);
@@ -235,7 +235,7 @@ class _PrayerTimeSreenState extends State<PrayerTimeSreen> {
   String _printDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, "0");
     String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));
-    return "${twoDigits(duration.inHours)}:$twoDigitMinutes";
+    return "$twoDigitMinutes";
   }
 
   Container titlel(String titlel, int i, Size s) {
@@ -253,7 +253,6 @@ class _PrayerTimeSreenState extends State<PrayerTimeSreen> {
           SizedBox(),
           Text(titlel, style: Theme.of(context).textTheme.headline1),
           Container(
-            
               height: s.height * 0.06,
               width: s.width * 0.1,
               decoration: BoxDecoration(

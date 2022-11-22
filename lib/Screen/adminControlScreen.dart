@@ -307,7 +307,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                               'Change Language');
                                         } else if (list[i].url ==
                                             ThemeScreen.routeName) {
-                                               Provider.of<Buttonclickp>(context,
+                                          Provider.of<Buttonclickp>(context,
                                                   listen: false)
                                               .storetheme();
                                           lan = await clickbuttongrid(
@@ -318,14 +318,14 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                                       listen: false)
                                                   .themeselected,
                                               'White',
-                                              'White',
+                                              'white',
                                               'Black',
-                                              'Black',
+                                              'black',
                                               'Change Theme');
-                                         
                                         } else if (list[i].url ==
                                             ResetScreen.routeName) {
-                                             await  Provider.of<Buttonclickp>(context,
+                                          await Provider.of<Buttonclickp>(
+                                                  context,
                                                   listen: false)
                                               .storereset();
                                           lan = await clickbuttongrid(
@@ -340,10 +340,9 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                               'default',
                                               'Default',
                                               'Reset Mode');
-                                         
                                         } else if (list[i].url ==
                                             ScreenScreen.routeName) {
-                                               Provider.of<Buttonclickp>(context,
+                                          Provider.of<Buttonclickp>(context,
                                                   listen: false)
                                               .storeScreen();
                                           lan = await clickbuttongrid(
@@ -358,7 +357,6 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                               'sleep_no',
                                               'Default',
                                               'Change Screen Mode');
-                                         
                                         } else {
                                           Navigator.of(context)
                                               .pushNamed(list[i].url);
@@ -518,9 +516,13 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
     if (state) {
       Provider.of<Respray>(context, listen: false).sendudp(str1);
       lan = language[str2];
+      print(lan);
+      print(str1);
     } else {
       Provider.of<Respray>(context, listen: false).sendudp(str3);
       lan = language[str4];
+      print(lan);
+      print(str3);
     }
     Timer(Duration(seconds: 1), () {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

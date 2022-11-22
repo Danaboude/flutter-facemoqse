@@ -5,45 +5,53 @@ import 'package:network_tools/network_tools.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 
 import 'package:flutter/material.dart';
+//import 'package:flutter_socket_plugin/flutter_socket_plugin.dart';
+import 'package:udp/udp.dart';
 
 class Respray with ChangeNotifier {
   List<String> Ips = [];
   bool isdoneserarching = false;
-  String ipaddress = '';
+  String ipaddress = '192.168.0.104';
+
   Future<void> sendudp(String data) async {
-    //var sender = await UDP.bind(Endpoint.any(port: Port(44092)));
-
+    //send a simple string to a broadcast endpoint on port 65001.
+    /*var sender = await UDP.bind(InternetAddress.anyIPv4,(port: Port(44092)));
+    printIps();
     // send a simple string to a broadcast endpoint on port 65001.
-    //   var dataLength = await sender.send(data.codeUnits,
-    //   Endpoint.broadcast(port: Port(44092)));
-    //  print('$dataLength');
-    //   stdout.write("$dataLength bytes sent.");
-    //   var multicastEndpoint =
-    //       Endpoint.multicast(InternetAddress("192.186.1.23"), port: Port(44092));
-    // var sender = await UDP.bind(Endpoint.any());
+    var dataLength = await sender.send(
+        data.codeUnits, Endpoint.broadcast(port: Port(44092)));
 
-    //   await sender.send(data.codeUnits, multicastEndpoint);
-    print(data);
-    if (ipaddress != '') {
-      var DESTINATION_ADDRESS = InternetAddress(ipaddress);
+    stdout.write("$dataLength bytes sent.");
 
-      RawDatagramSocket.bind(InternetAddress.anyIPv4, 44092)
-          .then((RawDatagramSocket udpSocket) {
-        udpSocket.broadcastEnabled = true;
-        udpSocket.listen((e) {
-          Datagram? dg = udpSocket.receive();
-          if (dg != null) {
-            ipaddress = dg.address.address;
-            print("received ${dg.address}");
-          }
-        });
-        List<int> data1 = utf8.encode(data);
-        udpSocket.send(data1, DESTINATION_ADDRESS, 44092);
+    // creates a new UDP instance and binds it to the local address and the port
+    // 65002.
+    var receiver = await UDP.bind(Endpoint.loopback(port: Port(44092)));
+
+    // receiving\listenin
+    // close the UDP instances and their sockets.
+    sender.close();
+    receiver.close();*/
+    printIps();
+
+    var DESTINATION_ADDRESS = InternetAddress(ipaddress);
+
+    RawDatagramSocket.bind(InternetAddress.anyIPv4, 44092)
+        .then((RawDatagramSocket udpSocket) {
+      udpSocket.broadcastEnabled = true;
+      udpSocket.listen((e) {
+        Datagram? dg = udpSocket.receive();
+        if (dg != null) {
+          ipaddress = dg.address.address;
+          print("received ${dg.address}");
+        }
       });
-    }
+      List<int> data1 = utf8.encode(data);
+      udpSocket.send(data1, DESTINATION_ADDRESS, 44092);
+      udpSocket.close();
+    });
   }
 
-  Future<void> setisdoneserarching(bool iss)async {
+  Future<void> setisdoneserarching(bool iss) async {
     isdoneserarching = iss;
     notifyListeners();
   }
@@ -54,9 +62,23 @@ class Respray with ChangeNotifier {
     notifyListeners();
   }
 
+  Future printIps() async {
+    for (var interface in await NetworkInterface.list()) {
+      print('== Interface: ${interface.name} ==');
+      for (var addr in interface.addresses) {
+        print(
+            '${addr.address} ${addr.host} ${addr.isLoopback} ${addr.rawAddress} ${addr.type.name}');
+        var IpArray = addr.address.split('.');
+        ipaddress =
+            IpArray[0] + "." + IpArray[1] + "." + IpArray[2] + "." + "255";
+        print("BroadCasting" + ipaddress);
+      }
+    }
+  }
+
   Future<void> getIprespery() async {
     List<String> Ip = [];
-     
+
     /// Initialize Ip Address
     final info = NetworkInfo();
     var hostAddress = await info.getWifiIP();
