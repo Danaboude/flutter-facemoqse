@@ -1,8 +1,11 @@
+import 'dart:ffi';
+
 import 'package:facemosque/providers/fatchdata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as latlong;
 import 'package:provider/provider.dart';
+import 'package:mapbox_search/mapbox_search.dart';
 
 class LoctionMosque extends StatefulWidget {
   @override
@@ -11,6 +14,9 @@ class LoctionMosque extends StatefulWidget {
 
 class _LoctionMosqueState extends State<LoctionMosque> {
   late MapController mapController;
+  final MAPBOX_KEY = '';
+  List<MapBoxPlace> places = [];
+
   @override
   void initState() {
     mapController = MapController();
@@ -25,12 +31,38 @@ class _LoctionMosqueState extends State<LoctionMosque> {
     super.dispose();
   }
 
+  Future placesSearch(String apiKey) async {
+    var placesService = PlacesSearch(
+      apiKey: apiKey,
+      limit: 5,
+    );
+
+    var places = await placesService.getPlaces(
+      "Reichenhainer Strasse. 51",
+    );
+
+    for (var element in places!) {
+      print(element.geometry!.coordinates);
+    }
+  }
+
+  /*Future placesSearch(String apiKey, String Address, String House) async {
+    var placesService = PlacesSearch(
+      apiKey: apiKey,
+      limit: 5,
+    );
+
+    print(Address + ". " + House);
+    places = (await placesService.getPlaces(Address + ". " + House))!;
+  }*/
+
   @override
   Widget build(BuildContext context) {
     double zoom = 18.0;
     var sizedphone = MediaQuery.of(context).size;
-    // read latlng from fatchdata
+
     latlong.LatLng l = Provider.of<FatchData>(context).latlng1;
+
     return Stack(
       children: [
         new FlutterMap(
@@ -63,23 +95,17 @@ class _LoctionMosqueState extends State<LoctionMosque> {
           ],
         ),
         Align(
-                    alignment: Alignment.bottomLeft,
-
+          alignment: Alignment.bottomLeft,
           child: Container(
-            margin: EdgeInsets.all(5),
-            height: sizedphone.height*0.06,
-             width: sizedphone.width*0.1,
-           decoration: BoxDecoration(
-            
-               color: Theme.of(context).primaryColor,
-        
-            borderRadius: BorderRadius.circular(40)
-           ),
-              
+              margin: EdgeInsets.all(5),
+              height: sizedphone.height * 0.06,
+              width: sizedphone.width * 0.1,
+              decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(40)),
               child: IconButton(
-                color:Colors.white,
+                  color: Colors.white,
                   onPressed: () {
-                    
                     zoom = zoom - 1;
                     mapController.move(l, zoom);
                     print(zoom);
@@ -87,26 +113,22 @@ class _LoctionMosqueState extends State<LoctionMosque> {
                   icon: Icon(Icons.zoom_out))),
         ),
         Align(
-                    alignment: Alignment.bottomRight,
-
+          alignment: Alignment.bottomRight,
           child: Container(
-            margin: EdgeInsets.all(5),
-            height: sizedphone.height*0.06,
-             width: sizedphone.width*0.1,
-           decoration: BoxDecoration(
-            
-               color: Theme.of(context).primaryColor,
-        
-            borderRadius: BorderRadius.circular(40)
-           ),
-               child: IconButton(
-                              color: Colors.white,
-        
+              margin: EdgeInsets.all(5),
+              height: sizedphone.height * 0.06,
+              width: sizedphone.width * 0.1,
+              decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(40)),
+              child: IconButton(
+                  color: Colors.white,
                   onPressed: () {
-                    if(zoom<18)
-                    {zoom = zoom + 1;
-                    mapController.move(l, zoom);
-                     print(zoom);}
+                    if (zoom < 18) {
+                      zoom = zoom + 1;
+                      mapController.move(l, zoom);
+                      print(zoom);
+                    }
                   },
                   icon: Icon(Icons.zoom_in))),
         ),

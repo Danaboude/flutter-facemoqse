@@ -61,8 +61,8 @@ class _VolumeScreenState extends State<VolumeScreen> {
               children: [
                 ElevatedButton(
                     child: Text(language['Change Volume']),
-                    onPressed: () async{
-                        await Provider.of<Respray>(context, listen: false)
+                    onPressed: () async {
+                      await Provider.of<Respray>(context, listen: false)
                           .sendudp('volume ${_valslider.toInt()}');
                     },
                     style: ButtonStyle(
@@ -76,6 +76,7 @@ class _VolumeScreenState extends State<VolumeScreen> {
                 ElevatedButton(
                     child: Text(language['Mute']),
                     onPressed: () async {
+                      _valslider = 0;
                       await Provider.of<Respray>(context, listen: false)
                           .sendudp('muted');
                     },

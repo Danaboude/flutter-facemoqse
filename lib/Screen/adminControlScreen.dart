@@ -174,11 +174,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        "${language['Admin']} ${user.email}",
-                        style: Theme.of(context).textTheme.headline1,
-                      ),
-                      Text(
-                        'IP ${Provider.of<Respray>(context).ipaddress}',
+                        "${language['Admin']}",
                         style: Theme.of(context).textTheme.headline1,
                       ),
                     ],
@@ -196,6 +192,12 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
             Container(
               height: sizedphone.height * 0.78,
               width: sizedphone.width,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/quranbackground.jpg"),
+                      fit: BoxFit.fill,
+                      scale: 0.05,
+                      opacity: 0.02)),
               padding: EdgeInsets.all(8),
               child: AnimationLimiter(
                 child: GridView.builder(

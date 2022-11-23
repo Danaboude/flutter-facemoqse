@@ -11,7 +11,7 @@ import 'package:udp/udp.dart';
 class Respray with ChangeNotifier {
   List<String> Ips = [];
   bool isdoneserarching = false;
-  String ipaddress = '192.168.0.104';
+  List<String> ipaddress = [];
 
   Future<void> sendudp(String data) async {
     //send a simple string to a broadcast endpoint on port 65001.
@@ -33,22 +33,24 @@ class Respray with ChangeNotifier {
     receiver.close();*/
     printIps();
 
-    var DESTINATION_ADDRESS = InternetAddress(ipaddress);
+    for (var i = 0; i < ipaddress.length; i++) {
+      var DESTINATION_ADDRESS = InternetAddress(ipaddress[i]);
 
-    RawDatagramSocket.bind(InternetAddress.anyIPv4, 44092)
-        .then((RawDatagramSocket udpSocket) {
-      udpSocket.broadcastEnabled = true;
-      udpSocket.listen((e) {
-        Datagram? dg = udpSocket.receive();
-        if (dg != null) {
-          ipaddress = dg.address.address;
-          print("received ${dg.address}");
-        }
+      RawDatagramSocket.bind(InternetAddress.anyIPv4, 44092)
+          .then((RawDatagramSocket udpSocket) {
+        udpSocket.broadcastEnabled = true;
+        udpSocket.listen((e) {
+          Datagram? dg = udpSocket.receive();
+          if (dg != null) {
+            // ipaddress = dg.address.address;
+            print("received ${dg.address}");
+          }
+        });
+        List<int> data1 = utf8.encode(data);
+        udpSocket.send(data1, DESTINATION_ADDRESS, 44092);
+        udpSocket.close();
       });
-      List<int> data1 = utf8.encode(data);
-      udpSocket.send(data1, DESTINATION_ADDRESS, 44092);
-      udpSocket.close();
-    });
+    }
   }
 
   Future<void> setisdoneserarching(bool iss) async {
@@ -57,7 +59,7 @@ class Respray with ChangeNotifier {
   }
 
   void setipaddress(String ip) {
-    ipaddress = ip;
+    //ipaddress = ip;
 
     notifyListeners();
   }
@@ -65,13 +67,28 @@ class Respray with ChangeNotifier {
   Future printIps() async {
     for (var interface in await NetworkInterface.list()) {
       print('== Interface: ${interface.name} ==');
+
       for (var addr in interface.addresses) {
         print(
             '${addr.address} ${addr.host} ${addr.isLoopback} ${addr.rawAddress} ${addr.type.name}');
-        var IpArray = addr.address.split('.');
-        ipaddress =
-            IpArray[0] + "." + IpArray[1] + "." + IpArray[2] + "." + "255";
-        print("BroadCasting" + ipaddress);
+        if (addr.address.isNotEmpty) {
+          List<String> IpArray = addr.address.split(".");
+          print(addr.rawAddress[0].toString() +
+              "." +
+              addr.rawAddress[1].toString() +
+              "." +
+              addr.rawAddress[2].toString() +
+              "." +
+              "255");
+
+          ipaddress.add(addr.rawAddress[0].toString() +
+              "." +
+              addr.rawAddress[1].toString() +
+              "." +
+              addr.rawAddress[2].toString() +
+              "." +
+              "255");
+        }
       }
     }
   }

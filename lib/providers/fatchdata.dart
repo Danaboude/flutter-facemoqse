@@ -87,7 +87,6 @@ class FatchData with ChangeNotifier {
     preferences.setBool('favortemosqe', val);
     notifyListeners();
   }
- 
 
 // ask for location Permisson
   void locationPermission() async {
@@ -103,6 +102,7 @@ class FatchData with ChangeNotifier {
 // get LatLng from address using MapboxApi becuse FlutterMap Requires LatLng for Markars
   Future<void> loction() async {
     try {
+      print("-->Mosque" + mosqueFollow.houseno);
       if (mosqueFollow.street != '') {
         MapboxApi mapbox = MapboxApi(
           accessToken:
@@ -152,6 +152,9 @@ class FatchData with ChangeNotifier {
 
       mosquelist =
           List<Mosques>.from(l.map((model) => Mosques.fromJson(model)));
+      for (var mosqueli in mosquelist) {
+        print(mosqueli.houseno);
+      }
       notifyListeners();
     } catch (e) {
       print(e);
@@ -215,8 +218,7 @@ class FatchData with ChangeNotifier {
         mosqueFollow = mosquelist.firstWhere(
             (element) => int.parse(element.mosqueid) == int.parse(mosqid));
         prefs.setString('mosqueFollow', json.encode(mosqueFollow.toMap()));
-          prefs.setString('mosqid', mosqid);
-      
+        prefs.setString('mosqid', mosqid);
       } else {
         Mosque mosqu = await Mosque.fromJson(jsonDecode(response.body));
         mosqueFollow = mosquelist.firstWhere(

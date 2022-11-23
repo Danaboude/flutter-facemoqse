@@ -18,9 +18,9 @@ class Buttonclickp with ChangeNotifier {
   bool languageselected = false;
   bool resetselected = false;
   bool themeselected = false;
-  bool screenselected=false;
-  bool languageformosqueselected=false;
-  int counteraddparyer=1;
+  bool screenselected = false;
+  bool languageformosqueselected = false;
+  int counteraddparyer = 1;
   //Two maps with the same keys with different values containing words in the language en,ar
   Map<String, String> en = {
     'titlenamemasjed': 'Prayer and Iqamah times of mosque',
@@ -44,10 +44,10 @@ class Buttonclickp with ChangeNotifier {
     'searchbar': 'Search for mosque...',
     'azannotification': 'Azen Notification',
     'adan': 'Adan',
-    'prayer': 'prayer',
-    'delete Worning': 'Delete Worning',
+    'prayer': 'Prayer',
+    'delete Worning': 'Delete Warning',
     'body delete worning': 'Are you sure you want to Delete',
-    'sign Worning': 'Sign Worning',
+    'sign Worning': 'Sign Warning',
     'body sign worning': 'Are you sure you want to sign to Event',
     'yes': 'Yes',
     'no': 'No',
@@ -55,7 +55,7 @@ class Buttonclickp with ChangeNotifier {
     'Cancel': 'Cancel',
     'username': 'User Name',
     'enterusername': 'Enter User Name',
-    'firstname': 'First name',
+    'firstname': 'First Name',
     'setyouname': 'set You\'r name',
     'lastname': 'Last name',
     'setyoulastname': 'set You\'r Last Name',
@@ -70,7 +70,7 @@ class Buttonclickp with ChangeNotifier {
     'set You\'r MAC': 'set You\'r MAC',
     'LOGIN': 'LOGIN',
     'SIGNUP': 'SIGNUP',
-    'Event Noititcations': 'Event Noititcations',
+    'Event Noititcations': 'Event Notifications',
     'information': 'information',
     'Admin': 'Admin',
     'Title': 'Title',
@@ -86,10 +86,10 @@ class Buttonclickp with ChangeNotifier {
     'set a Time': 'set a Time',
     'Mosque Name': 'Mosque Name',
     'Mosque ID': 'Mosque ID',
-    'Prauer_Method': 'Prauer_Method',
+    'Prauer_Method': 'Prayer_Method',
     'StatUs': 'StatUs',
     'Date Of Start': 'Date Of Start',
-    'Actibation Code': 'Actibation Code',
+    'Actibation Code': 'Activation Code',
     'Address': 'Address',
     'Theme': 'Theme',
     'azan active': 'Azan Active',
@@ -102,53 +102,55 @@ class Buttonclickp with ChangeNotifier {
     'Reset': 'Reset',
     'Default': 'Default',
     'Reset Mode': 'Reset Mode',
-     'Change Theme': 'Change Theme',
-     'Select':'Select',
-     'Always On':'Always On',
-     'Change Screen Mode':'Change Screen Mode',
-     'Screen':'Screen',
-     'Scan QR Code':'Scan QR Code',
-     'Change Volume':'Change Volume',
-     'Mute':'Mute',
-     'volume':'volume',
-     'Write Message':'Write Message',
-     'Send Message':'Send Message',
-     'Delete Message':'Delete Message',
-     'Message':'Message',
-     'Prayer Time':'Prayer Time',
-     'Prayer Settings':'Prayer Settings',
-     'Iqamah Settings':'Iqamah Settings',
-     'Chooses Time':'Chooses Time',
-     'Chooses Prayer':'Chooses Prayer',
-     'Chooses':'Chooses ',
-     'Send Times':'Send Time',
-     'logout':'Logout',
-     'Connect':'Connect',
-     'Sync':'Sync',
-     'Scan':'Scan',
-     'not registered':'Not Registered',
-     'Back':'Back',
-     'Delete':'Delete',
-     'Share':'Share',
-     'An Error Occurred':'An Error Occurred',
-     'OK':'OK',
-     'Fill the TextFild':'Fill the TextFild',
-     'Wecome to Facemosque':'Wecome to Facemosque',
-     'Change Language':'Change Language',
-     'time of prayer has been updated':'time of prayer has been updated',
-     'please select Setting and prayer':'please select Setting and prayer',
-     'The restart command has been sent':'The restart command has been sent',
-     'Serach for Respray IP':'Serach for Respray IP',
-     'Choose ip':'Choose ip',
-     'wait for IP to find':'Wait to find IP',
-     'Connect to wifi':'Connect to wifi',
-     'No More paryer for today':'No More paryer for today',
-     'Today\'s prayers are over':'Today\'s prayers are over',
-     'Take me to Google Map':'Take me to the mosque',
-     'Select the mosque to see the last prayer':'Select the mosque to see the last prayer'
+    'Change Theme': 'Change Theme',
+    'Select': 'Select',
+    'Always On': 'Always On',
+    'Change Screen Mode': 'Change Screen Mode',
+    'Screen': 'Screen',
+    'Scan QR Code': 'Scan QR Code',
+    'Change Volume': 'Change Volume',
+    'Mute': 'Mute',
+    'volume': 'Volume',
+    'Write Message': 'Write Message',
+    'Send Message': 'Send Message',
+    'Delete Message': 'Delete Message',
+    'Message': 'Message',
+    'Prayer Time': 'Prayer Time',
+    'Prayer Settings': 'Prayer Settings',
+    'Iqamah Settings': 'Iqamah Settings',
+    'Chooses Time': 'Choose Time',
+    'Chooses Prayer': 'Choose Prayer',
+    'Chooses': 'Choose ',
+    'Send Times': 'Send Time',
+    'logout': 'Logout',
+    'Connect': 'Connect',
+    'Sync': 'Sync',
+    'Scan': 'Scan',
+    'not registered': 'Not Registered',
+    'Back': 'Back',
+    'Delete': 'Delete',
+    'Share': 'Share',
+    'An Error Occurred': 'An Error Occurred',
+    'OK': 'OK',
+    'Fill the TextFild': 'Fill the TextFild',
+    'Wecome to Facemosque': 'Wecome to Facemosque',
+    'Change Language': 'Change Language',
+    'time of prayer has been updated': 'time of prayer has been updated',
+    'please select Setting and prayer': 'please select Setting and prayer',
+    'The restart command has been sent': 'The restart command has been sent',
+    'Serach for Respray IP': 'Serach for Respray IP',
+    'Choose ip': 'Choose ip',
+    'wait for IP to find': 'Wait to find IP',
+    'Connect to wifi': 'Connect to wifi',
+    'No More paryer for today': 'No More paryer for today',
+    'Today\'s prayers are over': 'Today\'s prayers are over',
+    'Take me to Google Map': 'Take me to the mosque',
+    'Select the mosque to see the last prayer':
+        'Select the mosque to see the last prayer',
+    'mosques': 'Mosques'
   };
   Map<String, String> ar = {
-    'titlenamemasjed': 'مواقيات الصلاة والاقامة لجامع',
+    'titlenamemasjed': 'مواقيت الصلاة و الإقامة لجامع',
     'fajer': 'الفجر',
     'sharouq': 'الشروق',
     'dhuhr': 'الظهر',
@@ -156,20 +158,20 @@ class Buttonclickp with ChangeNotifier {
     'magrib': 'المغرب',
     'isha': 'العشاء',
     'nextparer': 'الصلاة التالية بعد',
-    'todayaya': 'اية اليوم',
+    'todayaya': 'آية اليوم',
     'mymosque': 'مسجدي',
-    'searchmosquetimes': 'ابحث عن مسجد لتتبع اوقات الصلاة والاقام',
+    'searchmosquetimes': 'ابحث عن مسجد لتتبع أوقات  الصلاة والإقامة',
     'othermosque': 'مساجد اخرى',
-    'followfronotific': 'اتبع المساجد للاشعارات',
-    'eventnotifications': 'الاشعارات',
+    'followfronotific': 'تبع المساجد للإشعارات',
+    'eventnotifications': 'الإشعارات',
     'language': 'اللغة',
     'selectlanguage': 'اختيار اللغة',
     'englich': 'انكليزي',
     'arabic': 'عربي',
     'searchbar': 'ابحث عن مسجد',
     'azannotification': 'تنبهات الاذان',
-    'adan': 'الاذان',
-    'prayer': 'الاقامة',
+    'adan': 'الأذان',
+    'prayer': 'الإقامة',
     'delete Worning': 'تحذير حذف',
     'body delete worning': 'هل أنت متأكد أنك تريد حذف',
     'sign Worning': 'تحذير تسجيل',
@@ -225,57 +227,56 @@ class Buttonclickp with ChangeNotifier {
     'Black': 'أسود',
     'White': 'أبيض',
     'Default': 'إفتراضي',
-    'Reset':'إعادة ضبط',
-    'Reset Mode':'وضع إعادة التعيين',
-    'Change Theme':'تغير الخلفية الى اللون',
-    'Select':'اختيار',
-    'Always On':'دائما قيد التشغيل',
-    'Change Screen Mode':'تغيير وضع الشاشة',
-    'Screen':'شاشة',
-    'Scan QR Code':' QR مسح',
-    'Change Volume':'تغيير حجم الصوت',
-    'Mute':'صامت',
-    'volume':'الصوت',
-    'Write Message':'اكتب رسالة',
-    'Send Message':'أرسل رسالة',
-    'Delete Message':'حذف رسالة',
-    'Message':'رسالة',
-    'Prayer Time':'وقت الصلاة',
-    'Prayer Settings':'إعدادات الصلاة',
-    'Iqamah Settings':'إعدادات الإقامة',
-    'Chooses Time':'اختار الوقت',
-    'Chooses Prayer':'اختار الصلاة',
-    'Chooses':'اختار',
-    'Send Times':'إرسال الوقت',
-    'logout':'تسجيل خروج',
-    'Connect':'الاتصال',
-    'Sync':'مزامنة',
-    'Scan':'مسح',
-    'not registered':'لم يسجل',
-    'Back':'عودة',
-    'Delete':'حذف',
-    'Share':'شارك',
-    'An Error Occurred':'حدث خطأ',
-    'OK':'نعم',
-    'Fill the TextFild':'املأ حقل النص',
-    'Wecome to Facemosque':'Facemosque مرحبا بكم في ',
-    'Change Language':'تغيير لللغة',
-    'time of prayer has been updated':'تم تحديث وقت الصلاة',
-    'please select Setting and prayer':'يرجى تحديد الإعداد والصلاة',
-    'The restart command has been sent':'تم ارسال امر إعادة التشغيل',
-    'Serach for Respray IP':'ابحث عن Respray IP',
-    'Choose ip':'اختر IP',
-    'wait for IP to find':'IP انتظر حتى يتم العثور على',
-    'Connect to wifi':'wifi اتصل بشبكة',
-    'No More paryer for today':'لا مزيد من الصلاة لهذا اليوم',
-    'Today\'s prayers are over':'انتهت الصلوات لليوم',
-    'Take me to Google Map':'ارشدي إلى المسجد',
-
-    'Select the mosque to see the last prayer':'حدد الجامع لترى اخر صلاه'
+    'Reset': 'إعادة ضبط',
+    'Reset Mode': 'وضع إعادة التعيين',
+    'Change Theme': 'تغير الخلفية الى اللون',
+    'Select': 'اختيار',
+    'Always On': 'دائما قيد التشغيل',
+    'Change Screen Mode': 'تغيير وضع الشاشة',
+    'Screen': 'شاشة',
+    'Scan QR Code': ' QR مسح',
+    'Change Volume': 'تغيير حجم الصوت',
+    'Mute': 'صامت',
+    'volume': 'الصوت',
+    'Write Message': 'اكتب رسالة',
+    'Send Message': 'أرسل رسالة',
+    'Delete Message': 'حذف رسالة',
+    'Message': 'رسالة',
+    'Prayer Time': 'وقت الصلاة',
+    'Prayer Settings': 'إعدادات الصلاة',
+    'Iqamah Settings': 'إعدادات الإقامة',
+    'Chooses Time': 'اختار الوقت',
+    'Chooses Prayer': 'اختار الصلاة',
+    'Chooses': 'اختار',
+    'Send Times': 'إرسال الوقت',
+    'logout': 'تسجيل خروج',
+    'Connect': 'الاتصال',
+    'Sync': 'مزامنة',
+    'Scan': 'مسح',
+    'not registered': 'لم يسجل',
+    'Back': 'عودة',
+    'Delete': 'حذف',
+    'Share': 'شارك',
+    'An Error Occurred': 'حدث خطأ',
+    'OK': 'نعم',
+    'Fill the TextFild': 'املأ حقل النص',
+    'Wecome to Facemosque': 'Facemosque مرحبا بكم في ',
+    'Change Language': 'تغيير لللغة',
+    'time of prayer has been updated': 'تم تحديث وقت الصلاة',
+    'please select Setting and prayer': 'يرجى تحديد الإعداد والصلاة',
+    'The restart command has been sent': 'تم ارسال امر إعادة التشغيل',
+    'Serach for Respray IP': 'ابحث عن Facemosque IP',
+    'Choose ip': 'اختر IP',
+    'wait for IP to find': 'IP انتظر حتى يتم العثور على',
+    'Connect to wifi': 'wifi اتصل بشبكة',
+    'No More paryer for today': 'لا مزيد من الصلاة لهذا اليوم',
+    'Today\'s prayers are over': 'انتهت الصلوات لليوم',
+    'Take me to Google Map': 'أرشدني إلى المسجد',
+    'Select the mosque to see the last prayer': 'حدد الجامع لترى اخر توقيت صلاه'
   };
 
-String parerEdit='';
-String settingEdit='';
+  String parerEdit = '';
+  String settingEdit = '';
   // A map that stores Arabic and English words according to the value of the variable languageselected
   Map<String, String> get languagepro {
     return languageselected ? ar : en;
@@ -310,19 +311,23 @@ String settingEdit='';
     themeselected = !themeselected;
     notifyListeners();
   }
+
   void setcunteraddparyer(int num) async {
     counteraddparyer = num;
     notifyListeners();
   }
-    void setParerEdit(String str) async {
+
+  void setParerEdit(String str) async {
     parerEdit = str;
     notifyListeners();
   }
-    void SetSettingEdit(String str) async {
+
+  void SetSettingEdit(String str) async {
     settingEdit = str;
     notifyListeners();
   }
-   Future<void> storelanguageformosque() async {
+
+  Future<void> storelanguageformosque() async {
     languageformosqueselected = !languageformosqueselected;
     notifyListeners();
   }
@@ -331,6 +336,7 @@ String settingEdit='';
     resetselected = !resetselected;
     notifyListeners();
   }
+
   void storeScreen() async {
     screenselected = !screenselected;
     notifyListeners();

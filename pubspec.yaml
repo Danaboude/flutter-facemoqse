@@ -66,6 +66,10 @@ dependencies:
   onboarding_intro_screen: ^0.0.5
   connectivity_plus: ^2.3.6+1
   map_launcher: ^2.4.0
+  persistent_bottom_nav_bar: ^5.0.2
+  geocoding: ^2.0.5
+  mapbox_search: ^3.0.1+2
+  share_plus: ^6.3.0
 
  
   

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:facemosque/Screen/adminControlScreen.dart';
@@ -21,7 +22,11 @@ import 'package:facemosque/widget/bottomnav.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:swipe/swipe.dart';
+import "package:flutter/material.dart";
+import "package:persistent_bottom_nav_bar/persistent_tab_view.dart";
 
+//import "package:persistent_bottom_nav_bar_example_project/custom-widget-tabs.widget.dart";
+//import "package:persistent_bottom_nav_bar_example_project/screens.dart";
 import '../providers/messagefromtaipc.dart';
 import '../widget/notificationHelper.dart';
 
@@ -29,11 +34,12 @@ class MySlider {
   String time;
   String timeend;
   String adan;
-  MySlider({
-    required this.time,
-    required this.timeend,
-    required this.adan,
-  });
+  bool Issharouq;
+  MySlider(
+      {required this.time,
+      required this.timeend,
+      required this.adan,
+      required this.Issharouq});
 }
 
 class HomeScreen extends StatefulWidget {
@@ -47,11 +53,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   NotificationHelper _notificationHelper = NotificationHelper();
-
+  late PersistentTabController _controller;
+  late bool _hideNavBar;
   @override
   void initState() {
     read();
     super.initState();
+    _controller = PersistentTabController();
+    _hideNavBar = false;
   }
 
   @override
@@ -87,6 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
     Provider.of<FatchData>(context, listen: false).locationPermission();
     //call mosque form provider (FatchData) if not select mosque it well show Noting in All Text
     Mosque mosque = Provider.of<FatchData>(context).mosque;
+    String mosquefollow = Provider.of<FatchData>(context).mosqueFollow.name;
+
     //call Map(languagepro) from provider (Buttonclickp) return en language as default
     //have all key of word we need
     Map language = Provider.of<Buttonclickp>(context).languagepro;
@@ -96,24 +107,35 @@ class _HomeScreenState extends State<HomeScreen> {
     //Every key language[''] well get word in en or ar
     List<MySlider> slider = [
       MySlider(
-        time: mosque.fajer,
-        timeend: mosque.fajeri,
-        adan: language['fajer'],
-      ),
+          time: mosque.fajer,
+          timeend: mosque.fajeri,
+          adan: language['fajer'],
+          Issharouq: false),
       MySlider(
-        time: mosque.sharouq,
-        timeend: ' ',
-        adan: language['sharouq'],
-      ),
+          time: mosque.sharouq,
+          timeend: ' ',
+          adan: language['sharouq'],
+          Issharouq: true),
       MySlider(
-          time: mosque.dhuhr, timeend: mosque.dhuhri, adan: language['dhuhr']),
-      MySlider(time: mosque.asr, timeend: mosque.asri, adan: language['asr']),
+          time: mosque.dhuhr,
+          timeend: mosque.dhuhri,
+          adan: language['dhuhr'],
+          Issharouq: false),
+      MySlider(
+          time: mosque.asr,
+          timeend: mosque.asri,
+          adan: language['asr'],
+          Issharouq: false),
       MySlider(
           time: mosque.magrib,
           timeend: mosque.magribi,
-          adan: language['magrib']),
+          adan: language['magrib'],
+          Issharouq: false),
       MySlider(
-          time: mosque.isha, timeend: mosque.ishai, adan: language['isha']),
+          time: mosque.isha,
+          timeend: mosque.ishai,
+          adan: language['isha'],
+          Issharouq: false),
     ];
 
     return Scaffold(
@@ -136,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: SafeArea(
             child: Container(
               // background color(white) of app
-              color: Colors.white,
+              color: Color.fromARGB(255, 255, 255, 255),
               child: ListView(
                 physics: Provider.of<Buttonclickp>(context)
                             .indexnavigationbottmbar ==
@@ -153,18 +175,40 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
-                              padding: EdgeInsets.all(8),
-                              child: AutoSizeText(
-                                //show word in en or ar as lebal
-                                language['titlenamemasjed'],
-                                style: Theme.of(context).textTheme.headline2,
-                              ),
-                            ),
-                            Text(
-                              //show name of mosque user select if not select it well show nothing
-                              Provider.of<FatchData>(context).mosqueFollow.name,
-                              style: Theme.of(context).textTheme.headline2,
-                            ),
+                                width: sizedphone.width * 0.95,
+                                height: 100,
+                                margin: const EdgeInsets.only(top: 10),
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage(
+                                          "assets/images/quranbackground.jpg"),
+                                      fit: BoxFit.cover,
+                                      opacity: 0.05),
+                                  border: Border.all(
+                                      color: const Color(0xffD1B000), width: 2),
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                padding: EdgeInsets.all(8),
+                                child: Center(
+                                  child: AutoSizeText(
+                                    //show word in en or ar as lebal
+                                    language['titlenamemasjed'] +
+                                        "\n" +
+                                        mosquefollow,
+
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: "Al-Jazeera",
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18),
+                                    // Theme.of(context).textTheme.headline2,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )),
+
+                            //show name of mosque user select if not select it well show nothing
+
                             CarouselSlider(
                                 options: CarouselOptions(
                                   //take 28% of height size phone for this widget (cart)
@@ -184,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           //take 28% of height size phone for this widget
                                           height: sizedphone.height * 0.15,
                                           //take 90% of height size phone for this widget
-                                          width: sizedphone.width * 0.9,
+                                          width: sizedphone.width * 0.95,
                                           //leave space 8 form left and right  of widget
                                           margin: const EdgeInsets.symmetric(
                                               vertical: 8),
@@ -192,11 +236,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                           decoration: BoxDecoration(
                                             color:
                                                 Theme.of(context).primaryColor,
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/images/backgroundprayers.png"),
+                                                fit: BoxFit.cover,
+                                                opacity: 0.1),
                                             border: Border.all(
                                                 color: const Color(0xffD1B000),
-                                                width: 3),
+                                                width: 2),
                                             borderRadius:
-                                                BorderRadius.circular(40),
+                                                BorderRadius.circular(20),
                                           ),
                                           child: Column(
                                             mainAxisAlignment:
@@ -204,61 +253,80 @@ class _HomeScreenState extends State<HomeScreen> {
                                             children: [
                                               Text(
                                                 //name of adan
-                                                item.adan,
+                                                item.Issharouq
+                                                    ? item.adan +
+                                                        "\n" +
+                                                        item.time
+                                                    : item.adan,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .headline1,
+                                                textAlign: TextAlign.center,
                                               ),
                                               const SizedBox(),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: [
-                                                  //show word adan or اذان as lebal
-                                                  Text(language['adan'],
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headline1),
-                                                  const SizedBox(),
-                                                  Text(language['prayer'],
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headline1),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: [
-                                                  //time adan
-                                                  Text(item.time,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headline1),
-                                                  SizedBox(
-                                                    width:
-                                                        sizedphone.width * 0.09,
-                                                  ),
-                                                  //time المقام
-                                                  Text(item.timeend,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headline1),
-                                                ],
-                                              ),
+                                              if (!item.Issharouq)
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
+                                                  children: [
+                                                    //show word adan or اذان as lebal
+                                                    Text(
+                                                        item.Issharouq
+                                                            ? ""
+                                                            : language['adan'],
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline1),
+                                                    const SizedBox(),
+                                                    Text(
+                                                        item.Issharouq
+                                                            ? ""
+                                                            : language[
+                                                                'prayer'],
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline1),
+                                                  ],
+                                                ),
+                                              if (!item.Issharouq)
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
+                                                  children: [
+                                                    //time adan
+                                                    Text(item.time,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline1),
+                                                    SizedBox(
+                                                      width: sizedphone.width *
+                                                          0.095,
+                                                    ),
+                                                    //time المقام
+                                                    Text(item.timeend,
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline1),
+                                                  ],
+                                                ),
                                             ],
                                           )),
                                     )
                                     .toList()),
                             Container(
                               height: sizedphone.height * 0.58,
-                              width: sizedphone.width * 0.9,
+                              width: sizedphone.width * 0.95,
                               decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        "assets/images/quranbackground.jpg"),
+                                    fit: BoxFit.cover,
+                                    opacity: 0.05),
                                 border: Border.all(
-                                    color: const Color(0xffD1B000), width: 3),
-                                borderRadius: BorderRadius.circular(40),
+                                    color: const Color(0xffD1B000), width: 2),
+                                borderRadius: BorderRadius.circular(20),
                                 color: Theme.of(context).primaryColor,
                               ),
                               child: Column(
@@ -272,10 +340,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               .parse(mosque.isha.split(':')[0] +
                                                   ':' +
                                                   mosque.isha.split(':')[1])
-                                              .isAfter(DateFormat("hh:mm")
-                                                  .parse(DateTime.now()
-                                                          .hour
-                                                          .toString() +
+                                              .isAfter(DateFormat("hh:mm").parse(
+                                                  DateTime.now().hour.toString() +
                                                       ':' +
                                                       DateTime.now()
                                                           .minute
@@ -290,15 +356,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                               'Select the mosque to see the last prayer'],
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headline1!.copyWith(fontSize: 15)),
+                                              .headline1!
+                                              .copyWith(fontSize: 15)),
                                   titlel(language['todayaya']),
                                   Expanded(
                                       child: Container(
+                                    /*decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/images/quranbackground.jpg"),
+                                          fit: BoxFit.cover,
+                                          opacity: 0.05),
+                                    ),*/
                                     alignment: Alignment.topCenter,
+
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 9),
                                     //AutoSizeText it well Change the font size to fit inside widget
                                     // That you gave it a certain size(height,wdith) of the phone screan size
+
                                     child: AutoSizeText(
                                       textAlign: TextAlign.center,
                                       // if language ar it well show haditha else it well show hadithe
@@ -313,6 +389,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               : mosque.qurane.toString(),
                                       //give text style of headline 1 (I set in main.dart)
                                       //but it well change the font size to 20
+
                                       style: Theme.of(context)
                                           .textTheme
                                           .headline1!
@@ -350,7 +427,7 @@ class _HomeScreenState extends State<HomeScreen> {
       margin: const EdgeInsets.all(15),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(20),
         color: Color(0xFF94C973),
       ),
       alignment: Alignment.center,

@@ -221,7 +221,7 @@ void alarmadan(String adan) async {
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
-  static const int _bluePrimaryValue = 0xFF1ea345;
+  static const int _bluePrimaryValue = 0xFF0e8028;
 
   static const MaterialColor green = MaterialColor(
     _bluePrimaryValue,
@@ -231,7 +231,7 @@ class MyApp extends StatefulWidget {
       200: Color(0xFF90CAF9),
       300: Color(0xFF64B5F6),
       400: Color(0xFF42A5F5),
-      500: Color(0xFF1ea345),
+      500: Color(0xFF0e8028),
       600: Color(0xFF1E88E5),
       700: Color(0xFF1976D2),
       800: Color(0xFF1565C0),

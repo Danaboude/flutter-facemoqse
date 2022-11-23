@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:share_plus/share_plus.dart';
 
 class EventNotifications extends StatefulWidget {
   const EventNotifications({Key? key}) : super(key: key);
@@ -84,7 +85,9 @@ class _EventNotificationsState extends State<EventNotifications> {
                   child: Column(children: [
                     ListTile(
                       enableFeedback: true,
-                      leading:item.isEvent=='false'? Image.asset('assets/images/announcement_0.png'):Image.asset('assets/images/event-1.png'),
+                      leading: item.isEvent == 'false'
+                          ? Image.asset('assets/images/announcement_0.png')
+                          : Image.asset('assets/images/event-1.png'),
                       title: AutoSizeText(
                         item.title + ' ' + item.date,
                         maxLines: 2,
@@ -94,7 +97,7 @@ class _EventNotificationsState extends State<EventNotifications> {
                             ?.copyWith(fontSize: 16),
                       ),
                       subtitle: AutoSizeText(
-                        minFontSize:14,
+                        minFontSize: 14,
                         maxLines: 25,
                         item.message,
                         style: Theme.of(context).textTheme.headline2!.copyWith(
@@ -111,10 +114,9 @@ class _EventNotificationsState extends State<EventNotifications> {
                                 showDialog(
                                   context: context,
                                   builder: (ctx) => AlertDialog(
-                                     shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(40),
-                                          ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
                                     title: Text(language['delete Worning']),
                                     content:
                                         Text(language['body delete worning']),
@@ -132,7 +134,10 @@ class _EventNotificationsState extends State<EventNotifications> {
                                         onPressed: () {
                                           Navigator.of(ctx).pop();
                                         },
-                                        child: Text(language['no'],style: TextStyle(color: Colors.red),),
+                                        child: Text(
+                                          language['no'],
+                                          style: TextStyle(color: Colors.red),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -149,7 +154,7 @@ class _EventNotificationsState extends State<EventNotifications> {
                                       showDialog(
                                         context: context,
                                         builder: (ctx) => AlertDialog(
-                                           shape: RoundedRectangleBorder(
+                                          shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(40),
                                           ),
@@ -161,7 +166,8 @@ class _EventNotificationsState extends State<EventNotifications> {
                                               onPressed: () {
                                                 Navigator.of(ctx)
                                                     .pushReplacementNamed(
-                                                        SigninScreenforEvent.routeName,
+                                                        SigninScreenforEvent
+                                                            .routeName,
                                                         arguments: item);
                                               },
                                               child: Text(language['yes']),
@@ -170,7 +176,11 @@ class _EventNotificationsState extends State<EventNotifications> {
                                               onPressed: () {
                                                 Navigator.of(ctx).pop();
                                               },
-                                              child: Text(language['no'],style: TextStyle(color: Colors.red),),
+                                              child: Text(
+                                                language['no'],
+                                                style: TextStyle(
+                                                    color: Colors.red),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -179,7 +189,7 @@ class _EventNotificationsState extends State<EventNotifications> {
                                       showDialog(
                                         context: context,
                                         builder: (ctx) => AlertDialog(
-                                           shape: RoundedRectangleBorder(
+                                          shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(40),
                                           ),
@@ -190,28 +200,30 @@ class _EventNotificationsState extends State<EventNotifications> {
                                             height: sizedphone.height * 0.3,
                                             width: sizedphone.width * 0.7,
                                             child: QrImage(
-
-                                              data:prefs.getString('${item.eventId}')!,
+                                              data: prefs.getString(
+                                                  '${item.eventId}')!,
                                               version: QrVersions.auto,
                                               size: 300.0,
                                             ),
                                           ),
                                           actions: <Widget>[
                                             Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: TextButton.icon(
-                                                icon: Icon(Icons.arrow_forward_ios_sharp),
-                                                
+                                                icon: Icon(Icons
+                                                    .arrow_forward_ios_sharp),
                                                 onPressed: () async {
-                                                  SharedPreferences preferences =
+                                                  SharedPreferences
+                                                      preferences =
                                                       await SharedPreferences
                                                           .getInstance();
-                                                  preferences.remove('userinfo');
+                                                  preferences
+                                                      .remove('userinfo');
 
                                                   Navigator.of(ctx).pop();
                                                 },
-                                                label:  Text(language['Back']),
-                                              
+                                                label: Text(language['Back']),
                                               ),
                                             ),
                                           ],
@@ -223,7 +235,13 @@ class _EventNotificationsState extends State<EventNotifications> {
                                   label: Text('Qr'))
                               : Container(),
                           TextButton.icon(
-                              onPressed: () {},
+                              onPressed: () {
+                                Share.share(item.title +
+                                    "\n" +
+                                    item.message +
+                                    "\n" +
+                                    "Facemosuqe Team");
+                              },
                               icon: Icon(Icons.share),
                               label: Text(language['Share'])),
                         ],
