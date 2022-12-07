@@ -92,8 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //ask for locationPermission in homeScreen
-    Provider.of<FatchData>(context, listen: false).locationPermission();
+   
     //call mosque form provider (FatchData) if not select mosque it well show Noting in All Text
     Mosque mosque = Provider.of<FatchData>(context).mosque;
     String mosquefollow = Provider.of<FatchData>(context).mosqueFollow.name;

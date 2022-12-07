@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 //Model Mosques
 class Mosques {
   String mosqueid;
@@ -62,7 +61,7 @@ class Mosques {
       'country': country,
       'idcity': idcity,
       'street': street,
-      'house_no': houseno,
+      'houseno': houseno,
       'zip': zip,
       'status': status,
       'publicip': publicip,
@@ -107,7 +106,7 @@ class Mosques {
       country: map['country'] ?? '',
       idcity: map['idcity'] ?? '',
       street: map['street'] ?? '',
-      houseno: map['house_no'] ?? '',
+      houseno: map['houseno'] ?? '',
       zip: map['zip'] ?? '',
       status: map['status'] ?? '',
       publicip: map['publicip'] ?? '',

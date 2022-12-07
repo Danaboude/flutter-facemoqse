@@ -18,9 +18,9 @@ class Buttonclickp with ChangeNotifier {
   bool languageselected = false;
   bool resetselected = false;
   bool themeselected = false;
-  bool screenselected = false;
-  bool languageformosqueselected = false;
-  int counteraddparyer = 1;
+  bool screenselected=false;
+  bool languageformosqueselected=false;
+  int counteraddparyer=1;
   //Two maps with the same keys with different values containing words in the language en,ar
   Map<String, String> en = {
     'titlenamemasjed': 'Prayer and Iqamah times of mosque',
@@ -275,8 +275,8 @@ class Buttonclickp with ChangeNotifier {
     'Select the mosque to see the last prayer': 'حدد الجامع لترى اخر توقيت صلاه'
   };
 
-  String parerEdit = '';
-  String settingEdit = '';
+String parerEdit='';
+String settingEdit='';
   // A map that stores Arabic and English words according to the value of the variable languageselected
   Map<String, String> get languagepro {
     return languageselected ? ar : en;
@@ -311,23 +311,19 @@ class Buttonclickp with ChangeNotifier {
     themeselected = !themeselected;
     notifyListeners();
   }
-
   void setcunteraddparyer(int num) async {
     counteraddparyer = num;
     notifyListeners();
   }
-
-  void setParerEdit(String str) async {
+    void setParerEdit(String str) async {
     parerEdit = str;
     notifyListeners();
   }
-
-  void SetSettingEdit(String str) async {
+    void SetSettingEdit(String str) async {
     settingEdit = str;
     notifyListeners();
   }
-
-  Future<void> storelanguageformosque() async {
+   Future<void> storelanguageformosque() async {
     languageformosqueselected = !languageformosqueselected;
     notifyListeners();
   }
@@ -336,7 +332,6 @@ class Buttonclickp with ChangeNotifier {
     resetselected = !resetselected;
     notifyListeners();
   }
-
   void storeScreen() async {
     screenselected = !screenselected;
     notifyListeners();

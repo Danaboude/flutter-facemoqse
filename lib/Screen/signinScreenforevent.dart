@@ -90,7 +90,7 @@ class _SigninScreenforEventtate extends State<SigninScreenforEvent> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                RaisedButton(
+               ElevatedButton(
                   child: Text(language['Register']),
                   onPressed: () {
                     try {
@@ -135,20 +135,17 @@ class _SigninScreenforEventtate extends State<SigninScreenforEvent> {
                       );
                     }
                   },
-                  shape: RoundedRectangleBorder(
+               style: ElevatedButton.styleFrom( shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30)),
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),shadowColor: Theme.of(context).primaryColor,textStyle: TextStyle(color: Colors.white,)),
                 ),
-                RaisedButton(
+                ElevatedButton(
                   child: Text(language['Cancel']),
                   onPressed: () => Navigator.of(context).pop(),
-                  shape: RoundedRectangleBorder(
+                  style: ElevatedButton.styleFrom( shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30)),
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-                  color: Theme.of(context).primaryColor,
-                  textColor: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),shadowColor: Theme.of(context).primaryColor,textStyle: TextStyle(color: Colors.white,)),
+                 
                 ),
               ],
             ),

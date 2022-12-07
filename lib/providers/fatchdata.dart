@@ -5,7 +5,6 @@ import 'package:facemosque/providers/mosque.dart';
 import 'package:facemosque/providers/mosques.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:location/location.dart';
 import 'package:mapbox_api/mapbox_api.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -87,22 +86,12 @@ class FatchData with ChangeNotifier {
     preferences.setBool('favortemosqe', val);
     notifyListeners();
   }
+ 
 
-// ask for location Permisson
-  void locationPermission() async {
-    if (!kIsWeb) {
-      final location = Location();
-      final hasPermissions = await location.hasPermission();
-      if (hasPermissions != PermissionStatus.granted) {
-        await location.requestPermission();
-      }
-    }
-  }
 
 // get LatLng from address using MapboxApi becuse FlutterMap Requires LatLng for Markars
   Future<void> loction() async {
     try {
-      print("-->Mosque" + mosqueFollow.houseno);
       if (mosqueFollow.street != '') {
         MapboxApi mapbox = MapboxApi(
           accessToken:
@@ -152,9 +141,6 @@ class FatchData with ChangeNotifier {
 
       mosquelist =
           List<Mosques>.from(l.map((model) => Mosques.fromJson(model)));
-      for (var mosqueli in mosquelist) {
-        print(mosqueli.houseno);
-      }
       notifyListeners();
     } catch (e) {
       print(e);
@@ -218,7 +204,8 @@ class FatchData with ChangeNotifier {
         mosqueFollow = mosquelist.firstWhere(
             (element) => int.parse(element.mosqueid) == int.parse(mosqid));
         prefs.setString('mosqueFollow', json.encode(mosqueFollow.toMap()));
-        prefs.setString('mosqid', mosqid);
+          prefs.setString('mosqid', mosqid);
+      
       } else {
         Mosque mosqu = await Mosque.fromJson(jsonDecode(response.body));
         mosqueFollow = mosquelist.firstWhere(

@@ -129,7 +129,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                               subtitle: AutoSizeText(
                                 maxLines: 1,
                                 //show country and street mosuqe we select
-                                '${mosquefollow.country} , ${mosquefollow.street},${mosquefollow.houseno}',
+                                '${mosquefollow.country} , ${mosquefollow.street}',
                                 //give text style of headline 1 (I set in main.dart)
                                 //but it well change the font size to 14
                                 style: Theme.of(context)
@@ -185,20 +185,21 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                           ),
                           ElevatedButton(
                             style: ButtonStyle(
-                                shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            ))),
+  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+    RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20.0),
+    )
+  )
+),
                             onPressed: () {
                               MapLauncher.showMarker(
-                                mapType: MapType.google,
+                                mapType: MapType.apple,
                                 coords: Coords(l.latitude, l.longitude),
-                                title: mosquefollow.name,
+                                title: 'Hi',
                                 zoom: 20,
                               );
                             },
-                            child: Text(language['Take me to Google Map']),
+                            child:  Text(language['Take me to Google Map']),
                           ),
                           Container(
                               alignment: Alignment.center,

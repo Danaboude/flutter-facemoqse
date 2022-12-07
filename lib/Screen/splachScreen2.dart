@@ -70,7 +70,7 @@ class _SplachScreen2State extends State<SplachScreen2> {
       });
     });
     Provider.of<MessageSetting>(context, listen: false).getNotification();
-    changeStatusColor(Color(0xFF1ea345));
+    changeStatusColor(Color(0xFF0e8028));
     //reload all mosque from api
     Provider.of<FatchData>(context, listen: false).fatchandsetallmosque();
     //read All data form SharedPreferences
@@ -116,7 +116,7 @@ class _SplachScreen2State extends State<SplachScreen2> {
     double _h = MediaQuery.of(context).size.height;
     double _w = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: Color(0xFF1ea345),
+      backgroundColor: Color(0xFF0e8028),
       body: Center(
         child: Column(
           children: [

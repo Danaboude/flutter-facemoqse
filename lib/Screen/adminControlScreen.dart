@@ -193,6 +193,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
               height: sizedphone.height * 0.78,
               width: sizedphone.width,
               decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(0.3),
                   image: DecorationImage(
                       image: AssetImage("assets/images/quranbackground.jpg"),
                       fit: BoxFit.fill,
@@ -452,39 +453,39 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                 RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
                         )))),
-                _connectionStatus.name != 'wifi'
-                    ? Text(
-                        language['Connect to wifi'],
-                        style: Theme.of(context).textTheme.headline2,
-                      )
-                    : Provider.of<Respray>(context).isdoneserarching == false
-                        ? ElevatedButton(
-                            child: Text(language['Connect']),
-                            onPressed: () async {
-                              await Provider.of<Respray>(context, listen: false)
-                                  .setisdoneserarching(true);
-                              await Provider.of<Respray>(context, listen: false)
-                                  .getIprespery();
+                // _connectionStatus.name != 'wifi'
+                //     ? Text(
+                //         language['Connect to wifi'],
+                //         style: Theme.of(context).textTheme.headline2,
+                //       )
+                //     : Provider.of<Respray>(context).isdoneserarching == false
+                //         ? ElevatedButton(
+                //             child: Text(language['Connect']),
+                //             onPressed: () async {
+                //               await Provider.of<Respray>(context, listen: false)
+                //                   .setisdoneserarching(true);
+                //               await Provider.of<Respray>(context, listen: false)
+                //                   .getIprespery();
 
-                              Timer(Duration(seconds: 4), (() {
-                                Navigator.of(context).pushReplacementNamed(
-                                    ConnectScreen.routeName);
-                              }));
-                              Provider.of<Respray>(context, listen: false)
-                                  .setisdoneserarching(false);
-                            },
-                            style: ButtonStyle(
-                                padding: MaterialStateProperty.all<
-                                    EdgeInsetsGeometry>(EdgeInsets.all(13)),
-                                shape: MaterialStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                ))))
-                        : Text(
-                            language['wait for IP to find'],
-                            style: Theme.of(context).textTheme.headline2,
-                          ),
+                //               Timer(Duration(seconds: 4), (() {
+                //                 Navigator.of(context).pushReplacementNamed(
+                //                     ConnectScreen.routeName);
+                //               }));
+                //               Provider.of<Respray>(context, listen: false)
+                //                   .setisdoneserarching(false);
+                //             },
+                //             style: ButtonStyle(
+                //                 padding: MaterialStateProperty.all<
+                //                     EdgeInsetsGeometry>(EdgeInsets.all(13)),
+                //                 shape: MaterialStateProperty.all<
+                //                         RoundedRectangleBorder>(
+                //                     RoundedRectangleBorder(
+                //                   borderRadius: BorderRadius.circular(18.0),
+                //                 ))))
+                //         : Text(
+                //             language['wait for IP to find'],
+                //             style: Theme.of(context).textTheme.headline2,
+                //           ),
                 ElevatedButton(
                     child: Text(language['Sync']),
                     onPressed: () {

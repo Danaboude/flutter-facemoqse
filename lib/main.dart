@@ -32,7 +32,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
-import 'package:workmanager/workmanager.dart';
+import 'package:background_fetch/background_fetch.dart';
 
 //method set adan for all sala
 Future<void> calladan() async {
@@ -44,6 +44,7 @@ Future<void> calladan() async {
   alarmadan('magrib');
   alarmadan('isha');
 }
+
 
 //firebase setting for notification
 Future<void> _firebasePushHandler(RemoteMessage message) async {
@@ -81,41 +82,50 @@ Future<void> updateMosuqe() async {
     ).timeout(const Duration(seconds: 300));
     print(response.body);
     Mosque mosqu = await Mosque.fromJson(jsonDecode(response.body));
-    preferences.setString('mosque', json.encode(mosqu.toMap()));
+    preferences.setString( 'mosque', json.encode(mosqu.toMap()));
   }
 }
 
 void callbackDispatcher() {
-  Workmanager().executeTask((task, inputData) async {
-    TimeOfDay now = TimeOfDay.now();
-    if (now.hour == 23) {
-      await updateMosuqe();
-    }
+  // Workmanager().executeTask((task, inputData) async {
+  //   
 
-    return Future.value(true);
-  });
+  //   return Future.value(true);
+  // });
 }
-
 int? initScreen;
-
+void backgroundFetchHeadlessTask(HeadlessTask task) async {
+  String taskId = task.taskId;
+  bool isTimeout = task.timeout;
+  if (isTimeout) {
+    await updateMosuqe();
+    print("[BackgroundFetch] Headless task timed-out: $taskId");
+    BackgroundFetch.finish(taskId);
+    return;
+  }  
+  print('[BackgroundFetch] Headless event received.');
+  // Do your work here...
+  BackgroundFetch.finish(taskId);
+}
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
 
-  Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
-  await Workmanager().registerPeriodicTask(
-      'recallmousqedata', 'recallmousqedata',
-      frequency: Duration(hours: 1),
-      initialDelay: Duration(seconds: 10),
-      constraints: Constraints(networkType: NetworkType.connected));
-  //set all alarm when app open
+  BackgroundFetch.scheduleTask(TaskConfig(
+  taskId: "com.transistorsoft.customtask",
+  delay: 45000000  // <-- milliseconds
+));
+  // set all alarm when app open
   calladan();
 
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
-  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+     SharedPreferences prefs = await SharedPreferences.getInstance();
   initScreen = await prefs.getInt("initScreen");
   await prefs.setInt("initScreen", 1);
   runApp(const MyApp());
+
 }
 
 void alarmadan(String adan) async {
@@ -221,7 +231,7 @@ void alarmadan(String adan) async {
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
-  static const int _bluePrimaryValue = 0xFF0e8028;
+ static const int _bluePrimaryValue = 0xFF0e8028;
 
   static const MaterialColor green = MaterialColor(
     _bluePrimaryValue,
@@ -248,10 +258,11 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
+    
     return MultiProvider(
+      
       providers: [
         ChangeNotifierProvider.value(value: Buttonclickp()),
         ChangeNotifierProvider.value(value: FatchData()),
@@ -260,8 +271,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider.value(value: Respray())
       ],
       child: MaterialApp(
+      
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
+        theme:ThemeData(
           fontFamily: 'Al-Jazeera',
           primarySwatch: MyApp.green,
           //set color app
@@ -293,7 +305,7 @@ class _MyAppState extends State<MyApp> {
           MessageScscreen.routeName: (_) => MessageScscreen(),
           PrayerTimeSreen.routeName: (_) => PrayerTimeSreen(),
           ConnectScreen.routeName: (_) => ConnectScreen(),
-          OnbordingScreen2.routeName: (_) => OnbordingScreen2()
+          OnbordingScreen2.routeName:(_)=> OnbordingScreen2()
         },
         //when app launch run SplachScreen
         home: SplachScreen2(),
