@@ -254,23 +254,30 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                                   child: Text(
                                                       ' ${a['First Name'] ?? ''} ${a['Last Name'] ?? language['not registered']}'),
                                                 ),
-                                                content: Container(
-                                                    padding: EdgeInsets.only(
-                                                        left: 10),
-                                                    alignment: Alignment.center,
-                                                    height:
-                                                        sizedphone.height * 0.2,
-                                                    width:
-                                                        sizedphone.width * 0.7,
-                                                    child: Icon(
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      Provider.of<Auth>(context)
-                                                              .chackuserinvide
-                                                          ? Icons.check_circle
-                                                          : Icons.close,
-                                                      size: 100,
-                                                    )),
+                                                content: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Container(
+                                                        padding: EdgeInsets.only(
+                                                            left: 10),
+                                                        alignment: Alignment.center,
+                                                        height:
+                                                            sizedphone.height * 0.2,
+                                                        width:
+                                                            sizedphone.width * 0.7,
+                                                        child: Icon(
+                                                          color: Theme.of(context)
+                                                              .primaryColor,
+                                                          Provider.of<Auth>(context)
+                                                                  .chackuserinvide
+                                                              ? Icons.check_circle
+                                                              : Icons.close,
+                                                          size: 100,
+                                                        )),
+                                                        Text(Provider.of<Auth>(context)
+                                                                  .chackuserinvide?language['user is registered']:language['user is not registered'])
+                                                  ],
+                                                ),
                                                 actions: <Widget>[
                                                   Padding(
                                                     padding:

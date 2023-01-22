@@ -38,7 +38,7 @@ import 'package:background_fetch/background_fetch.dart';
 Future<void> calladan() async {
   _notificationHelper.initializeNotification();
   // _notificationHelper.cancelAll();
-  alarmadan('fajer');
+              alarmadan('fajer');
   alarmadan('dhuhr');
   alarmadan('asr');
   alarmadan('magrib');
@@ -140,6 +140,7 @@ void alarmadan(String adan) async {
   //adan pass as parmater 'fajer','dhar'...
   //in setting Screen we have button for each adan
   //it store value in SharedPreferences
+
   if (prefs.containsKey(adan)) {
     bool adanstate = prefs.getBool(adan)!;
     if (adanstate) {

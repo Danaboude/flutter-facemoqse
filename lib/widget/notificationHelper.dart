@@ -24,7 +24,7 @@ class NotificationHelper {
     _configureLocalTimeZone();
     //ios setting but i not set
     const IOSInitializationSettings initializationSettingsIOS =
-        IOSInitializationSettings();
+        IOSInitializationSettings(defaultPresentSound: true,);
    //set icon notification the same as icon app
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings("@mipmap/ic_launcher");
@@ -98,8 +98,7 @@ class NotificationHelper {
           priority: Priority.high,
           sound: RawResourceAndroidNotificationSound(sound),
         ),
-        iOS: IOSNotificationDetails(sound: '$sound.mp3'),
-      ),
+  iOS: IOSNotificationDetails(sound: 'adan1.caf'),      ),
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
@@ -114,6 +113,7 @@ class NotificationHelper {
         .resolvePlatformSpecificImplementation<
             IOSFlutterLocalNotificationsPlugin>()
         ?.requestPermissions(
+
           alert: true,
           badge: true,
           sound: true,

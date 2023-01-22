@@ -51,6 +51,7 @@ class _CreatenotificationsScreen extends State<CreatenotificationsScreen> {
     var sizedphone = MediaQuery.of(context).size;
     Map language = Provider.of<Buttonclickp>(context).languagepro;
     return Scaffold(
+      appBar: AppBar(leading: IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.arrow_back_ios))),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Form(

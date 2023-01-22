@@ -34,6 +34,8 @@ class _PrayerTimeSreenState extends State<PrayerTimeSreen> {
     String prayer = Provider.of<Buttonclickp>(context).parerEdit;
 
     return Scaffold(
+            appBar: AppBar(leading: IconButton(onPressed: (){Navigator.pop(context);}, icon: Icon(Icons.arrow_back_ios))),
+
       key: _scaffoldKey,
       body: SingleChildScrollView(
         child: Center(

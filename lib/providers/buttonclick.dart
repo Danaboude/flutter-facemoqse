@@ -147,7 +147,9 @@ class Buttonclickp with ChangeNotifier {
     'Take me to Google Map': 'Take me to the mosque',
     'Select the mosque to see the last prayer':
         'Select the mosque to see the last prayer',
-    'mosques': 'Mosques'
+    'mosques': 'Mosques',
+    'user is registered':'user is registered',
+    'user is not registered':'user is not registered'
   };
   Map<String, String> ar = {
     'titlenamemasjed': 'مواقيت الصلاة و الإقامة لجامع',
@@ -272,7 +274,9 @@ class Buttonclickp with ChangeNotifier {
     'No More paryer for today': 'لا مزيد من الصلاة لهذا اليوم',
     'Today\'s prayers are over': 'انتهت الصلوات لليوم',
     'Take me to Google Map': 'أرشدني إلى المسجد',
-    'Select the mosque to see the last prayer': 'حدد الجامع لترى اخر توقيت صلاه'
+    'Select the mosque to see the last prayer': 'حدد الجامع لترى اخر توقيت صلاه',
+    'user is registered':'المستخدم مسجل',
+    'user is not registered':'المستخدم غير مسجل'
   };
 
 String parerEdit='';

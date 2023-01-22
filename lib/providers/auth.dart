@@ -235,10 +235,11 @@ class Auth with ChangeNotifier {
           'Accept': 'application/json',
         },
       );
+      print(response.body);
       if (response.body == '"user is registered"')
-        chackuserinvide = await true;
+        chackuserinvide =  true;
       else if (response.body == '"user is not registered"')
-        chackuserinvide = await false;
+        chackuserinvide =  false;
 
       print(response.body);
       notifyListeners();
