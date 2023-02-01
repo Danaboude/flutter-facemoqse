@@ -24,6 +24,11 @@ class _VolumeScreenState extends State<VolumeScreen> {
     Map language = Provider.of<Buttonclickp>(context).languagepro;
 
     return Scaffold(
+      appBar: AppBar(leading: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon:const Icon(Icons.arrow_back_ios)),),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -61,8 +66,8 @@ class _VolumeScreenState extends State<VolumeScreen> {
               children: [
                 ElevatedButton(
                     child: Text(language['Change Volume']),
-                    onPressed: () async{
-                        await Provider.of<Respray>(context, listen: false)
+                    onPressed: () async {
+                      await Provider.of<Respray>(context, listen: false)
                           .sendudp('volume ${_valslider.toInt()}');
                     },
                     style: ButtonStyle(
@@ -76,6 +81,7 @@ class _VolumeScreenState extends State<VolumeScreen> {
                 ElevatedButton(
                     child: Text(language['Mute']),
                     onPressed: () async {
+                      _valslider = 0;
                       await Provider.of<Respray>(context, listen: false)
                           .sendudp('muted');
                     },

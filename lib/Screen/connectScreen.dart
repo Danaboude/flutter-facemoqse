@@ -22,6 +22,11 @@ class ConnectScreen extends StatelessWidget {
     String ipselected = '';
     print(ips);
     return Scaffold(
+      appBar: AppBar(leading: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon:const Icon(Icons.arrow_back_ios)),),
       body: SafeArea(
           child: Column(
         children: [

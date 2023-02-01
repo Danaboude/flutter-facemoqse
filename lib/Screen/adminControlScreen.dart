@@ -62,7 +62,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
     try {
       result = await _connectivity.checkConnectivity();
     } on PlatformException catch (e) {
-      print('Couldn\'t check connectivity status $e');
+    //  print('Couldn\'t check connectivity status $e');
       return;
     }
 
@@ -193,7 +193,6 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
               height: sizedphone.height * 0.78,
               width: sizedphone.width,
               decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.3),
                   image: DecorationImage(
                       image: AssetImage("assets/images/quranbackground.jpg"),
                       fit: BoxFit.fill,
@@ -238,7 +237,6 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                             } else {
                                               a = {"Mobile Number": '1'};
                                             }
-                                            print(a);
                                             await Provider.of<Auth>(context,
                                                     listen: false)
                                                 .chackqr(a['Mobile Number']);
@@ -254,30 +252,23 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                                   child: Text(
                                                       ' ${a['First Name'] ?? ''} ${a['Last Name'] ?? language['not registered']}'),
                                                 ),
-                                                content: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                  children: [
-                                                    Container(
-                                                        padding: EdgeInsets.only(
-                                                            left: 10),
-                                                        alignment: Alignment.center,
-                                                        height:
-                                                            sizedphone.height * 0.2,
-                                                        width:
-                                                            sizedphone.width * 0.7,
-                                                        child: Icon(
-                                                          color: Theme.of(context)
-                                                              .primaryColor,
-                                                          Provider.of<Auth>(context)
-                                                                  .chackuserinvide
-                                                              ? Icons.check_circle
-                                                              : Icons.close,
-                                                          size: 100,
-                                                        )),
-                                                        Text(Provider.of<Auth>(context)
-                                                                  .chackuserinvide?language['user is registered']:language['user is not registered'])
-                                                  ],
-                                                ),
+                                                content: Container(
+                                                    padding: EdgeInsets.only(
+                                                        left: 10),
+                                                    alignment: Alignment.center,
+                                                    height:
+                                                        sizedphone.height * 0.2,
+                                                    width:
+                                                        sizedphone.width * 0.7,
+                                                    child: Icon(
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                      Provider.of<Auth>(context)
+                                                              .chackuserinvide
+                                                          ? Icons.check_circle
+                                                          : Icons.close,
+                                                      size: 100,
+                                                    )),
                                                 actions: <Widget>[
                                                   Padding(
                                                     padding:
@@ -460,39 +451,39 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                 RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0),
                         )))),
-                // _connectionStatus.name != 'wifi'
-                //     ? Text(
-                //         language['Connect to wifi'],
-                //         style: Theme.of(context).textTheme.headline2,
-                //       )
-                //     : Provider.of<Respray>(context).isdoneserarching == false
-                //         ? ElevatedButton(
-                //             child: Text(language['Connect']),
-                //             onPressed: () async {
-                //               await Provider.of<Respray>(context, listen: false)
-                //                   .setisdoneserarching(true);
-                //               await Provider.of<Respray>(context, listen: false)
-                //                   .getIprespery();
+                _connectionStatus.name != 'wifi'
+                    ? Text(
+                        language['Connect to wifi'],
+                        style: Theme.of(context).textTheme.headline2,
+                      )
+                    : Provider.of<Respray>(context).isdoneserarching == false
+                        ? ElevatedButton(
+                            child: Text(language['Connect']),
+                            onPressed: () async {
+                              await Provider.of<Respray>(context, listen: false)
+                                  .setisdoneserarching(true);
+                              await Provider.of<Respray>(context, listen: false)
+                                  .getIprespery();
 
-                //               Timer(Duration(seconds: 4), (() {
-                //                 Navigator.of(context).pushReplacementNamed(
-                //                     ConnectScreen.routeName);
-                //               }));
-                //               Provider.of<Respray>(context, listen: false)
-                //                   .setisdoneserarching(false);
-                //             },
-                //             style: ButtonStyle(
-                //                 padding: MaterialStateProperty.all<
-                //                     EdgeInsetsGeometry>(EdgeInsets.all(13)),
-                //                 shape: MaterialStateProperty.all<
-                //                         RoundedRectangleBorder>(
-                //                     RoundedRectangleBorder(
-                //                   borderRadius: BorderRadius.circular(18.0),
-                //                 ))))
-                //         : Text(
-                //             language['wait for IP to find'],
-                //             style: Theme.of(context).textTheme.headline2,
-                //           ),
+                              Timer(Duration(seconds: 4), (() {
+                                Navigator.of(context).pushReplacementNamed(
+                                    ConnectScreen.routeName);
+                              }));
+                              Provider.of<Respray>(context, listen: false)
+                                  .setisdoneserarching(false);
+                            },
+                            style: ButtonStyle(
+                                padding: MaterialStateProperty.all<
+                                    EdgeInsetsGeometry>(EdgeInsets.all(13)),
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0),
+                                ))))
+                        : Text(
+                            language['wait for IP to find'],
+                            style: Theme.of(context).textTheme.headline2,
+                          ),
                 ElevatedButton(
                     child: Text(language['Sync']),
                     onPressed: () {
@@ -526,13 +517,11 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
     if (state) {
       Provider.of<Respray>(context, listen: false).sendudp(str1);
       lan = language[str2];
-      print(lan);
-      print(str1);
+     
     } else {
       Provider.of<Respray>(context, listen: false).sendudp(str3);
       lan = language[str4];
-      print(lan);
-      print(str3);
+    
     }
     Timer(Duration(seconds: 1), () {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

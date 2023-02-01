@@ -21,7 +21,7 @@ class Buttonclickp with ChangeNotifier {
   bool screenselected=false;
   bool languageformosqueselected=false;
   int counteraddparyer=1;
-  //Two maps with the same keys with different values containing words in the language en,ar
+   //Two maps with the same keys with different values containing words in the language en,ar
   Map<String, String> en = {
     'titlenamemasjed': 'Prayer and Iqamah times of mosque',
     'fajer': 'Fajer',
@@ -148,8 +148,7 @@ class Buttonclickp with ChangeNotifier {
     'Select the mosque to see the last prayer':
         'Select the mosque to see the last prayer',
     'mosques': 'Mosques',
-    'user is registered':'user is registered',
-    'user is not registered':'user is not registered'
+    'Sorry, you cannot register':'Sorry, you cannot register'
   };
   Map<String, String> ar = {
     'titlenamemasjed': 'مواقيت الصلاة و الإقامة لجامع',
@@ -275,9 +274,9 @@ class Buttonclickp with ChangeNotifier {
     'Today\'s prayers are over': 'انتهت الصلوات لليوم',
     'Take me to Google Map': 'أرشدني إلى المسجد',
     'Select the mosque to see the last prayer': 'حدد الجامع لترى اخر توقيت صلاه',
-    'user is registered':'المستخدم مسجل',
-    'user is not registered':'المستخدم غير مسجل'
+    'Sorry, you cannot register':'عذرا لا يمكنك التسجيل'
   };
+
 
 String parerEdit='';
 String settingEdit='';
