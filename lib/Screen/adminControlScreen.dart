@@ -62,7 +62,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
     try {
       result = await _connectivity.checkConnectivity();
     } on PlatformException catch (e) {
-      print('Couldn\'t check connectivity status $e');
+    //  print('Couldn\'t check connectivity status $e');
       return;
     }
 
@@ -237,7 +237,6 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                             } else {
                                               a = {"Mobile Number": '1'};
                                             }
-                                            print(a);
                                             await Provider.of<Auth>(context,
                                                     listen: false)
                                                 .chackqr(a['Mobile Number']);
@@ -518,13 +517,11 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
     if (state) {
       Provider.of<Respray>(context, listen: false).sendudp(str1);
       lan = language[str2];
-      print(lan);
-      print(str1);
+     
     } else {
       Provider.of<Respray>(context, listen: false).sendudp(str3);
       lan = language[str4];
-      print(lan);
-      print(str3);
+    
     }
     Timer(Duration(seconds: 1), () {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

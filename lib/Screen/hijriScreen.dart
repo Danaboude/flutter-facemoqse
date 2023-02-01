@@ -38,6 +38,11 @@ class _HigiriScreenState extends State<HigiriScreen> {
     var sizedphone = MediaQuery.of(context).size;
     Map language = Provider.of<Buttonclickp>(context).languagepro;
     return Scaffold(
+      appBar: AppBar(leading: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon:const Icon(Icons.arrow_back_ios)),),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

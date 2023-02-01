@@ -43,7 +43,7 @@ class _EventNotificationsState extends State<EventNotifications> {
   @override
   Widget build(BuildContext context) {
     listmessage = Provider.of<MessageSetting>(context).messageFromTaipc;
-    print(listmessage);
+
 
     //call Map(languagepro) from provider (Buttonclickp) return en language as default
     Map language = Provider.of<Buttonclickp>(context).languagepro;

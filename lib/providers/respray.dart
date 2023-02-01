@@ -73,13 +73,13 @@ class Respray with ChangeNotifier {
             '${addr.address} ${addr.host} ${addr.isLoopback} ${addr.rawAddress} ${addr.type.name}');
         if (addr.address.isNotEmpty) {
           List<String> IpArray = addr.address.split(".");
-          print(addr.rawAddress[0].toString() +
-              "." +
-              addr.rawAddress[1].toString() +
-              "." +
-              addr.rawAddress[2].toString() +
-              "." +
-              "255");
+          // print(addr.rawAddress[0].toString() +
+          //     "." +
+          //     addr.rawAddress[1].toString() +
+          //     "." +
+          //     addr.rawAddress[2].toString() +
+          //     "." +
+          //     "255");
 
           ipaddress.add(addr.rawAddress[0].toString() +
               "." +
@@ -99,21 +99,18 @@ class Respray with ChangeNotifier {
     /// Initialize Ip Address
     final info = NetworkInfo();
     var hostAddress = await info.getWifiIP();
-    print(hostAddress.toString());
+  
     if (hostAddress != null) {
       String ip = hostAddress;
 
       // or You can also get address using network_info_plus package
       final String subnet = ip.substring(0, ip.lastIndexOf('.'));
-      final stream = HostScanner.getAllPingableDevices(subnet,
-          firstSubnet: 1, lastSubnet: 255, progressCallback: (progress) {
-        print('Progress for host discovery : $progress');
+      final stream = HostScanner.getAllPingableDevices(subnet, progressCallback: (progress) {
       });
 
       stream.listen((host) async {
         //Same host can be emitted multiple times
         //Use Set<ActiveHost> instead of List<ActiveHost>
-        print('Found device: ${await host.address}');
         sendudp(await host.address);
         Ip.add(await host.address);
       }, onDone: () {

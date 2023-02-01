@@ -26,6 +26,11 @@ class ScreenScreen extends StatelessWidget {
     var sizedphone = MediaQuery.of(context).size;
 
     return Scaffold(
+      appBar: AppBar(leading: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon:const Icon(Icons.arrow_back_ios)),),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
