@@ -11,12 +11,10 @@ import 'data.dart';
 
 class User {
   Mosques mosques;
-  String email;
   String time_zone;
   String asr_method;
   User({
     required this.mosques,
-    required this.email,
     required this.time_zone,
     required this.asr_method,
   });
@@ -24,7 +22,6 @@ class User {
   Map<String, dynamic> toMap() {
     return {
       'mosques': mosques.toMap(),
-      'email': email,
       'time_zone': time_zone,
       'asr_method': asr_method,
     };
@@ -33,7 +30,6 @@ class User {
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
       mosques: Mosques.fromMap(map['mosques']),
-      email: map['email'] ?? '',
       time_zone: map['time_zone'] ?? '',
       asr_method: map['asr_method'] ?? '',
     );
@@ -88,8 +84,8 @@ class Auth with ChangeNotifier {
                 publicip: userjosn['pry_method'],
                 prymethod: userjosn['pry_method'],
                 activationcode: userjosn['activation_code'],
-                dateofstart: userjosn['time_zone']),
-            email: userjosn['email'],
+                dateofstart: userjosn['time_zone'],
+                Email: userjosn['email']),
             time_zone: userjosn['date_of_start'],
             asr_method: userjosn['asr_method']);
         prefs.setString('user', json.encode(user!.toMap()));
@@ -135,8 +131,8 @@ class Auth with ChangeNotifier {
                 publicip: userjosn['pry_method'],
                 prymethod: userjosn['pry_method'],
                 activationcode: userjosn['activation_code'],
-                dateofstart: userjosn['time_zone']),
-            email: userjosn['email'],
+                dateofstart: userjosn['time_zone'],
+                Email: userjosn['email']),
             time_zone: userjosn['date_of_start'],
             asr_method: userjosn['asr_method']);
         prefs.setString('user', json.encode(user!.toMap()));
@@ -150,9 +146,8 @@ class Auth with ChangeNotifier {
     }
   }
 
-  Future<void> saveMassge(String title, String massege,String time,String number,String date) async {
-
-    
+  Future<void> saveMassge(String title, String massege, String time,
+      String number, String date) async {
     try {
       http.Response response = await http.post(
         Uri.parse(
@@ -173,8 +168,7 @@ class Auth with ChangeNotifier {
 
   Future sendtotaipc(String title, String massege, bool isEvent, String time,
       String date, String maxnum) async {
-        
-    saveMassge(title, massege,time,maxnum,date);
+    saveMassge(title, massege, time, maxnum, date);
     final postUrl = 'https://fcm.googleapis.com/fcm/send';
     String toParams = "/topics/" + "${user!.mosques.name}";
     var data = Data('', '', '', time, '', false, 0, 0);

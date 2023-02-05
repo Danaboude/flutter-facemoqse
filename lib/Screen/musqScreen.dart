@@ -146,6 +146,8 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                     Provider.of<FatchData>(context,
                                             listen: false)
                                         .setmosqueFollowFavrote(false);
+
+                                    unsubscribeTopic(mosquefollow.name);
                                     // store bool replacetoloc in SharedPreferences
                                     // when user select mosuqe and close app
                                     //it save what well show to user (All mousqe)
@@ -261,6 +263,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                     .storereplacetoevent(true);
                                 Provider.of<FatchData>(context, listen: false)
                                     .fatchandsetallmosque();
+
                                 unsubscribeTopic(mosquesforevent.name);
                               },
                               icon: Icon(Icons.star,
@@ -353,6 +356,8 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                 mosquefollow = listmosque.firstWhere(
                                     (element) =>
                                         element.mosqueid == item.mosqueid);
+                                print("--> Request Mosuw" + mosquefollow.name);
+                                subscribeTopic(mosquefollow.name);
                                 //fatch mosque data form api using mosque id
                                 await Provider.of<FatchData>(con, listen: false)
                                     .fatchandsetmosque(mosquefollow.mosqueid);

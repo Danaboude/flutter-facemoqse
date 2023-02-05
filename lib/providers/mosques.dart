@@ -16,6 +16,7 @@ class Mosques {
   String prymethod;
   String activationcode;
   String dateofstart;
+  String Email;
   bool isFavrote;
   Mosques({
     required this.mosqueid,
@@ -32,6 +33,7 @@ class Mosques {
     required this.prymethod,
     required this.activationcode,
     required this.dateofstart,
+    required this.Email,
     this.isFavrote = false,
   });
   clean() {
@@ -50,6 +52,7 @@ class Mosques {
     prymethod = '';
     activationcode = '';
     dateofstart = '';
+    Email = '';
     isFavrote = false;
   }
 
@@ -69,6 +72,7 @@ class Mosques {
       'prymethod': prymethod,
       'activationcode': activationcode,
       'dateofstart': dateofstart,
+      'email': Email,
       'isFavrote': isFavrote,
     };
   }
@@ -90,6 +94,7 @@ class Mosques {
       prymethod: json['pry_method'] ?? '',
       activationcode: json['activation_code'] ?? '',
       dateofstart: json['date_of_start'] ?? '',
+      Email: json['email'] ?? '',
     );
   }
 
@@ -114,6 +119,7 @@ class Mosques {
       prymethod: map['prymethod'] ?? '',
       activationcode: map['activationcode'] ?? '',
       dateofstart: map['dateofstart'] ?? '',
+      Email: map['email'] ?? '',
       isFavrote: map['isFavrote'] ?? '',
     );
   }

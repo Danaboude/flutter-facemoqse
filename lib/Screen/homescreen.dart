@@ -4,6 +4,7 @@ import 'dart:ffi';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:facemosque/Screen/adminControlScreen.dart';
 import 'package:facemosque/Screen/authscreen.dart';
+import 'package:facemosque/Screen/contactUs.dart';
 import 'package:facemosque/Screen/musqScreen.dart';
 import 'package:facemosque/providers/auth.dart';
 import 'package:facemosque/providers/fatchdata.dart';
@@ -96,7 +97,10 @@ class _HomeScreenState extends State<HomeScreen> {
     Provider.of<FatchData>(context, listen: false).locationPermission();
     //call mosque form provider (FatchData) if not select mosque it well show Noting in All Text
     Mosque mosque = Provider.of<FatchData>(context).mosque;
+
     String mosquefollow = Provider.of<FatchData>(context).mosqueFollow.name;
+    String msoqueFollowEmail =
+        Provider.of<FatchData>(context).mosqueFollow.Email;
 
     //call Map(languagepro) from provider (Buttonclickp) return en language as default
     //have all key of word we need
@@ -159,6 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               // background color(white) of app
               color: Color.fromARGB(255, 255, 255, 255),
+
               child: ListView(
                 physics: Provider.of<Buttonclickp>(context)
                             .indexnavigationbottmbar ==
@@ -418,6 +423,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
+          ),
+        ),
+        floatingActionButton: Visibility(
+          visible: msoqueFollowEmail.isNotEmpty,
+          child: FloatingActionButton(
+            onPressed: () =>
+                Navigator.of(context).pushNamed(contactUs.routeName),
+
+            // Add your onPressed code here!
+
+            backgroundColor: Colors.white,
+            child: const Icon(Icons.contact_support_sharp,
+                color: Color(0xFF94C973)),
           ),
         ));
   }

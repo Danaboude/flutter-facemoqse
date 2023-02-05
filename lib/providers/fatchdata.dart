@@ -58,6 +58,7 @@ class FatchData with ChangeNotifier {
       prymethod: '',
       activationcode: '',
       dateofstart: '',
+      Email: '',
       isFavrote: false);
   // Latlng are the coordinates to show a location on the map
   latlong.LatLng latlng1 = latlong.LatLng(0, 0);
@@ -77,6 +78,7 @@ class FatchData with ChangeNotifier {
       prymethod: '',
       activationcode: '',
       dateofstart: '',
+      Email: '',
       isFavrote: false);
   // store mosqueFollow.isFavrote value in SharedPreferences
   // if it true that mean mosque select for fatch data mousqe
@@ -102,7 +104,7 @@ class FatchData with ChangeNotifier {
 // get LatLng from address using MapboxApi becuse FlutterMap Requires LatLng for Markars
   Future<void> loction() async {
     try {
-      print("-->Mosque" + mosqueFollow.houseno);
+      print("-->Mosque" + mosqueFollow.Email);
       if (mosqueFollow.street != '') {
         MapboxApi mapbox = MapboxApi(
           accessToken:
@@ -152,8 +154,9 @@ class FatchData with ChangeNotifier {
 
       mosquelist =
           List<Mosques>.from(l.map((model) => Mosques.fromJson(model)));
+      print(response.body);
       for (var mosqueli in mosquelist) {
-        print(mosqueli.houseno);
+        print(mosqueli.Email);
       }
       notifyListeners();
     } catch (e) {

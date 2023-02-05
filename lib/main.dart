@@ -5,6 +5,7 @@ import 'package:facemosque/Screen/adminControlScreen.dart';
 import 'package:facemosque/Screen/authscreen.dart';
 import 'package:facemosque/Screen/azanScreen.dart';
 import 'package:facemosque/Screen/connectScreen.dart';
+import 'package:facemosque/Screen/contactUs.dart';
 import 'package:facemosque/Screen/createnotificationsScreen.dart';
 import 'package:facemosque/Screen/hijriScreen.dart';
 import 'package:facemosque/Screen/homescreen.dart';
@@ -293,7 +294,8 @@ class _MyAppState extends State<MyApp> {
           MessageScscreen.routeName: (_) => MessageScscreen(),
           PrayerTimeSreen.routeName: (_) => PrayerTimeSreen(),
           ConnectScreen.routeName: (_) => ConnectScreen(),
-          OnbordingScreen2.routeName: (_) => OnbordingScreen2()
+          OnbordingScreen2.routeName: (_) => OnbordingScreen2(),
+          contactUs.routeName: (_) => contactUs()
         },
         //when app launch run SplachScreen
         home: SplachScreen2(),
