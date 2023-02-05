@@ -24,6 +24,11 @@ class _VolumeScreenState extends State<VolumeScreen> {
     Map language = Provider.of<Buttonclickp>(context).languagepro;
 
     return Scaffold(
+      appBar: AppBar(leading: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon:const Icon(Icons.arrow_back_ios)),),
       body: SingleChildScrollView(
         child: Column(
           children: [

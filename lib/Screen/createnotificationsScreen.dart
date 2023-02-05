@@ -51,6 +51,11 @@ class _CreatenotificationsScreen extends State<CreatenotificationsScreen> {
     var sizedphone = MediaQuery.of(context).size;
     Map language = Provider.of<Buttonclickp>(context).languagepro;
     return Scaffold(
+      appBar: AppBar(leading: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon:const Icon(Icons.arrow_back_ios)),),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Form(
@@ -183,12 +188,12 @@ class _CreatenotificationsScreen extends State<CreatenotificationsScreen> {
                     decoration: InputDecoration(
                         labelText: language['Maximum number Persons']),
                     controller: _numberController,
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.text,
         
                     // obscureText: true,
                     validator: _massageMode == MassageMode.Even
                         ? (val) {
-                            if (val == '') return language['set Number'];
+                            if (val == '' || val=='0') return language['set Number'];
                             return null;
                           }
                         : null,

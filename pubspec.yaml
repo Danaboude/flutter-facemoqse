@@ -70,9 +70,12 @@ dependencies:
   geocoding: ^2.0.5
   mapbox_search: ^3.0.1+2
   share_plus: ^6.3.0
+
   dropdownfield: ^1.0.3
   email_validator: ^2.1.17
   flutter_email_sender: ^5.2.0
+
+  geocoder_location: ^0.1.1
 
  
   
@@ -80,8 +83,8 @@ dependencies:
  
  
  
-
-  
+dependency_overrides:
+  firebase_core_platform_interface: 4.5.1
  
   
     

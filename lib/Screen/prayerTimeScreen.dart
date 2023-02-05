@@ -35,6 +35,11 @@ class _PrayerTimeSreenState extends State<PrayerTimeSreen> {
 
     return Scaffold(
       key: _scaffoldKey,
+      appBar: AppBar(leading: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon:const Icon(Icons.arrow_back_ios)),),
       body: SingleChildScrollView(
         child: Center(
           child: Column(

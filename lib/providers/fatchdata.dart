@@ -1,15 +1,16 @@
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
 import 'dart:ffi';
-import 'package:facemosque/providers/mosque.dart';
-import 'package:facemosque/providers/mosques.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 import 'package:mapbox_api/mapbox_api.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
-//import 'package:geocoder_location/geocoder.dart';
+
+import 'package:facemosque/providers/mosque.dart';
+import 'package:facemosque/providers/mosques.dart';
+ import 'package:geocoder_location/geocoder.dart';
 
 import 'package:latlong2/latlong.dart' as latlong;
 

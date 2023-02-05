@@ -402,23 +402,24 @@ class _AuthCardState extends State<AuthCard>
                 height: 20,
               ),
               if (_isLoading) CircularProgressIndicator(),
-              RaisedButton(
+              ElevatedButton(
                 child: Text(_authMode == AuthMode.Login ?language ['LOGIN'] : language['SIGNUP']),
                 onPressed: _authMode == AuthMode.Login ? submit : register,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)),
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
-                color: Theme.of(context).primaryColor,
-                textColor: Colors.white,
+                  style: ElevatedButton.styleFrom( shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),shadowColor: Theme.of(context).primaryColor,textStyle: TextStyle(color: Colors.white,)),
+                 
+                
               ),
-              FlatButton(
+              TextButton(
                 onPressed: _switchAuthMode,
                 child: Text(
                   _authMode == AuthMode.Login ? language['SIGNUP']:language ['LOGIN'] ,
                 ),
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 4),
-                //color: Theme.of(context).primaryColor,
-                textColor: Theme.of(context).primaryColor,
+                   style: ElevatedButton.styleFrom( shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),textStyle: TextStyle(color: Theme.of(context).primaryColor,)),
+              
               ),
             ],
           ),
@@ -436,7 +437,7 @@ class _AuthCardState extends State<AuthCard>
               title:  Center(child: Text(language['An Error Occurred'])),
               content: Text(errorMessage.toString()),
               actions: [
-                FlatButton(
+                TextButton(
                   onPressed: () => Navigator.of(ctx).pop(),
                   child:  Text(language['OK']),
                 )

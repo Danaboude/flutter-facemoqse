@@ -112,6 +112,7 @@ void main() async {
   calladan();
 
   await Firebase.initializeApp();
+  FirebaseMessaging.instance.getToken();
   FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   initScreen = await prefs.getInt("initScreen");

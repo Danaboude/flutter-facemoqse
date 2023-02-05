@@ -17,6 +17,7 @@ class MessageSetting with ChangeNotifier {
       messageFromTaipc = jsonData.map<MessageFromTaipc>((jsonList) {
         return MessageFromTaipc.fromJson(jsonList);
       }).toList();
+      print(messageFromTaipc);
       //   messageFromTaipc=list;
 
     }
@@ -29,14 +30,14 @@ class MessageSetting with ChangeNotifier {
     prefs.setString('listmessage', MessageFromTaipc.encode(messageFromTaipc));
     notifyListeners();
   }
-
-  Future<void> senddatauserforevent(String fname, String lname, String number,   MessageFromTaipc message) async {
+  String canevent='';
+  Future<String> senddatauserforevent(String fname, String lname, String number,   MessageFromTaipc message, String mosqueid) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       http.Response response = await http.get(
         Uri.parse(
           "https://facemosque.eu/api/api.php?client=app&cmd=user_reg&mosque_id=" +
-              message.mosqueid +
+             ( mosqueid==''?'22': mosqueid )+
               "&first_name=" +
               fname +
               "&last_name=" +
@@ -54,7 +55,8 @@ class MessageSetting with ChangeNotifier {
           'Accept': 'application/json',
         },
       );
-      if (response.statusCode == 200) {
+    print(response.body);
+      if (response.body == '"200"') {
         Map s = {
           'First Name': fname,
           'Last Name': lname,
@@ -62,9 +64,18 @@ class MessageSetting with ChangeNotifier {
           'Mosque Id': message.mosqueid,
           'Date Event': message.date
         };
-        prefs.setString('${message.eventId}', json.encode(s));
+        prefs.setString(message.eventId, json.encode(s));
+               notifyListeners();
+
+       return response.body;
+      }else{
+               notifyListeners();
+
+      return response.body;
+               
+
       }
-      notifyListeners();
+      
     } catch (e) {
       throw e;
     }

@@ -26,6 +26,11 @@ class LanguageScreen extends StatelessWidget {
       Language(lang: language['arabic'])
     ];
     return Scaffold(
+      appBar: AppBar(leading: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon:const Icon(Icons.arrow_back_ios)),),
       body: SafeArea(
         child: Column(
           children: [
