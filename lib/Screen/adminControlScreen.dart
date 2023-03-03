@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-
-import 'package:barcode_scan2/barcode_scan2.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:facemosque/Screen/LanguageScreen.dart';
 import 'package:facemosque/Screen/authscreen.dart';
 import 'package:facemosque/Screen/azanScreen.dart';
@@ -47,7 +46,7 @@ class GridItem {
 }
 
 class _AdminControlScreenState extends State<AdminControlScreen> {
-  ScanResult? scanResult;
+
 
   var _aspectTolerance = 0.00;
   var _selectedCamera = -1;
@@ -97,10 +96,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
     super.dispose();
   }
 
-  static final _possibleFormats = BarcodeFormat.values.toList()
-    ..removeWhere((e) => e == BarcodeFormat.unknown);
-
-  List<BarcodeFormat> selectedFormats = [..._possibleFormats];
+ 
   @override
   Widget build(BuildContext context) {
     String lan = '';
@@ -226,14 +222,15 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                       //
                                       if (list[i].url != 'reboot') {
                                         if (list[i].url == 'qr') {
-                                          await _scan();
-                                          if (scanResult!.rawContent != '') {
+                                        String  scanResult = await FlutterBarcodeScanner.scanBarcode(
+                                          '#ff6666', 'Cancel', true, ScanMode.QR);
+                                          if (scanResult != '') {
                                             Map a;
                                             if (json.decode(
-                                                    scanResult!.rawContent)
+                                                    scanResult)
                                                 is Map) {
                                               a = json.decode(
-                                                  scanResult!.rawContent);
+                                                  scanResult);
                                             } else {
                                               a = {"Mobile Number": '1'};
                                             }
@@ -563,30 +560,5 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
     );
   }
 
-  Future<void> _scan() async {
-    try {
-      final result = await BarcodeScanner.scan(
-        options: ScanOptions(
-          restrictFormat: selectedFormats,
-          useCamera: _selectedCamera,
-          autoEnableFlash: _autoEnableFlash,
-          android: AndroidOptions(
-            aspectTolerance: _aspectTolerance,
-            useAutoFocus: _useAutoFocus,
-          ),
-        ),
-      );
-      setState(() => scanResult = result);
-    } on PlatformException catch (e) {
-      setState(() {
-        scanResult = ScanResult(
-          type: ResultType.Error,
-          format: BarcodeFormat.unknown,
-          rawContent: e.code == BarcodeScanner.cameraAccessDenied
-              ? 'The user did not grant the camera permission!'
-              : 'Unknown error: $e',
-        );
-      });
-    }
-  }
+ 
 }

@@ -117,7 +117,7 @@ class _contactUs extends State<contactUs> {
                           body: 'body of email',
                           subject: 'subject of email',
                           recipients: ['ibrahimalnasser@outlook.com'],
-                          clients,
+                          
                           isHTML: false,
                         );
                         await FlutterEmailSender.send(send_email);

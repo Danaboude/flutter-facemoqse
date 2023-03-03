@@ -65,23 +65,22 @@ class _LoctionMosqueState extends State<LoctionMosque> {
 
     return Stack(
       children: [
-        new FlutterMap(
+         FlutterMap(
           mapController: mapController,
-          options: new MapOptions(
-            //  debugMultiFingerGestureWinner: true,
-            //  allowPanningOnScrollingParent: true,
-
+          options:  MapOptions(
+   
             //set camera map from l
             center: l,
             zoom: zoom,
             maxZoom: 18,
           ),
-          layers: [
-            TileLayerOptions(
+          
+          children: [
+            TileLayer(
               urlTemplate:
                   'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v11/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZmFjZW1vc3F1ZSIsImEiOiJja2dwOTVkdzQwM21hMnZzMjQ1amJhaWxmIn0.fqW1E4WO3RSMu3tAPkz25g',
             ),
-            MarkerLayerOptions(markers: [
+            MarkerLayer(markers: [
               Marker(
                   width: 80,
                   height: 80,
@@ -97,7 +96,7 @@ class _LoctionMosqueState extends State<LoctionMosque> {
         Align(
           alignment: Alignment.bottomLeft,
           child: Container(
-              margin: EdgeInsets.all(5),
+              margin:const EdgeInsets.all(5),
               height: sizedphone.height * 0.06,
               width: sizedphone.width * 0.1,
               decoration: BoxDecoration(

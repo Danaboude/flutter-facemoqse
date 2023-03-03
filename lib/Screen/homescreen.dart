@@ -28,6 +28,7 @@ import "package:persistent_bottom_nav_bar/persistent_tab_view.dart";
 
 //import "package:persistent_bottom_nav_bar_example_project/custom-widget-tabs.widget.dart";
 //import "package:persistent_bottom_nav_bar_example_project/screens.dart";
+import '../main.dart';
 import '../providers/messagefromtaipc.dart';
 import '../widget/notificationHelper.dart';
 
@@ -162,14 +163,14 @@ class _HomeScreenState extends State<HomeScreen> {
           child: SafeArea(
             child: Container(
               // background color(white) of app
-              color: Color.fromARGB(255, 255, 255, 255),
+              color: const Color.fromARGB(255, 255, 255, 255),
 
               child: ListView(
                 physics: Provider.of<Buttonclickp>(context)
                             .indexnavigationbottmbar ==
                         1
-                    ? NeverScrollableScrollPhysics()
-                    : AlwaysScrollableScrollPhysics(),
+                    ? const NeverScrollableScrollPhysics()
+                    : const AlwaysScrollableScrollPhysics(),
                 shrinkWrap: true,
                 children: [
                   //if user select Home icon in app index(0) it's well show HomeScrean
@@ -184,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 100,
                                 margin: const EdgeInsets.only(top: 10),
                                 decoration: BoxDecoration(
-                                  image: DecorationImage(
+                                  image: const DecorationImage(
                                       image: AssetImage(
                                           "assets/images/quranbackground.jpg"),
                                       fit: BoxFit.cover,
@@ -194,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(20),
                                   color: Theme.of(context).primaryColor,
                                 ),
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: Center(
                                   child: AutoSizeText(
                                     //show word in en or ar as lebal
@@ -202,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         "\n" +
                                         mosquefollow,
 
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.white,
                                         fontFamily: "Al-Jazeera",
                                         fontWeight: FontWeight.bold,
@@ -214,117 +215,158 @@ class _HomeScreenState extends State<HomeScreen> {
 
                             //show name of mosque user select if not select it well show nothing
 
-                            CarouselSlider(
-                                options: CarouselOptions(
-                                  //take 28% of height size phone for this widget (cart)
-                                  height: sizedphone.height * 0.23,
-                                  scrollDirection: Axis.horizontal,
-                                  //to keep scroll forever
-                                  enableInfiniteScroll: true,
-                                  autoPlay: true,
-                                  viewportFraction: 1,
-                                  disableCenter: false,
-                                ),
-                                // get list of slider to map it well show count of item i have added to list
-                                // with each item I can Show name of adan and time
-                                items: slider
-                                    .map(
-                                      (item) => Container(
-                                          //take 28% of height size phone for this widget
-                                          height: sizedphone.height * 0.15,
-                                          //take 90% of height size phone for this widget
-                                          width: sizedphone.width * 0.95,
-                                          //leave space 8 form left and right  of widget
-                                          margin: const EdgeInsets.symmetric(
-                                              vertical: 8),
-                                          padding: const EdgeInsets.all(8),
-                                          decoration: BoxDecoration(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    "assets/images/backgroundprayers.png"),
-                                                fit: BoxFit.cover,
-                                                opacity: 0.1),
-                                            border: Border.all(
-                                                color: const Color(0xffD1B000),
-                                                width: 2),
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Text(
-                                                //name of adan
-                                                item.Issharouq
-                                                    ? item.adan +
-                                                        "\n" +
-                                                        item.time
-                                                    : item.adan,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline1,
-                                                textAlign: TextAlign.center,
+                            Stack(
+                              children: [
+                                CarouselSlider(
+                                    options: CarouselOptions(
+                                      //take 28% of height size phone for this widget (cart)
+                                      height: sizedphone.height * 0.23,
+                                      scrollDirection: Axis.horizontal,
+                                      //to keep scroll forever
+                                      enableInfiniteScroll: true,
+                                      autoPlay: true,
+                                      viewportFraction: 1,
+                                      disableCenter: false,
+                                    ),
+                                    // get list of slider to map it well show count of item i have added to list
+                                    // with each item I can Show name of adan and time
+                                    items: slider
+                                        .map(
+                                          (item) => Container(
+                                              //take 28% of height size phone for this widget
+                                              height: sizedphone.height * 0.15,
+                                              //take 90% of height size phone for this widget
+                                              width: sizedphone.width * 0.95,
+                                              //leave space 8 form left and right  of widget
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 8),
+                                              padding: const EdgeInsets.all(8),
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                image: const DecorationImage(
+                                                    image: AssetImage(
+                                                        "assets/images/backgroundprayers.png"),
+                                                    fit: BoxFit.cover,
+                                                    opacity: 0.1),
+                                                border: Border.all(
+                                                    color:
+                                                        const Color(0xffD1B000),
+                                                    width: 2),
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
                                               ),
-                                              const SizedBox(),
-                                              if (!item.Issharouq)
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
-                                                  children: [
-                                                    //show word adan or اذان as lebal
-                                                    Text(
-                                                        item.Issharouq
-                                                            ? ""
-                                                            : language['adan'],
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headline1),
-                                                    const SizedBox(),
-                                                    Text(
-                                                        item.Issharouq
-                                                            ? ""
-                                                            : language[
-                                                                'prayer'],
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headline1),
-                                                  ],
-                                                ),
-                                              if (!item.Issharouq)
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
-                                                  children: [
-                                                    //time adan
-                                                    Text(item.time,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headline1),
-                                                    SizedBox(
-                                                      width: sizedphone.width *
-                                                          0.095,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceEvenly,
+                                                children: [
+                                                  Text(
+                                                    //name of adan
+                                                    item.Issharouq
+                                                        ? item.adan +
+                                                            "\n" +
+                                                            item.time
+                                                        : item.adan,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline1,
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                  const SizedBox(),
+                                                  if (!item.Issharouq)
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceAround,
+                                                      children: [
+                                                        //show word adan or اذان as lebal
+                                                        Text(
+                                                            item.Issharouq
+                                                                ? ""
+                                                                : language[
+                                                                    'adan'],
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .headline1),
+                                                        const SizedBox(),
+                                                        Text(
+                                                            item.Issharouq
+                                                                ? ""
+                                                                : language[
+                                                                    'prayer'],
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .headline1),
+                                                      ],
                                                     ),
-                                                    //time المقام
-                                                    Text(item.timeend,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headline1),
-                                                  ],
-                                                ),
-                                            ],
-                                          )),
-                                    )
-                                    .toList()),
+                                                  if (!item.Issharouq)
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceAround,
+                                                      children: [
+                                                        //time adan
+                                                        Text(item.time,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .headline1),
+                                                        SizedBox(
+                                                          width:
+                                                              sizedphone.width *
+                                                                  0.095,
+                                                        ),
+                                                        //time المقام
+                                                        Text(item.timeend,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .headline1),
+                                                      ],
+                                                    ),
+                                                ],
+                                              )),
+                                        )
+                                        .toList()),
+                                Container(
+                                  margin: const EdgeInsets.all(8),
+                                  alignment: Alignment.topLeft,
+                                  child: IconButton(
+                                    icon: const Icon(
+                                      Icons.refresh,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () async {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                        content: Text(
+                                            language['Times are being update']),
+                                        backgroundColor:
+                                            Theme.of(context).primaryColor,
+                                      ));
+                                      await updateMosuqe();
+
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(
+                                                language['Updated'],
+                                              ),
+                                              backgroundColor: Theme.of(context)
+                                                  .primaryColor));
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                             Container(
                               height: sizedphone.height * 0.58,
                               width: sizedphone.width * 0.95,
                               decoration: BoxDecoration(
-                                image: DecorationImage(
+                                image: const DecorationImage(
                                     image: AssetImage(
                                         "assets/images/quranbackground.jpg"),
                                     fit: BoxFit.cover,
@@ -351,7 +393,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       DateTime.now()
                                                           .minute
                                                           .toString()))
-                                          ? CountdownTimer()
+                                          ? const CountdownTimer()
                                           : Text(language['Today\'s prayers are over'],
                                               style: Theme.of(context)
                                                   .textTheme
@@ -446,7 +488,7 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: Color(0xFF94C973),
+        color: const Color(0xFF94C973),
       ),
       alignment: Alignment.center,
       child: Text(titlel, style: Theme.of(context).textTheme.headline1),

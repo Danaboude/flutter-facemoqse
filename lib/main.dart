@@ -33,7 +33,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
-import 'package:workmanager/workmanager.dart';
+import 'package:background_fetch/background_fetch.dart';
 
 //method set adan for all sala
 Future<void> calladan() async {
@@ -86,29 +86,43 @@ Future<void> updateMosuqe() async {
   }
 }
 
-void callbackDispatcher() {
-  Workmanager().executeTask((task, inputData) async {
-    TimeOfDay now = TimeOfDay.now();
-    if (now.hour == 23) {
-      await updateMosuqe();
-    }
-
-    return Future.value(true);
-  });
-}
+// @pragma('vm:entry-point')
+// void callbackDispatcher() {
+//   Workmanager().executeTask((task, inputData) async {
+//     await updateMosuqe();
+//     return Future.value(true);
+//   });
+// }
 
 int? initScreen;
+@pragma('vm:entry-point')
+void backgroundFetchHeadlessTask(HeadlessTask task) async {
+  String taskId = task.taskId;
+  bool isTimeout = task.timeout;
+  if (isTimeout) {
+    await updateMosuqe();
+    print("[BackgroundFetch] Headless task timed-out: $taskId");
+    BackgroundFetch.finish(taskId);
+    return;
+  }  
+  print('[BackgroundFetch] Headless event received.');
+  // Do your work here...
+  BackgroundFetch.finish(taskId);
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  Workmanager().initialize(callbackDispatcher, isInDebugMode: false);
-  await Workmanager().registerPeriodicTask(
-      'recallmousqedata', 'recallmousqedata',
-      frequency: Duration(hours: 1),
-      initialDelay: Duration(seconds: 10),
-      constraints: Constraints(networkType: NetworkType.connected));
-  //set all alarm when app open
+ BackgroundFetch.scheduleTask(TaskConfig(
+  taskId: "com.transistorsoft.customtask",
+  delay: 7200000  // <-- milliseconds
+));
+  // Workmanager().initialize(callbackDispatcher);
+  // await Workmanager().registerPeriodicTask(
+  //     'recallmousqedata', 'recallmousqedata',
+  //     frequency: const Duration(hours: 2),
+  //     initialDelay: const Duration(seconds: 10),
+  //     constraints: Constraints(networkType: NetworkType.connected));
+  //set all alarm when app ope
   calladan();
 
   await Firebase.initializeApp();
