@@ -1,9 +1,13 @@
 buildscript {
-    ext.kotlin_version = '1.6.10'
+    ext.kotlin_version = '1.8.0'
        ext {
-       compileSdkVersion   = 33               // or latest
-       targetSdkVersion    = 33               // or latest
-      appCompatVersion    = "1.4.2"           // or latest
+       buildToolsVersion = "32.0.0"
+        minSdkVersion = 21
+        compileSdkVersion = 33
+        targetSdkVersion = 32             // or latest
+      appCompatVersion    = "1.4.2"  
+       kotlinVersion = "1.8.0"
+         // or latest
   }
     repositories {
         google()
@@ -36,6 +40,6 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
-task clean(type: Delete) {
+tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }

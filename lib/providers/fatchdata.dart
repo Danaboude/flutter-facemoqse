@@ -142,7 +142,7 @@ class FatchData with ChangeNotifier {
     try {
       http.Response response = await http.get(
         Uri.parse(
-          "https://facemosque.eu/api/api.php?client=app&cmd=mosque_list&mosque",
+          "https://facemosque.eu/api/api.php?client=app&cmd=mosquelist",
         ),
         headers: {
           "Connection": "Keep-Alive",
@@ -150,8 +150,10 @@ class FatchData with ChangeNotifier {
           'Accept': 'application/json',
         },
       );
-      Iterable l = json.decode(
-          "${response.body.split('\n').toString().substring(0, response.body.split('\n').toString().length - 3)}]");
+       print(response.body);
+      /*Iterable l = json.decode(
+          "${response.body.split('\n').toString().substring(0, response.body.split('\n').toString().length - 3)}]");*/
+      Iterable l = json.decode(response.body);
 
       mosquelist =
           List<Mosques>.from(l.map((model) => Mosques.fromJson(model)));

@@ -24,7 +24,7 @@
 
    <application
         tools:replace="android:label"
-        android:label="facemosque"
+        android:label="Facemosque"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">

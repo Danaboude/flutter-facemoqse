@@ -23,8 +23,8 @@ class NotificationHelper {
   initializeNotification() async {
     _configureLocalTimeZone();
     //ios setting but i not set
-    const IOSInitializationSettings initializationSettingsIOS =
-        IOSInitializationSettings();
+    const DarwinInitializationSettings initializationSettingsIOS =
+        DarwinInitializationSettings();
    //set icon notification the same as icon app
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings("@mipmap/ic_launcher");
@@ -69,7 +69,7 @@ class NotificationHelper {
           priority: Priority.high,
           playSound: true,
         ),
-        iOS: IOSNotificationDetails(sound: 'assets/mp3/notification.mp3'),
+        iOS: DarwinNotificationDetails(sound: 'assets/mp3/notification.mp3'),
       ),
       payload: 'It could be anything you pass',
     );
@@ -98,7 +98,7 @@ class NotificationHelper {
           priority: Priority.high,
           sound: RawResourceAndroidNotificationSound(sound),
         ),
-        iOS: IOSNotificationDetails(sound: '$sound.mp3'),
+        iOS: DarwinNotificationDetails(sound:'$sound.mp3'),
       ),
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:

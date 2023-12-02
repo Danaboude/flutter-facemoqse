@@ -199,7 +199,7 @@ class _EventNotificationsState extends State<EventNotifications> {
                                             alignment: Alignment.center,
                                             height: sizedphone.height * 0.3,
                                             width: sizedphone.width * 0.7,
-                                            child: QrImage(
+                                            child: QrImageView(
                                               data: prefs.getString(
                                                   '${item.eventId}')!,
                                               version: QrVersions.auto,
