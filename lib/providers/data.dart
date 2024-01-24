@@ -9,7 +9,7 @@ class Data {
   bool? isEvent;
   int? mosqueId;
   int? eventId;
-  
+
   Data(
     this.Title,
     this.Message,
@@ -60,7 +60,7 @@ class Data {
       'time': time,
       'maxPerson': maxPerson,
       'isEvent': isEvent,
-      'mosqueId': mosqueId,
+      'mosqueid': mosqueId,
       'eventId': eventId,
     };
   }

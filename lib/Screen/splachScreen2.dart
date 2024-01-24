@@ -1,4 +1,3 @@
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:animations/animations.dart';
 import 'package:facemosque/Screen/homescreen.dart';
@@ -15,8 +14,6 @@ import '../providers/buttonclick.dart';
 import '../providers/fatchdata.dart';
 import '../providers/messagesetting.dart';
 import '../providers/respray.dart';
-
-
 
 class SplachScreen2 extends StatefulWidget {
   @override
@@ -39,10 +36,10 @@ class _SplachScreen2State extends State<SplachScreen2> {
       debugPrint(e.toString());
     }
   }
+
   @override
   void initState() {
     super.initState();
-     
 
     Timer(Duration(milliseconds: 400), () {
       setState(() {
@@ -75,7 +72,7 @@ class _SplachScreen2State extends State<SplachScreen2> {
     Provider.of<FatchData>(context, listen: false).fatchandsetallmosque();
     //read All data form SharedPreferences
     Provider.of<FatchData>(context, listen: false).readdata();
-  Provider.of<Auth>(context,listen: false).readuser();
+    Provider.of<Auth>(context, listen: false).readuser();
     //read adan notifications button state from SharedPreferences
     Provider.of<Buttonclickp>(context, listen: false).readsalaDay();
     // show all mosuqe or( mosuqefollow and map ) in tab My Mosuqe from SharedPreferences
@@ -84,21 +81,21 @@ class _SplachScreen2State extends State<SplachScreen2> {
     Provider.of<Buttonclickp>(context, listen: false).getreplacetoevent();
     //read language from SharedPreferences
     Provider.of<Buttonclickp>(context, listen: false).readlanguage();
-   
- //   int? initScreen ;
+
+    //   int? initScreen ;
     Timer(Duration(milliseconds: 3850), () {
-      
       setState(() {
         Navigator.of(context).pushReplacement(
           ThisIsFadeRoute(
-            route:  initScreen == 0 || initScreen == null ? OnbordingScreen2() : HomeScreen(), page: Container(),
+            route: initScreen == 0 || initScreen == null
+                ? OnbordingScreen2()
+                : HomeScreen(),
+            page: Container(),
           ),
         );
       });
     });
-   
   }
-
 
   bool _a = false;
   bool _b = false;
@@ -150,14 +147,12 @@ class _SplachScreen2State extends State<SplachScreen2> {
                       ? 130
                       : 20,
               decoration: BoxDecoration(
-                  color: _b ? Colors.white:Color(0xFF1ea345) ,
+                  color: _b ? Colors.white : Color(0xFF1ea345),
                   // shape: _c? BoxShape.rectangle : BoxShape.circle,
-                  borderRadius:  _d ? BorderRadius.only() : BorderRadius.circular(20)
-                  ),
+                  borderRadius:
+                      _d ? BorderRadius.only() : BorderRadius.circular(20)),
               child: Center(
-                child: _e
-                    ?Image.asset('assets/images/logo.png')
-                    : SizedBox(),
+                child: _e ? Image.asset('assets/images/logo.png') : SizedBox(),
               ),
             ),
           ],
@@ -191,4 +186,3 @@ class ThisIsFadeRoute extends PageRouteBuilder {
           ),
         );
 }
-

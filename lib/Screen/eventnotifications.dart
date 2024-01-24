@@ -44,7 +44,6 @@ class _EventNotificationsState extends State<EventNotifications> {
   Widget build(BuildContext context) {
     listmessage = Provider.of<MessageSetting>(context).messageFromTaipc;
 
-
     //call Map(languagepro) from provider (Buttonclickp) return en language as default
     Map language = Provider.of<Buttonclickp>(context).languagepro;
     var sizedphone = MediaQuery.of(context).size;
@@ -211,7 +210,7 @@ class _EventNotificationsState extends State<EventNotifications> {
                                               padding:
                                                   const EdgeInsets.all(8.0),
                                               child: TextButton.icon(
-                                                icon: Icon(Icons
+                                                icon: const Icon(Icons
                                                     .arrow_forward_ios_sharp),
                                                 onPressed: () async {
                                                   SharedPreferences

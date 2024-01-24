@@ -356,7 +356,8 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                 mosquefollow = listmosque.firstWhere(
                                     (element) =>
                                         element.mosqueid == item.mosqueid);
-                                print("--> Request Mosuw" + mosquefollow.name);
+                                print("--> Request Mosuw" +
+                                    mosquefollow.mosqueid);
                                 subscribeTopic(mosquefollow.name);
                                 //fatch mosque data form api using mosque id
                                 await Provider.of<FatchData>(con, listen: false)
@@ -424,7 +425,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
                                     .readdata();
                               }
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.star,
                               color: Colors.grey,
                             )),
@@ -459,7 +460,7 @@ class _MusqScreenState extends State<MusqScreen> with TickerProviderStateMixin {
     _notificationHelper.initializeNotification();
     await FirebaseMessaging.instance
         .subscribeToTopic(name)
-        .then((value) => print(name));
+        .then((value) => print("subscribe" + name));
   }
 
   void unsubscribeTopic(String name) async {

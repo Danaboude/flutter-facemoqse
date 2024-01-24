@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:facemosque/Screen/adminControlScreen.dart';
@@ -84,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }).toList();
       }
       MessageFromTaipc messagetaipc = MessageFromTaipc.fromJson(message.data);
+      print('-------->>>>');
       print(messagetaipc.toString());
       list.add(messagetaipc);
       preferences.setString('listmessage', MessageFromTaipc.encode(list));

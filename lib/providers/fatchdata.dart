@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -10,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:facemosque/providers/mosque.dart';
 import 'package:facemosque/providers/mosques.dart';
- import 'package:geocoder_location/geocoder.dart';
+import 'package:geocoder_location/geocoder.dart';
 
 import 'package:latlong2/latlong.dart' as latlong;
 
@@ -150,7 +149,7 @@ class FatchData with ChangeNotifier {
           'Accept': 'application/json',
         },
       );
-       print(response.body);
+      print(response.body);
       /*Iterable l = json.decode(
           "${response.body.split('\n').toString().substring(0, response.body.split('\n').toString().length - 3)}]");*/
       Iterable l = json.decode(response.body);
@@ -219,14 +218,15 @@ class FatchData with ChangeNotifier {
           'Accept': 'application/json',
         },
       );
-      print(jsonDecode(response.body));
+      print(jsonDecode(utf8.decode(response.bodyBytes)));
       if (response.body == 'Mosque not exist') {
         mosqueFollow = mosquelist.firstWhere(
             (element) => int.parse(element.mosqueid) == int.parse(mosqid));
         prefs.setString('mosqueFollow', json.encode(mosqueFollow.toMap()));
         prefs.setString('mosqid', mosqid);
       } else {
-        Mosque mosqu = await Mosque.fromJson(jsonDecode(response.body));
+        var data = utf8.decode(response.bodyBytes);
+        Mosque mosqu = await Mosque.fromJson(jsonDecode(data));
         mosqueFollow = mosquelist.firstWhere(
             (element) => int.parse(element.mosqueid) == int.parse(mosqid));
         prefs.setString('mosqueFollow', json.encode(mosqueFollow.toMap()));

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:facemosque/providers/fatchdata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -65,16 +63,14 @@ class _LoctionMosqueState extends State<LoctionMosque> {
 
     return Stack(
       children: [
-         FlutterMap(
+        FlutterMap(
           mapController: mapController,
-          options:  MapOptions(
-   
+          options: MapOptions(
             //set camera map from l
             center: l,
             zoom: zoom,
             maxZoom: 18,
           ),
-          
           children: [
             TileLayer(
               urlTemplate:
@@ -96,7 +92,7 @@ class _LoctionMosqueState extends State<LoctionMosque> {
         Align(
           alignment: Alignment.bottomLeft,
           child: Container(
-              margin:const EdgeInsets.all(5),
+              margin: const EdgeInsets.all(5),
               height: sizedphone.height * 0.06,
               width: sizedphone.width * 0.1,
               decoration: BoxDecoration(

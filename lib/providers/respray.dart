@@ -34,20 +34,24 @@ class Respray with ChangeNotifier {
     printIps();
 
     for (var i = 0; i < ipaddress.length; i++) {
-      var DESTINATION_ADDRESS = InternetAddress(ipaddress[i]);
+      var destinationAddress = InternetAddress(ipaddress[i]);
 
       RawDatagramSocket.bind(InternetAddress.anyIPv4, 44092)
           .then((RawDatagramSocket udpSocket) {
         udpSocket.broadcastEnabled = true;
-        udpSocket.listen((e) {
+        print(data);
+        /* udpSocket.listen((e) {
           Datagram? dg = udpSocket.receive();
           if (dg != null) {
             // ipaddress = dg.address.address;
             print("received ${dg.address}");
           }
-        });
+        });*/
         List<int> data1 = utf8.encode(data);
-        udpSocket.send(data1, DESTINATION_ADDRESS, 44092);
+        print(data1);
+        int d = udpSocket.send(data1, destinationAddress, 44092);
+        print("Testing");
+        print(d);
         udpSocket.close();
       });
     }
@@ -73,13 +77,13 @@ class Respray with ChangeNotifier {
             '${addr.address} ${addr.host} ${addr.isLoopback} ${addr.rawAddress} ${addr.type.name}');
         if (addr.address.isNotEmpty) {
           List<String> IpArray = addr.address.split(".");
-          // print(addr.rawAddress[0].toString() +
-          //     "." +
-          //     addr.rawAddress[1].toString() +
-          //     "." +
-          //     addr.rawAddress[2].toString() +
-          //     "." +
-          //     "255");
+          print(addr.rawAddress[0].toString() +
+              "." +
+              addr.rawAddress[1].toString() +
+              "." +
+              addr.rawAddress[2].toString() +
+              "." +
+              "255");
 
           ipaddress.add(addr.rawAddress[0].toString() +
               "." +
@@ -99,14 +103,14 @@ class Respray with ChangeNotifier {
     /// Initialize Ip Address
     final info = NetworkInfo();
     var hostAddress = await info.getWifiIP();
-  
+
     if (hostAddress != null) {
       String ip = hostAddress;
 
       // or You can also get address using network_info_plus package
       final String subnet = ip.substring(0, ip.lastIndexOf('.'));
-      final stream = HostScanner.getAllPingableDevices(subnet, progressCallback: (progress) {
-      });
+      final stream = HostScanner.getAllPingableDevices(subnet,
+          progressCallback: (progress) {});
 
       stream.listen((host) async {
         //Same host can be emitted multiple times

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../providers/auth.dart';
 import '../providers/buttonclick.dart';
+
 class AuthScreen extends StatelessWidget {
   static const routeName = '/auth';
   @override
@@ -84,8 +85,8 @@ class _AuthCardState extends State<AuthCard>
   void initState() {
     super.initState();
     Provider.of<Auth>(context, listen: false).readuser();
-    _usernameController.text = 'mbd';
-    _passwordController.text = '123456';
+    _usernameController.text = '';
+    _passwordController.text = '';
     // getDeviceName();
     _controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 300));
@@ -128,8 +129,6 @@ class _AuthCardState extends State<AuthCard>
   }
 
   Future<void> submit() async {
-  
-
     try {
       await Provider.of<Auth>(context, listen: false)
           .login(_usernameController.text, _passwordController.text);
@@ -141,7 +140,6 @@ class _AuthCardState extends State<AuthCard>
   }
 
   Future<void> register() async {
-
     try {
       await Provider.of<Auth>(context, listen: false).register(
           _usernameController.text,
@@ -154,7 +152,6 @@ class _AuthCardState extends State<AuthCard>
       Navigator.of(context).pushReplacementNamed(AdminControlScreen.routeName);
 
       // Navigator.of(context).pop();
-
     } catch (e) {
       _showErrorDialog(e.toString());
     }
@@ -178,8 +175,7 @@ class _AuthCardState extends State<AuthCard>
   Widget build(BuildContext context) {
     final deciceSize = MediaQuery.of(context).size;
     // String token=Provider.of<Auth>(context).token;
-        Map language = Provider.of<Buttonclickp>(context).languagepro;
-
+    Map language = Provider.of<Buttonclickp>(context).languagepro;
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -204,7 +200,7 @@ class _AuthCardState extends State<AuthCard>
               TextFormField(
                 controller: _usernameController,
                 decoration: InputDecoration(
-                  labelText:language ['username'],
+                  labelText: language['username'],
                   fillColor: Theme.of(context).primaryColor,
                   filled: false,
                 ),
@@ -213,7 +209,6 @@ class _AuthCardState extends State<AuthCard>
                   if (val!.isEmpty) return language['enterusername'];
                   return null;
                 },
-               
               ),
               AnimatedContainer(
                 curve: Curves.easeIn,
@@ -229,7 +224,7 @@ class _AuthCardState extends State<AuthCard>
                     child: TextFormField(
                       enabled: _authMode == AuthMode.SignUp,
                       decoration:
-                           InputDecoration(labelText: language['firstname']),
+                          InputDecoration(labelText: language['firstname']),
                       controller: _fnameController,
                       // obscureText: true,
                       validator: _authMode == AuthMode.SignUp
@@ -255,7 +250,8 @@ class _AuthCardState extends State<AuthCard>
                     position: _slideAnimation,
                     child: TextFormField(
                       enabled: _authMode == AuthMode.SignUp,
-                      decoration:  InputDecoration(labelText: language['lastname']),
+                      decoration:
+                          InputDecoration(labelText: language['lastname']),
                       controller: _lnameController,
                       // obscureText: true,
                       validator: _authMode == AuthMode.SignUp
@@ -269,7 +265,7 @@ class _AuthCardState extends State<AuthCard>
                 ),
               ),
               TextFormField(
-                decoration:  InputDecoration(labelText: language['Password']),
+                decoration: InputDecoration(labelText: language['Password']),
                 obscureText: true,
                 controller: _passwordController,
                 validator: (val) {
@@ -277,7 +273,6 @@ class _AuthCardState extends State<AuthCard>
                     return language['passowrdisshort'];
                   return null;
                 },
-              
               ),
               AnimatedContainer(
                 curve: Curves.easeIn,
@@ -292,8 +287,8 @@ class _AuthCardState extends State<AuthCard>
                     position: _slideAnimation,
                     child: TextFormField(
                       enabled: _authMode == AuthMode.SignUp,
-                      decoration:
-                           InputDecoration(labelText:language ['Confirm Password']),
+                      decoration: InputDecoration(
+                          labelText: language['Confirm Password']),
                       obscureText: true,
                       validator: _authMode == AuthMode.SignUp
                           ? (val) {
@@ -319,7 +314,7 @@ class _AuthCardState extends State<AuthCard>
                     position: _slideAnimation,
                     child: TextFormField(
                       enabled: _authMode == AuthMode.SignUp,
-                      decoration:  InputDecoration(
+                      decoration: InputDecoration(
                           labelText: language['Date of Brith YYYY-MM-DD']),
                       controller: _datapickerController,
                       keyboardType: TextInputType.none,
@@ -359,7 +354,8 @@ class _AuthCardState extends State<AuthCard>
                     position: _slideAnimation,
                     child: TextFormField(
                       enabled: _authMode == AuthMode.SignUp,
-                      decoration:  InputDecoration(labelText: language['E-mail']),
+                      decoration:
+                          InputDecoration(labelText: language['E-mail']),
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
                       validator: (val) {
@@ -367,7 +363,6 @@ class _AuthCardState extends State<AuthCard>
                           return language['Invalid Email'];
                         return null;
                       },
-                    
                     ),
                   ),
                 ),
@@ -403,23 +398,33 @@ class _AuthCardState extends State<AuthCard>
               ),
               if (_isLoading) CircularProgressIndicator(),
               ElevatedButton(
-                child: Text(_authMode == AuthMode.Login ?language ['LOGIN'] : language['SIGNUP']),
+                child: Text(_authMode == AuthMode.Login
+                    ? language['LOGIN']
+                    : language['SIGNUP']),
                 onPressed: _authMode == AuthMode.Login ? submit : register,
-                  style: ElevatedButton.styleFrom( shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),shadowColor: Theme.of(context).primaryColor,textStyle: TextStyle(color: Colors.white,)),
-                 
-                
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)),
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+                    shadowColor: Theme.of(context).primaryColor,
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                    )),
               ),
               TextButton(
                 onPressed: _switchAuthMode,
                 child: Text(
-                  _authMode == AuthMode.Login ? language['SIGNUP']:language ['LOGIN'] ,
+                  _authMode == AuthMode.Login
+                      ? language['SIGNUP']
+                      : language['LOGIN'],
                 ),
-                   style: ElevatedButton.styleFrom( shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),textStyle: TextStyle(color: Theme.of(context).primaryColor,)),
-              
+                style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)),
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+                    textStyle: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    )),
               ),
             ],
           ),
@@ -429,17 +434,17 @@ class _AuthCardState extends State<AuthCard>
   }
 
   void _showErrorDialog(String errorMessage) {
-            Map language = Provider.of<Buttonclickp>(context).languagepro;
+    Map language = Provider.of<Buttonclickp>(context).languagepro;
 
     showDialog(
         context: context,
         builder: (ctx) => AlertDialog(
-              title:  Center(child: Text(language['An Error Occurred'])),
+              title: Center(child: Text(language['An Error Occurred'])),
               content: Text(errorMessage.toString()),
               actions: [
                 TextButton(
                   onPressed: () => Navigator.of(ctx).pop(),
-                  child:  Text(language['OK']),
+                  child: Text(language['OK']),
                 )
               ],
             ));

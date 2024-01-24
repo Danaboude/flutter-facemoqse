@@ -25,16 +25,18 @@ class _SigninScreenforEventtate extends State<SigninScreenforEvent> {
     Map language = Provider.of<Buttonclickp>(context).languagepro;
     final argsmessage =
         ModalRoute.of(context)!.settings.arguments as MessageFromTaipc;
-     Mosques       mosquesforevent = Provider.of<FatchData>(context).mosqueFollowevent;
-
-
+    Mosques mosquesforevent = Provider.of<FatchData>(context).mosqueFollowevent;
+    print('---------------->Test Message');
+    print(mosquesforevent);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(leading: IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon:const Icon(Icons.arrow_back_ios)),),
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(Icons.arrow_back_ios)),
+      ),
       body: SafeArea(
         child: ListView(
           children: [
@@ -101,17 +103,18 @@ class _SigninScreenforEventtate extends State<SigninScreenforEvent> {
               children: [
                 ElevatedButton(
                   child: Text(language['Register']),
-                  onPressed: () async{
+                  onPressed: () async {
                     try {
-                   
-                   String m= await  Provider.of<MessageSetting>(context, listen: false)
+                      String m = await Provider.of<MessageSetting>(context,
+                              listen: false)
                           .senddatauserforevent(
                               _firestnameController.text,
                               _lastnameController.text,
                               _nomberController.text,
-                              argsmessage,mosquesforevent.mosqueid);
-                           
-                      if (m=='"200"') {
+                              argsmessage,
+                              mosquesforevent.mosqueid);
+
+                      if (m == '"200"') {
                         showDialog(
                           context: context,
                           builder: (ctx) => AlertDialog(
@@ -126,7 +129,6 @@ class _SigninScreenforEventtate extends State<SigninScreenforEvent> {
                           Navigator.of(context).pop();
                           Navigator.of(context).pop();
                         });
-                       
                       } else {
                         showDialog(
                           context: context,
@@ -135,7 +137,8 @@ class _SigninScreenforEventtate extends State<SigninScreenforEvent> {
                               borderRadius: BorderRadius.circular(40),
                             ),
                             title: Text(language['Erorr']),
-                            content:language['Sorry, you cannot register'],
+                            content:
+                                Text(language['Sorry, you cannot register']),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {
@@ -146,7 +149,6 @@ class _SigninScreenforEventtate extends State<SigninScreenforEvent> {
                             ],
                           ),
                         );
-                
                       }
                     } catch (e) {
                       showDialog(

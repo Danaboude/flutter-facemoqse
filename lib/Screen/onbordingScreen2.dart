@@ -15,7 +15,7 @@ class _OnbordingScreen2State extends State<OnbordingScreen2> {
     var sizedphone = MediaQuery.of(context).size;
     return OnBoardingScreen2(
       onSkip: () {
-       Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+        Navigator.pushReplacementNamed(context, HomeScreen.routeName);
       },
       showPrevNextButton: true,
       showIndicator: true,
@@ -249,7 +249,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen2> {
                 child: const Text(
                   "Skip",
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 24,
                     fontWeight: FontWeight.w400,
                   ),
                 ),

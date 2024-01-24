@@ -1,35 +1,41 @@
 {
   "project_info": {
-    "project_number": "372602040435",
-    "firebase_url": "https://facemosque-b07c5.firebaseio.com",
-    "project_id": "facemosque-b07c5",
-    "storage_bucket": "facemosque-b07c5.appspot.com"
+    "project_number": "613630834796",
+    "project_id": "facemosque-new",
+    "storage_bucket": "facemosque-new.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:372602040435:android:c1b8796beaf012f940ba06",
+        "mobilesdk_app_id": "1:613630834796:android:e2f59285d13a4ee0b38049",
         "android_client_info": {
-          "package_name": "com.example.facemosqueadmin"
+          "package_name": "com.muslims.facemosque"
         }
       },
       "oauth_client": [
         {
-          "client_id": "372602040435-1vcpp01884u7b6ktfidnso6nkb0ols5i.apps.googleusercontent.com",
+          "client_id": "613630834796-kbdprliifdp5u0aep9adg9814mr7j7b5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAD5zenoEVwVhEGhZcTf-DPRIqNP24J7Xk"
+          "current_key": "AIzaSyBzJzgAndqWzmR_4X1azCwyYxeW2d4opRQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "372602040435-1vcpp01884u7b6ktfidnso6nkb0ols5i.apps.googleusercontent.com",
+              "client_id": "613630834796-kbdprliifdp5u0aep9adg9814mr7j7b5.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "613630834796-4toq79qavk1coohkr2oqbtuq67ju85in.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.facemosque.com"
+              }
             }
           ]
         }

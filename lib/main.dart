@@ -48,6 +48,7 @@ Future<void> calladan() async {
 
 //firebase setting for notification
 Future<void> _firebasePushHandler(RemoteMessage message) async {
+  print('---------> Messsage in Background');
   print(message.data);
   SharedPreferences preferences = await SharedPreferences.getInstance();
   List<MessageFromTaipc> list = [];
@@ -58,7 +59,11 @@ Future<void> _firebasePushHandler(RemoteMessage message) async {
       return MessageFromTaipc.fromJson(jsonList);
     }).toList();
   }
+  print('----------->object');
+  print(message.data);
   MessageFromTaipc messagetaipc = MessageFromTaipc.fromJson(message.data);
+
+  print(messagetaipc);
   list.add(messagetaipc);
   preferences.setString('listmessage', MessageFromTaipc.encode(list));
   await Firebase.initializeApp();
@@ -104,7 +109,7 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
     print("[BackgroundFetch] Headless task timed-out: $taskId");
     BackgroundFetch.finish(taskId);
     return;
-  }  
+  }
   print('[BackgroundFetch] Headless event received.');
   // Do your work here...
   BackgroundFetch.finish(taskId);
@@ -112,10 +117,10 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
- BackgroundFetch.scheduleTask(TaskConfig(
-  taskId: "com.transistorsoft.customtask",
-  delay: 7200000  // <-- milliseconds
-));
+  BackgroundFetch.scheduleTask(TaskConfig(
+      taskId: "com.transistorsoft.customtask",
+      delay: 7200000 // <-- milliseconds
+      ));
   // Workmanager().initialize(callbackDispatcher);
   // await Workmanager().registerPeriodicTask(
   //     'recallmousqedata', 'recallmousqedata',

@@ -22,7 +22,7 @@ class _CreatenotificationsScreen extends State<CreatenotificationsScreen> {
   final _numberController = TextEditingController();
   final _TimeController = TextEditingController();
   final _MessageController = TextEditingController();
-    final GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey();
 
   MassageMode _massageMode = MassageMode.NoEven;
   bool switchstate = false;
@@ -43,19 +43,19 @@ class _CreatenotificationsScreen extends State<CreatenotificationsScreen> {
     }
   }
 
- 
-
   @override
   Widget build(BuildContext context) {
     bool status = false;
     var sizedphone = MediaQuery.of(context).size;
     Map language = Provider.of<Buttonclickp>(context).languagepro;
     return Scaffold(
-      appBar: AppBar(leading: IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon:const Icon(Icons.arrow_back_ios)),),
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(Icons.arrow_back_ios)),
+      ),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Form(
@@ -95,7 +95,8 @@ class _CreatenotificationsScreen extends State<CreatenotificationsScreen> {
                   ),
                   keyboardType: TextInputType.text,
                   validator: (val) {
-                    if (val!.isEmpty) return throw HttpException( language['fill TextFild']);
+                    if (val!.isEmpty)
+                      return throw HttpException(language['fill TextFild']);
                     return null;
                   },
                 ),
@@ -124,28 +125,30 @@ class _CreatenotificationsScreen extends State<CreatenotificationsScreen> {
                         child: Text(language['SEND']),
                         onPressed: () {
                           try {
-                          if (_formKey.currentState!.validate()) {
-                            Provider.of<Auth>(context, listen: false).sendtotaipc(
-                                _titleController.text,
-                                _MessageController.text,
-                                switchstate,
-                                _TimeController.text,
-                                _datapickerController.text,
-                                _numberController.text);
-                            showDialog(
-                              context: context,
-                              builder: (ctx) => AlertDialog(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                            if (_formKey.currentState!.validate()) {
+                              Provider.of<Auth>(context, listen: false)
+                                  .sendtotaipc(
+                                      _titleController.text,
+                                      _MessageController.text,
+                                      switchstate,
+                                      _TimeController.text,
+                                      _datapickerController.text,
+                                      _numberController.text);
+                              showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  title: Text(language['Success']),
+                                  content:
+                                      Text(language['You\'r Register Success']),
                                 ),
-                                title: Text(language['Success']),
-                                content:
-                                    Text(language['You\'r Register Success']),
-                              ),
-                            );
-                            Future.delayed(const Duration(seconds: 1), () {
-                              Navigator.of(context).pop();
-                            });}
+                              );
+                              Future.delayed(const Duration(seconds: 1), () {
+                                Navigator.of(context).pop();
+                              });
+                            }
                           } catch (e) {
                             showDialog(
                               context: context,
@@ -171,9 +174,8 @@ class _CreatenotificationsScreen extends State<CreatenotificationsScreen> {
                             padding:
                                 MaterialStateProperty.all<EdgeInsetsGeometry>(
                                     EdgeInsets.all(13)),
-                            shape:
-                                MaterialStateProperty.all<RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),
                             )))),
                   ),
@@ -189,11 +191,12 @@ class _CreatenotificationsScreen extends State<CreatenotificationsScreen> {
                         labelText: language['Maximum number Persons']),
                     controller: _numberController,
                     keyboardType: TextInputType.text,
-        
+
                     // obscureText: true,
                     validator: _massageMode == MassageMode.Even
                         ? (val) {
-                            if (val == '' || val=='0') return language['set Number'];
+                            if (val == '' || val == '0')
+                              return language['set Number'];
                             return null;
                           }
                         : null,
@@ -219,7 +222,7 @@ class _CreatenotificationsScreen extends State<CreatenotificationsScreen> {
                               DateTime.now().month, DateTime.now().day));
                       if (newdate == null) return;
                       DateFormat formatter = DateFormat('yyyy-MM-dd');
-        
+
                       _datapickerController.text = formatter.format(newdate);
                     },
                     // obscureText: true,
@@ -248,7 +251,7 @@ class _CreatenotificationsScreen extends State<CreatenotificationsScreen> {
                         initialTime: TimeOfDay.now(),
                       );
                       if (timep == null) return;
-        
+
                       _TimeController.text = '${timep.hour}:${timep.minute}';
                     },
                     // obscureText: true,
