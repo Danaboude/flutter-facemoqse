@@ -171,7 +171,7 @@ class Auth with ChangeNotifier {
       String date, String maxnum) async {
     saveMassge(title, massege, time, maxnum, date);
     final postUrl = 'https://fcm.googleapis.com/fcm/send';
-    String toParams = "/topics/" + "${user!.mosques.name}";
+    String toParams = "/topics/" "${user!.mosques.name}";
     var data = Data('', '', '', time, '', false, 0, 0);
     if (!isEvent) {
       data.Title = title;
@@ -180,7 +180,7 @@ class Auth with ChangeNotifier {
       data.isEvent = false;
       data.maxPerson = '';
       data.Message = '$massege (${user!.mosques.name})';
-      data.setMosqueId = user!.mosques.mosqueid as int;
+      data.setMosqueId = int.parse(user!.mosques.mosqueid);
       data.eventId = DateTime.now().millisecondsSinceEpoch;
       print(data.toString());
     } else {
@@ -197,7 +197,7 @@ class Auth with ChangeNotifier {
 
     var d = {
       'data': data.toMap(),
-      "to": "${toParams}",
+      "to": toParams,
       "priority": "high",
     };
 
@@ -230,10 +230,11 @@ class Auth with ChangeNotifier {
           'Accept': 'application/json',
         },
       );
-      if (response.body == '"user is registered"')
-        chackuserinvide = await true;
-      else if (response.body == '"user is not registered"')
-        chackuserinvide = await false;
+      if (response.body == '"user is registered"') {
+        chackuserinvide = true;
+      } else if (response.body == '"user is not registered"')
+        // ignore: curly_braces_in_flow_control_structures
+        chackuserinvide = false;
 
       print(response.body);
       notifyListeners();

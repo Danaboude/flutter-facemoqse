@@ -91,6 +91,29 @@ Future<void> updateMosuqe() async {
   }
 }
 
+void read() async {
+  FirebaseMessaging.instance.getToken();
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    List<MessageFromTaipc> list = [];
+    if (preferences.containsKey('listmessage')) {
+      final List<dynamic> jsonData =
+          jsonDecode(preferences.getString('listmessage')!);
+      list = jsonData.map<MessageFromTaipc>((jsonList) {
+        return MessageFromTaipc.fromJson(jsonList);
+      }).toList();
+    }
+    MessageFromTaipc messagetaipc = MessageFromTaipc.fromJson(message.data);
+    print('-------->>>>');
+    print(messagetaipc.toString());
+    list.add(messagetaipc);
+    preferences.setString('listmessage', MessageFromTaipc.encode(list));
+    await Firebase.initializeApp();
+    _notificationHelper.showNot(messagetaipc);
+  });
+}
+
 // @pragma('vm:entry-point')
 // void callbackDispatcher() {
 //   Workmanager().executeTask((task, inputData) async {
@@ -132,6 +155,19 @@ void main() async {
 
   await Firebase.initializeApp();
   FirebaseMessaging.instance.getToken();
+
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  NotificationSettings settings = await messaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+  read();
   FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   initScreen = await prefs.getInt("initScreen");

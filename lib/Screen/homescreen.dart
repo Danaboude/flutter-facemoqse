@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late bool _hideNavBar;
   @override
   void initState() {
-    read();
+    //read();
     super.initState();
     _controller = PersistentTabController();
     _hideNavBar = false;
@@ -67,29 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     super.dispose();
-  }
-
-  void read() async {
-    FirebaseMessaging.instance.getToken();
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      SharedPreferences preferences = await SharedPreferences.getInstance();
-      List<MessageFromTaipc> list = [];
-      if (preferences.containsKey('listmessage')) {
-        final List<dynamic> jsonData =
-            jsonDecode(preferences.getString('listmessage')!);
-        list = jsonData.map<MessageFromTaipc>((jsonList) {
-          return MessageFromTaipc.fromJson(jsonList);
-        }).toList();
-      }
-      MessageFromTaipc messagetaipc = MessageFromTaipc.fromJson(message.data);
-      print('-------->>>>');
-      print(messagetaipc.toString());
-      list.add(messagetaipc);
-      preferences.setString('listmessage', MessageFromTaipc.encode(list));
-      await Firebase.initializeApp();
-      _notificationHelper.showNot(messagetaipc);
-    });
   }
 
   @override
@@ -405,7 +382,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               .textTheme
                                               .headline1!
                                               .copyWith(fontSize: 15)),
-                                  titlel(language['todayaya']),
+                                  titlel(mosque.horA == 0
+                                      ? language['todayHadith']
+                                      : language['todayaya']),
                                   Expanded(
                                       child: Container(
                                     /*decoration: BoxDecoration(

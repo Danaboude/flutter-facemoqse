@@ -32,7 +32,7 @@ class MessageSetting with ChangeNotifier {
   }
 
   String canevent = '';
-  Future<String> senddatauserforevent(String fname, String lname, String number,
+  Future<int> senddatauserforevent(String fname, String lname, String number,
       MessageFromTaipc message, String mosqueid) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
@@ -58,8 +58,9 @@ class MessageSetting with ChangeNotifier {
         },
       );
       print(response.body);
-
-      if (response.body == '"200"') {
+      var res = jsonDecode(response.body) as Map<String, dynamic>;
+      // ignore: unrelated_type_equality_checks
+      if (res['code'] == 200) {
         Map s = {
           'First Name': fname,
           'Last Name': lname,
@@ -70,11 +71,11 @@ class MessageSetting with ChangeNotifier {
         prefs.setString(message.eventId, json.encode(s));
         notifyListeners();
 
-        return response.body;
+        return res['code'];
       } else {
         notifyListeners();
 
-        return response.body;
+        return res['code'];
       }
     } catch (e) {
       throw e;

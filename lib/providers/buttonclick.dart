@@ -32,6 +32,7 @@ class Buttonclickp with ChangeNotifier {
     'isha': 'Isha',
     'nextparer': 'Next Prayer After',
     'todayaya': 'Today\'s Aya',
+    'todayHadith': 'Today\'s Hadith',
     'mymosque': 'My Mosque',
     'searchmosquetimes': 'Search Mosque for Follow Prayer Times',
     'othermosque': 'Other Mosque',
@@ -148,9 +149,9 @@ class Buttonclickp with ChangeNotifier {
     'Select the mosque to see the last prayer':
         'Select the mosque to see the last prayer',
     'mosques': 'Mosques',
-    'Sorry, you cannot register':'Sorry, you cannot register',
-    'Times are being update':'Times are being update',
-    'Updated':'Updated'
+    'Sorry, you cannot register': 'Sorry, you cannot register',
+    'Times are being update': 'Times are being update',
+    'Updated': 'Updated'
   };
   Map<String, String> ar = {
     'titlenamemasjed': 'مواقيت الصلاة و الإقامة لجامع',
@@ -162,6 +163,7 @@ class Buttonclickp with ChangeNotifier {
     'isha': 'العشاء',
     'nextparer': 'الصلاة التالية بعد',
     'todayaya': 'آية اليوم',
+    'todayHadith': 'حديث اليوم',
     'mymosque': 'مسجدي',
     'searchmosquetimes': 'ابحث عن مسجد لتتبع أوقات  الصلاة والإقامة',
     'othermosque': 'مساجد اخرى',
@@ -275,10 +277,11 @@ class Buttonclickp with ChangeNotifier {
     'No More paryer for today': 'لا مزيد من الصلاة لهذا اليوم',
     'Today\'s prayers are over': 'انتهت الصلوات لليوم',
     'Take me to Google Map': 'أرشدني إلى المسجد',
-    'Select the mosque to see the last prayer': 'حدد الجامع لترى اخر توقيت صلاه',
-    'Sorry, you cannot register':'عذرا لا يمكنك التسجيل',
-    'Times are being update':'جاري تحديث الاوقات ',
-    'Updated':'تم التحديث'
+    'Select the mosque to see the last prayer':
+        'حدد الجامع لترى اخر توقيت صلاه',
+    'Sorry, you cannot register': 'عذرا لا يمكنك التسجيل',
+    'Times are being update': 'جاري تحديث الاوقات ',
+    'Updated': 'تم التحديث'
   };
 
   String parerEdit = '';

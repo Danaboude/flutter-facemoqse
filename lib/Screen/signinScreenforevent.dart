@@ -105,7 +105,7 @@ class _SigninScreenforEventtate extends State<SigninScreenforEvent> {
                   child: Text(language['Register']),
                   onPressed: () async {
                     try {
-                      String m = await Provider.of<MessageSetting>(context,
+                      int m = await Provider.of<MessageSetting>(context,
                               listen: false)
                           .senddatauserforevent(
                               _firestnameController.text,
@@ -114,7 +114,7 @@ class _SigninScreenforEventtate extends State<SigninScreenforEvent> {
                               argsmessage,
                               mosquesforevent.mosqueid);
 
-                      if (m == '"200"') {
+                      if (m == 200) {
                         showDialog(
                           context: context,
                           builder: (ctx) => AlertDialog(
@@ -137,8 +137,10 @@ class _SigninScreenforEventtate extends State<SigninScreenforEvent> {
                               borderRadius: BorderRadius.circular(40),
                             ),
                             title: Text(language['Erorr']),
-                            content:
-                                Text(language['Sorry, you cannot register']),
+                            content: Text(
+                                language['Sorry, you cannot register'] +
+                                    " " +
+                                    m.toString()),
                             actions: <Widget>[
                               TextButton(
                                 onPressed: () {

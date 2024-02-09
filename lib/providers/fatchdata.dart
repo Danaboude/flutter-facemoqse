@@ -149,20 +149,28 @@ class FatchData with ChangeNotifier {
           'Accept': 'application/json',
         },
       );
-      print(response.body);
+      if (kDebugMode) {
+        print(response.body);
+      }
       /*Iterable l = json.decode(
           "${response.body.split('\n').toString().substring(0, response.body.split('\n').toString().length - 3)}]");*/
       Iterable l = json.decode(response.body);
 
       mosquelist =
           List<Mosques>.from(l.map((model) => Mosques.fromJson(model)));
-      print(response.body);
+      if (kDebugMode) {
+        print(response.body);
+      }
       for (var mosqueli in mosquelist) {
-        print(mosqueli.Email);
+        if (kDebugMode) {
+          print(mosqueli.Email);
+        }
       }
       notifyListeners();
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -176,9 +184,11 @@ class FatchData with ChangeNotifier {
       if (preferences.containsKey('mosqueFollow')) {
         mosqueFollow = Mosques.fromJson(
             json.decode(preferences.getString('mosqueFollow')!));
-        Timer.periodic(Duration(days: 1), (timer) {
+        Timer.periodic(const Duration(days: 1), (timer) {
           fatchandsetmosque(mosqueFollow.mosqueid);
-          print(mosqueFollow);
+          if (kDebugMode) {
+            print(mosqueFollow);
+          }
         });
         loction();
 
@@ -199,7 +209,9 @@ class FatchData with ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -218,7 +230,9 @@ class FatchData with ChangeNotifier {
           'Accept': 'application/json',
         },
       );
-      print(jsonDecode(utf8.decode(response.bodyBytes)));
+      if (kDebugMode) {
+        print(jsonDecode(utf8.decode(response.bodyBytes)));
+      }
       if (response.body == 'Mosque not exist') {
         mosqueFollow = mosquelist.firstWhere(
             (element) => int.parse(element.mosqueid) == int.parse(mosqid));
@@ -242,7 +256,9 @@ class FatchData with ChangeNotifier {
       notifyListeners();
       // logLongString(mosque.toString());
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -279,7 +295,9 @@ class FatchData with ChangeNotifier {
       mosqueFollow.clean();
       notifyListeners();
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -291,7 +309,9 @@ class FatchData with ChangeNotifier {
     int endIndex = n;
     while (startIndex < s.length) {
       if (endIndex > s.length) endIndex = s.length;
-      print(s.substring(startIndex, endIndex));
+      if (kDebugMode) {
+        print(s.substring(startIndex, endIndex));
+      }
       startIndex += n;
       endIndex = startIndex + n;
     }
