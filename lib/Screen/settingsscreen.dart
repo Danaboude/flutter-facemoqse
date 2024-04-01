@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../main.dart';
 import '../widget/notificationHelper.dart';
 
+//TODO: creating a menua with different Muazan and deleting the notification checkboxs as they are in the main interfeca @ibrahim
 //Model of Language
 class Language {
   String lang;
@@ -21,15 +22,16 @@ class SettingsScreen extends StatefulWidget {
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
+
 enum Language1 { englich, arabic }
-
-
 
 class _SettingsScreenState extends State<SettingsScreen> {
   NotificationHelper _notificationHelper = NotificationHelper();
   @override
   Widget build(BuildContext context) {
-      Language1? language1=Provider.of<Buttonclickp>(context).languageselected?Language1.arabic:Language1.englich;
+    Language1? language1 = Provider.of<Buttonclickp>(context).languageselected
+        ? Language1.arabic
+        : Language1.englich;
 
     Mosques mosquefollow =
         Provider.of<FatchData>(context, listen: false).mosqueFollow;
@@ -247,18 +249,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
               style: Theme.of(context).textTheme.headline1,
             ),
           ),
-            SizedBox(
+          SizedBox(
             height: sizedphone.height * 0.1,
           ),
-          
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Transform.scale(
                 scale: 1.3,
                 child: Radio<Language1?>(
-                    groupValue:
-                        Language1.englich,
+                    groupValue: Language1.englich,
                     value: language1,
                     onChanged: (val) {
                       Provider.of<Buttonclickp>(context, listen: false)
@@ -268,12 +268,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               Text(
                 l[0].lang,
-                style:  Theme.of(context).textTheme.headline2,
+                style: Theme.of(context).textTheme.headline2,
               ),
               Transform.scale(
                 scale: 1.3,
                 child: Radio<Language1?>(
-                    groupValue:Language1.arabic,
+                    groupValue: Language1.arabic,
                     value: language1,
                     onChanged: (val) {
                       Provider.of<Buttonclickp>(context, listen: false)

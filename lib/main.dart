@@ -67,7 +67,7 @@ Future<void> _firebasePushHandler(RemoteMessage message) async {
   list.add(messagetaipc);
   preferences.setString('listmessage', MessageFromTaipc.encode(list));
   await Firebase.initializeApp();
-  _notificationHelper.showNot(messagetaipc);
+  // _notificationHelper.showNot(messagetaipc);
 }
 
 NotificationHelper _notificationHelper = NotificationHelper();
@@ -85,8 +85,10 @@ Future<void> updateMosuqe() async {
         'Accept': 'application/json',
       },
     ).timeout(const Duration(seconds: 300));
-    print(response.body);
-    Mosque mosqu = await Mosque.fromJson(jsonDecode(response.body));
+
+    var data = utf8.decode(response.bodyBytes);
+    print(data);
+    Mosque mosqu = await Mosque.fromJson(jsonDecode(data));
     preferences.setString('mosque', json.encode(mosqu.toMap()));
   }
 }
@@ -105,8 +107,7 @@ void read() async {
       }).toList();
     }
     MessageFromTaipc messagetaipc = MessageFromTaipc.fromJson(message.data);
-    print('-------->>>>');
-    print(messagetaipc.toString());
+    print("from the another function");
     list.add(messagetaipc);
     preferences.setString('listmessage', MessageFromTaipc.encode(list));
     await Firebase.initializeApp();
@@ -144,6 +145,7 @@ void main() async {
       taskId: "com.transistorsoft.customtask",
       delay: 7200000 // <-- milliseconds
       ));
+  await updateMosuqe();
   // Workmanager().initialize(callbackDispatcher);
   // await Workmanager().registerPeriodicTask(
   //     'recallmousqedata', 'recallmousqedata',
@@ -158,6 +160,12 @@ void main() async {
 
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true, // Required to display a heads up notification
+    badge: true,
+    sound: true,
+  );
+
   NotificationSettings settings = await messaging.requestPermission(
     alert: true,
     announcement: false,
@@ -167,8 +175,9 @@ void main() async {
     provisional: false,
     sound: true,
   );
+
   read();
-  FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
+  //FirebaseMessaging.onBackgroundMessage(_firebasePushHandler);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   initScreen = await prefs.getInt("initScreen");
   await prefs.setInt("initScreen", 1);

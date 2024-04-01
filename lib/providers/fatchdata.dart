@@ -292,6 +292,7 @@ class FatchData with ChangeNotifier {
           dataid: '');
       prefs.remove('mosque');
       prefs.remove('mosqueFollow');
+      prefs.remove('mosqid');
       mosqueFollow.clean();
       notifyListeners();
     } catch (e) {

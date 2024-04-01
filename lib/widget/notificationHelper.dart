@@ -15,7 +15,7 @@ class NotificationHelper {
     tz.initializeTimeZones();
     //get local time zone
     final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
-   //get location from timezone
+    //get location from timezone
     tz.setLocalLocation(tz.getLocation(timeZone));
   }
 
@@ -25,10 +25,10 @@ class NotificationHelper {
     //ios setting but i not set
     const DarwinInitializationSettings initializationSettingsIOS =
         DarwinInitializationSettings();
-   //set icon notification the same as icon app
+    //set icon notification the same as icon app
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings("@mipmap/ic_launcher");
-   //Initialize setting notification
+    //Initialize setting notification
     const InitializationSettings initializationSettings =
         InitializationSettings(
       iOS: initializationSettingsIOS,
@@ -38,7 +38,7 @@ class NotificationHelper {
   }
 
   /// Set right date and time for notifications
-  //if time adan has pass the day  it well add day 
+  //if time adan has pass the day  it well add day
   tz.TZDateTime _convertTime(int hour, int minutes) {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduleDate = tz.TZDateTime(
@@ -54,21 +54,21 @@ class NotificationHelper {
     }
     return scheduleDate;
   }
-//Notification for firebase 
+
+//Notification for firebase
   showNot(MessageFromTaipc message) async {
     await flutterLocalNotificationsPlugin.show(
-     message.hashCode,
-     message.title,
+      message.hashCode,
+      message.title,
       message.message,
-      NotificationDetails(
+      const NotificationDetails(
         android: AndroidNotificationDetails(
-          'your channel id asdf',
-          'abdalkremm',
-          channelDescription: 'socool',
-          importance: Importance.max,
-          priority: Priority.high,
-          playSound: true,
-        ),
+            'your channel id asdf', 'abdalkremm',
+            channelDescription: 'socool',
+            importance: Importance.max,
+            priority: Priority.high,
+            playSound: true,
+            sound: RawResourceAndroidNotificationSound('notification')),
         iOS: DarwinNotificationDetails(sound: 'assets/mp3/notification.mp3'),
       ),
       payload: 'It could be anything you pass',
@@ -98,7 +98,7 @@ class NotificationHelper {
           priority: Priority.high,
           sound: RawResourceAndroidNotificationSound(sound),
         ),
-        iOS: DarwinNotificationDetails(sound:'$sound.mp3'),
+        iOS: DarwinNotificationDetails(sound: '$sound.mp3'),
       ),
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:

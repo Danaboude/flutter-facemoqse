@@ -171,7 +171,7 @@ class Auth with ChangeNotifier {
       String date, String maxnum) async {
     saveMassge(title, massege, time, maxnum, date);
     final postUrl = 'https://fcm.googleapis.com/fcm/send';
-    String toParams = "/topics/" "${user!.mosques.name}";
+    String toParams = "/topics/" + user!.mosques.name;
     var data = Data('', '', '', time, '', false, 0, 0);
     if (!isEvent) {
       data.Title = title;
@@ -192,10 +192,10 @@ class Auth with ChangeNotifier {
       data.Message = '$massege (${user!.mosques.name})';
       data.setMosqueId = int.parse(user!.mosques.mosqueid);
       data.eventId = DateTime.now().millisecondsSinceEpoch;
-      print(data.toString());
     }
 
     var d = {
+      "notification": {"title": title, "body": user!.mosques.name},
       'data': data.toMap(),
       "to": toParams,
       "priority": "high",

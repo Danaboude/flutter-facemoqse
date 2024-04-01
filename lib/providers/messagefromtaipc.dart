@@ -77,4 +77,8 @@ class MessageFromTaipc {
   String toString() {
     return 'MessageFromTaipc(title: $title, message: $message, date: $date, time: $time, maxPerson: $maxPerson, mosqueid: $mosqueid, isEvent: $isEvent, eventId: $eventId)';
   }
+
+  String toStringRaw() {
+    return 'MessageFromTaipc(title: $title, message: $message, date: $date, time: $time, maxPerson: $maxPerson, mosqueid: $mosqueid, isEvent: $isEvent, eventId: $eventId)';
+  }
 }
