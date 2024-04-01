@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import '../main.dart';
 import '../widget/notificationHelper.dart';
 
-//TODO: creating a menua with different Muazan and deleting the notification checkboxs as they are in the main interfeca @ibrahim
+//TODO: #2 creating a menua with different Muazan and deleting the notification checkboxs as they are in the main interfeca @ibrahimalnasser
 //Model of Language
 class Language {
   String lang;
