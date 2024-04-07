@@ -1,3 +1,6 @@
+//TODO: #3 cleaning the code from unused libs and imports @ibrahimalnasser
+//TODO: #4 adding a message for the user to take out the app from the battery optimization @ibrahimalnasser
+//todo: #6 rebuild this code with IOS with the necessary modifcations for android and IOS in such a way that the code works for both @ibrahimalnasser
 import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
