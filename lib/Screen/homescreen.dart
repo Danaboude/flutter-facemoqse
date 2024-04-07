@@ -47,6 +47,7 @@ class MySlider {
       required this.Issharouq});
 }
 
+//todo: #9 adding the information about the mosque as in the website such services and followers and add it in the main interface @ibrahimalnasser
 class HomeScreen extends StatefulWidget {
   static const routeName = '/Home';
 

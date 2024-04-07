@@ -26,11 +26,13 @@ class LanguageScreen extends StatelessWidget {
       Language(lang: language['arabic'])
     ];
     return Scaffold(
-      appBar: AppBar(leading: IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon:const Icon(Icons.arrow_back_ios)),),
+      appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(Icons.arrow_back_ios)),
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -45,9 +47,7 @@ class LanguageScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline2,
               ),
             ),
-            Image.asset(
-              'assets/images/lang.png'
-            ),
+            Image.asset('assets/images/lang.png'),
             SizedBox(
               height: sizedphone.height * 0.14,
               width: sizedphone.width * 0.8,
@@ -92,26 +92,25 @@ class LanguageScreen extends StatelessWidget {
                 },
               ),
             ),
-             ElevatedButton(
-                    child: Text(language['Change Language']),
-                    onPressed: () {
-                      if (Provider.of<Buttonclickp>(context, listen: false)
-                          .languageformosqueselected) {
-                        Provider.of<Respray>(context, listen: false)
-                            .sendudp('Arabic');
-                      } else {
-                        Provider.of<Respray>(context, listen: false)
-                            .sendudp('English');
-                      }
-                    },
-                    style: ButtonStyle(
-                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                            EdgeInsets.all(13)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                        )))),
+            ElevatedButton(
+                child: Text(language['Change Language']),
+                onPressed: () {
+                  if (Provider.of<Buttonclickp>(context, listen: false)
+                      .languageformosqueselected) {
+                    Provider.of<Respray>(context, listen: false)
+                        .sendudp('Arabic');
+                  } else {
+                    Provider.of<Respray>(context, listen: false)
+                        .sendudp('English');
+                  }
+                },
+                style: ButtonStyle(
+                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                        EdgeInsets.all(13)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    )))),
           ],
         ),
       ),

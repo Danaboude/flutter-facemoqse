@@ -40,6 +40,7 @@ class _EventNotificationsState extends State<EventNotifications> {
     super.dispose();
   }
 
+// todo: #8 fixing the way to show the notifications, the current method using timer to update @ibrahimalnasser
   @override
   Widget build(BuildContext context) {
     listmessage = Provider.of<MessageSetting>(context).messageFromTaipc;

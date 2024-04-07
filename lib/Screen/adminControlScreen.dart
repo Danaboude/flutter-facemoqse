@@ -46,8 +46,6 @@ class GridItem {
 }
 
 class _AdminControlScreenState extends State<AdminControlScreen> {
-
-
   var _aspectTolerance = 0.00;
   var _selectedCamera = -1;
   var _useAutoFocus = true;
@@ -61,7 +59,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
     try {
       result = await _connectivity.checkConnectivity();
     } on PlatformException catch (e) {
-    //  print('Couldn\'t check connectivity status $e');
+      //  print('Couldn\'t check connectivity status $e');
       return;
     }
 
@@ -96,7 +94,7 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
     super.dispose();
   }
 
- 
+  //todo: #7 adding the item to control the raspberry to sync its data with the cloud @ibrahimalnasser
   @override
   Widget build(BuildContext context) {
     String lan = '';
@@ -222,15 +220,18 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
                                       //
                                       if (list[i].url != 'reboot') {
                                         if (list[i].url == 'qr') {
-                                        String  scanResult = await FlutterBarcodeScanner.scanBarcode(
-                                          '#ff6666', 'Cancel', true, ScanMode.QR);
+                                          String scanResult =
+                                              await FlutterBarcodeScanner
+                                                  .scanBarcode(
+                                                      '#ff6666',
+                                                      'Cancel',
+                                                      true,
+                                                      ScanMode.QR);
                                           if (scanResult != '') {
                                             Map a;
-                                            if (json.decode(
-                                                    scanResult)
+                                            if (json.decode(scanResult)
                                                 is Map) {
-                                              a = json.decode(
-                                                  scanResult);
+                                              a = json.decode(scanResult);
                                             } else {
                                               a = {"Mobile Number": '1'};
                                             }
@@ -514,11 +515,9 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
     if (state) {
       Provider.of<Respray>(context, listen: false).sendudp(str1);
       lan = language[str2];
-     
     } else {
       Provider.of<Respray>(context, listen: false).sendudp(str3);
       lan = language[str4];
-    
     }
     Timer(Duration(seconds: 1), () {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -559,6 +558,4 @@ class _AdminControlScreenState extends State<AdminControlScreen> {
       },
     );
   }
-
- 
 }
