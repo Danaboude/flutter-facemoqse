@@ -43,6 +43,7 @@ class _CreatenotificationsScreen extends State<CreatenotificationsScreen> {
     }
   }
 
+//todo: #10 chang the input of the maximum number of people from text field to a number to avoid wrong inputs from the user @ibrahimalnasser
   @override
   Widget build(BuildContext context) {
     bool status = false;
